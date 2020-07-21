@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
+using QuanLyQuanCafe.DAL;
 
 namespace QuanLyQuanCafe
 {
@@ -18,20 +19,45 @@ namespace QuanLyQuanCafe
             InitializeComponent();
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
+        void Login()
         {
-            this.Close();
-        }
-
-        private void btnLogin_Click(object sender, EventArgs e)
-        {
-            if (txtUsername.Text.Equals(txtPassword.Text))
+            string username = txtUsername.Text;
+            string password = txtPassword.Text;
+            if (DAL_Account.Instance.Login(username, password))
             {
                 fTableManager frmTableManager = new fTableManager();
                 frmTableManager.MdiParent = this.MdiParent;
                 frmTableManager.Show();
-                this.Close();
+                Exit();
             }
+            else
+            {
+                XtraMessageBox.Show("Bạn đã nhập sai tên đăng nhập hoặc mật khẩu!\nMời bạn nhập lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ClearAllInput();
+            }
+        }
+
+        void ClearAllInput()
+        {
+            txtUsername.Text = string.Empty;
+            txtPassword.Text = string.Empty;
+            txtUsername.Focus();
+        }
+
+        void Exit()
+        {
+            ClearAllInput();
+            this.Hide();
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Exit();
+        }
+
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            Login();
         }
     }
 }

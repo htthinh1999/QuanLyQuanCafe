@@ -35,6 +35,8 @@
   <ItemGroup>
     <Reference Include="Accessibility" />
     <Reference Include="DevExpress.Data.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.ExpressApp.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Persistent.Base.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Printing.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Utils.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraBars.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -42,6 +44,7 @@
     <Reference Include="DevExpress.XtraGrid.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraLayout.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraPrinting.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraReports.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -58,6 +61,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\DAL_Account.cs" />
+    <Compile Include="DAL\DAL_Bill.cs" />
+    <Compile Include="DAL\DAL_BillTableInfo.cs" />
+    <Compile Include="DAL\DAL_Food.cs" />
+    <Compile Include="DAL\DAL_FoodCategory.cs" />
+    <Compile Include="DAL\DAL_TableFood.cs" />
+    <Compile Include="DAL\DataProvider.cs" />
+    <Compile Include="DTO\Account.cs" />
+    <Compile Include="DTO\Bill.cs" />
+    <Compile Include="DTO\BillInfo.cs" />
+    <Compile Include="DTO\BillTableInfo.cs" />
+    <Compile Include="DTO\Food.cs" />
+    <Compile Include="DTO\FoodCategory.cs" />
+    <Compile Include="DTO\TableFood.cs" />
     <Compile Include="fAccount.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -192,9 +209,6 @@
   <ItemGroup>
     <None Include="Resources\clear_16x16.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DAL\" />
-    <Folder Include="DTO\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -13,46 +13,48 @@ namespace QuanLyQuanCafe
 {
     public partial class fMain : DevExpress.XtraBars.Ribbon.RibbonForm
     {
+        #region All forms except main form
+        
+        fLogin frmLogin;
+        fAccount frmAccount;
+        fAccountInfo frmAccountInfo;
+        fChangePassword frmChangePassword;
+        fFood frmFood;
+        fFoodCategory frmFoodCategory;
+        fRevenue frmRevenue;
+        fTableFood frmTableFood;
+        fTableManager frmTableManager;
+        
+        #endregion
+
         public fMain()
         {
             InitializeComponent();
+
+            PreLoadAllForms();
+            ShowForm(frmLogin, typeof(fLogin));
         }
 
-        private void btnLogin_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            if (!CheckExist(typeof(fLogin)))
-            {
-                fLogin frmLogin = new fLogin();
-                frmLogin.MdiParent = this;
-                frmLogin.Show();
-            }
-        }
+        #region Methods
 
-        private void btnInformation_ItemClick(object sender, ItemClickEventArgs e)
+        void PreLoadAllForms()
         {
-            if (!CheckExist(typeof(fAccountInfo)))
-            {
-                fAccountInfo frmAccountInfo = new fAccountInfo();
-                frmAccountInfo.MdiParent = this;
-                frmAccountInfo.Show();
-            }
-        }
-
-        private void btnChangePass_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            if (!CheckExist(typeof(fChangePassword)))
-            {
-                fChangePassword frmChangePassword = new fChangePassword();
-                frmChangePassword.MdiParent = this;
-                frmChangePassword.Show();
-            }
+            frmLogin = new fLogin();
+            frmAccount = new fAccount();
+            frmAccountInfo = new fAccountInfo();
+            frmChangePassword = new fChangePassword();
+            frmFood = new fFood();
+            frmFoodCategory = new fFoodCategory();
+            frmRevenue = new fRevenue();
+            frmTableFood = new fTableFood();
+            frmTableManager = new fTableManager();
         }
 
         bool CheckExist(Type fType)
         {
-            foreach(Form form in this.MdiChildren)
+            foreach (Form form in this.MdiChildren)
             {
-                if(form.GetType() == fType)
+                if (form.GetType() == fType)
                 {
                     form.Focus();
                     return true;
@@ -61,64 +63,64 @@ namespace QuanLyQuanCafe
             return false;
         }
 
+        void ShowForm(Form form, Type formType)
+        {
+            if (!CheckExist(formType))
+            {
+                form.MdiParent = this;
+                form.Show();
+            }
+        }
+
+        #endregion
+
+        #region Events
+
+        private void btnLogin_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ShowForm(frmLogin, typeof(fLogin));
+        }
+
+        private void btnInformation_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ShowForm(frmAccountInfo, typeof(fAccountInfo));
+        }
+
+        private void btnChangePass_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ShowForm(frmChangePassword, typeof(fChangePassword));
+        }
+
         private void btnRevenue_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (!CheckExist(typeof(fRevenue)))
-            {
-                fRevenue frmRevenue = new fRevenue();
-                frmRevenue.MdiParent = this;
-                frmRevenue.Show();
-            }
+            ShowForm(frmRevenue, typeof(fRevenue));
         }
 
         private void btnFood_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (!CheckExist(typeof(fFood)))
-            {
-                fFood frmFood = new fFood();
-                frmFood.MdiParent = this;
-                frmFood.Show();
-            }
+            ShowForm(frmFood, typeof(fFood));
         }
 
         private void btnFoodCategory_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (!CheckExist(typeof(fFoodCategory)))
-            {
-                fFoodCategory frmFoodCategory = new fFoodCategory();
-                frmFoodCategory.MdiParent = this;
-                frmFoodCategory.Show();
-            }
+            ShowForm(frmFoodCategory, typeof(fFoodCategory));
         }
 
         private void btnTableFood_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (!CheckExist(typeof(fTableFood)))
-            {
-                fTableFood frmTableFood = new fTableFood();
-                frmTableFood.MdiParent = this;
-                frmTableFood.Show();
-            }
+            ShowForm(frmTableFood, typeof(fTableFood));
         }
 
         private void btnAccount_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (!CheckExist(typeof(fAccount)))
-            {
-                fAccount frmAccount = new fAccount();
-                frmAccount.MdiParent = this;
-                frmAccount.Show();
-            }
+            ShowForm(frmAccount, typeof(fAccount));
         }
 
         private void btnTableManager_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (!CheckExist(typeof(fTableManager)))
-            {
-                fTableManager frmTableManager = new fTableManager();
-                frmTableManager.MdiParent = this;
-                frmTableManager.Show();
-            }
+            ShowForm(frmTableManager, typeof(fTableManager));
         }
+
+        #endregion
     }
 }

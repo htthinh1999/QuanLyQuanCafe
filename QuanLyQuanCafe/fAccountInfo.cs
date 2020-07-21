@@ -25,7 +25,7 @@ namespace QuanLyQuanCafe
 
         private void fAccountInfo_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (DataEntering() && MessageBox.Show("Các dữ liệu bạn đang nhập sẽ không được hoàn tác!\nBạn có chắc chắn muốn thoát?",
+            if (DataEntering() && XtraMessageBox.Show("Các dữ liệu bạn đang nhập sẽ không được hoàn tác!\nBạn có chắc chắn muốn thoát?",
                                     "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             {
                 e.Cancel = true;

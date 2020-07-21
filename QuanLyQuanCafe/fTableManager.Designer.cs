@@ -32,6 +32,10 @@
             this.cbxTable = new System.Windows.Forms.ComboBox();
             this.nmrDiscount = new System.Windows.Forms.NumericUpDown();
             this.lvBill = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.nmrCount = new System.Windows.Forms.NumericUpDown();
             this.btnAddFood = new DevExpress.XtraEditors.SimpleButton();
             this.cbxFoodCategory = new System.Windows.Forms.ComboBox();
@@ -110,12 +114,41 @@
             // 
             // lvBill
             // 
+            this.lvBill.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4});
             this.lvBill.HideSelection = false;
             this.lvBill.Location = new System.Drawing.Point(12, 62);
             this.lvBill.Name = "lvBill";
             this.lvBill.Size = new System.Drawing.Size(421, 413);
             this.lvBill.TabIndex = 7;
             this.lvBill.UseCompatibleStateImageBehavior = false;
+            this.lvBill.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Tên món";
+            this.columnHeader1.Width = 150;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Số lượng";
+            this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader2.Width = 70;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Đơn giá";
+            this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader3.Width = 100;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Thành tiền";
+            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader4.Width = 100;
             // 
             // nmrCount
             // 
@@ -128,6 +161,11 @@
             this.nmrCount.Name = "nmrCount";
             this.nmrCount.Size = new System.Drawing.Size(104, 21);
             this.nmrCount.TabIndex = 6;
+            this.nmrCount.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // btnAddFood
             // 
@@ -141,6 +179,7 @@
             this.btnAddFood.StyleController = this.layoutControl2;
             this.btnAddFood.TabIndex = 5;
             this.btnAddFood.Text = "Thêm món";
+            this.btnAddFood.Click += new System.EventHandler(this.btnAddFood_Click);
             // 
             // cbxFoodCategory
             // 
@@ -149,6 +188,7 @@
             this.cbxFoodCategory.Name = "cbxFoodCategory";
             this.cbxFoodCategory.Size = new System.Drawing.Size(159, 21);
             this.cbxFoodCategory.TabIndex = 4;
+            this.cbxFoodCategory.SelectedIndexChanged += new System.EventHandler(this.cbxFoodCategory_SelectedIndexChanged);
             // 
             // cbxFood
             // 
@@ -170,6 +210,7 @@
             this.btnCheckOut.StyleController = this.layoutControl2;
             this.btnCheckOut.TabIndex = 8;
             this.btnCheckOut.Text = "Thanh toán";
+            this.btnCheckOut.Click += new System.EventHandler(this.btnCheckOut_Click);
             // 
             // btnDiscount
             // 
@@ -374,6 +415,7 @@
             // 
             // flowLayoutPanel
             // 
+            this.flowLayoutPanel.AutoScroll = true;
             this.flowLayoutPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.flowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel.Location = new System.Drawing.Point(0, 0);
@@ -422,8 +464,6 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
         private System.Windows.Forms.NumericUpDown nmrCount;
         private DevExpress.XtraLayout.LayoutControlItem s;
-        private System.Windows.Forms.ListView lvBill;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
         private System.Windows.Forms.NumericUpDown nmrDiscount;
         private DevExpress.XtraEditors.SimpleButton btnCheckOut;
         private DevExpress.XtraEditors.SimpleButton btnDiscount;
@@ -437,5 +477,11 @@
         private DevExpress.XtraLayout.SimpleLabelItem simpleLabelItem1;
         private DevExpress.XtraLayout.SimpleLabelItem simpleLabelItem2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel;
+        private System.Windows.Forms.ListView lvBill;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
     }
 }
