@@ -25,11 +25,18 @@ namespace QuanLyQuanCafe.DAL
 
         public DAL_TableFood() { }
 
-        public List<TableFood> LoadTableFoodList()
+        public TableFood LoadTableStatus(int tableID)
+        {
+            string query = "USP_LoadTableStatus";
+            DataTable data = DataProvider.ExecuteQuery(query, new object[] { tableID });
+            return new TableFood(data.Rows[0]);
+        }
+
+        public List<TableFood> LoadTableList()
         {
             List<TableFood> listTableFood = new List<TableFood>();
 
-            string query = "USP_LoadTableFoodList";
+            string query = "USP_LoadTableList";
             DataTable data = DataProvider.ExecuteQuery(query);
             foreach(DataRow row in data.Rows)
             {
@@ -38,6 +45,12 @@ namespace QuanLyQuanCafe.DAL
             }
 
             return listTableFood;
+        }
+
+        public void MoveTable(int firstTableID, int secondTableID)
+        {
+            string query = "USP_MoveTable";
+            DataProvider.ExecuteQuery(query, new object[] { firstTableID, secondTableID });
         }
     }
 }

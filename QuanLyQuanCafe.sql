@@ -50,6 +50,7 @@ CREATE TABLE Bill
 (
 	id INT IDENTITY PRIMARY KEY,
 	idTable INT NOT NULL,
+	discount INT NOT NULL DEFAULT 0,
 	timeIn DATETIME NOT NULL DEFAULT GETDATE(),
 	timeOut DATETIME DEFAULT NULL,
 	status NVARCHAR(100) NOT NULL DEFAULT N'Chưa thanh toán', -- Đã thanh toán / Chưa thanh toán
@@ -186,61 +187,10 @@ VALUES
     30000.0  -- price - float
     )
 
-INSERT INTO dbo.Bill
-(
-    idTable,
-    timeIn,
-    timeOut,
-    status
-)
-VALUES
-(   1,         -- idTable - int
-    GETDATE(), -- timeIn - datetime
-    NULL, -- timeOut - datetime
-    N'Chưa thanh toán'        -- status - nvarchar(100)
-    )
-
-INSERT INTO dbo.Bill
-(
-    idTable,
-    timeIn,
-    timeOut,
-    status
-)
-VALUES
-(   4,         -- idTable - int
-    GETDATE(), -- timeIn - datetime
-    NULL, -- timeOut - datetime
-    N'Chưa thanh toán'        -- status - nvarchar(100)
-    )
-
-INSERT INTO dbo.Bill
-(
-    idTable,
-    timeIn,
-    timeOut,
-    status
-)
-VALUES
-(   5,         -- idTable - int
-    GETDATE(), -- timeIn - datetime
-    NULL, -- timeOut - datetime
-    N'Chưa thanh toán'        -- status - nvarchar(100)
-    )
-
-INSERT INTO dbo.Bill
-(
-    idTable,
-    timeIn,
-    timeOut,
-    status
-)
-VALUES
-(   10,         -- idTable - int
-    GETDATE(), -- timeIn - datetime
-    GETDATE(), -- timeOut - datetime
-    N'Đã thanh toán'        -- status - nvarchar(100)
-    )
+INSERT INTO dbo.Bill(idTable) VALUES(1)
+INSERT INTO dbo.Bill(idTable) VALUES(4)
+INSERT INTO dbo.Bill(idTable) VALUES(5)
+INSERT INTO dbo.Bill(idTable, timeOut, status) VALUES(10, GETDATE(), N'Đã thanh toán')
 
 INSERT INTO dbo.BillInfo
 (
@@ -360,8 +310,10 @@ SELECT * FROM dbo.Bill
 SELECT * FROM dbo.BillInfo
 GO
 
-
 ------------------------------------------ END INSERT DATA ------------------------------------------
+
+
+------------------------------------------ CREATE PROCEDURES ------------------------------------------
 
 CREATE PROC USP_Login
 @username VARCHAR(100),
@@ -374,7 +326,17 @@ BEGIN
 END
 GO
 
-CREATE PROC USP_LoadTableFoodList
+CREATE PROC USP_LoadTableStatus
+@tableID INT
+AS
+BEGIN
+    SELECT id, name, status
+	FROM dbo.TableFood
+	WHERE id = @tableID
+END
+GO
+
+CREATE PROC USP_LoadTableList
 AS
 BEGIN
 	SELECT id, name, status FROM dbo.TableFood
@@ -473,7 +435,8 @@ END
 GO
 
 CREATE PROC USP_CheckOutTable
-@tableID INT
+@tableID INT,
+@discount INT
 AS
 BEGIN
     DECLARE @billID INT
@@ -481,6 +444,10 @@ BEGIN
 	SELECT @billID = id
 	FROM dbo.Bill
 	WHERE idTable = @tableID AND status = N'Chưa thanh toán'
+
+	UPDATE dbo.Bill
+	SET discount = @discount
+	WHERE id = @billID
 
 	UPDATE dbo.Bill
 	SET timeOut = GETDATE()
@@ -495,6 +462,32 @@ BEGIN
 	WHERE id = @tableID
 END
 GO
+
+CREATE PROC USP_MoveTable
+@firstTableID INT,
+@secondTableID INT
+AS
+BEGIN
+    UPDATE dbo.Bill
+	SET idTable = @secondTableID
+	WHERE idTable = @firstTableID AND status = N'Chưa thanh toán'
+
+	UPDATE dbo.TableFood
+	SET status = N'Trống'
+	WHERE id = @firstTableID
+
+	UPDATE dbo.TableFood
+	SET status = N'Đã có người'
+	WHERE id = @secondTableID
+END
+GO
+
+
+
+------------------------------------------ END CREATE PROCEDURES ------------------------------------------
+
+
+------------------------------------------ CREATE TRIGGERS ------------------------------------------
 
 CREATE TRIGGER UTG_UpdateBillInfo
 ON dbo.BillInfo FOR INSERT, UPDATE
@@ -518,7 +511,7 @@ BEGIN
 	UPDATE dbo.TableFood
 	SET status = N'Đã có người'
 	WHERE id = @tableID
-
+	
 	DECLARE @existFoodOnTable INT = 0
 
 	SELECT @existFoodOnTable = COUNT(*)
@@ -534,5 +527,5 @@ BEGIN
 END
 GO
 
-SELECT * FROM dbo.Bill
+------------------------------------------ END CREATE TRIGGERS ------------------------------------------
 

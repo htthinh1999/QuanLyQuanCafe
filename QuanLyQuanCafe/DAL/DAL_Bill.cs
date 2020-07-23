@@ -40,10 +40,10 @@ namespace QuanLyQuanCafe.DAL
             return billList;
         }
 
-        public void CheckOutForTable(int tableID)
+        public void CheckOutForTable(int tableID, int discount)
         {
             string query = "USP_CheckOutTable";
-            DataProvider.ExecuteQuery(query, new object[] { tableID });
+            DataProvider.ExecuteQuery(query, new object[] { tableID, discount });
         }
     }
 }

@@ -44,8 +44,8 @@ namespace QuanLyQuanCafe.DAL
 
         public void AddFood(int foodID, int count, int tableID)
         {
-            string query = "USP_AddFood " + foodID + ", " + count + ", " + tableID;
-            DataProvider.ExecuteQuery(query);
+            string query = "USP_AddFood";
+            DataProvider.ExecuteQuery(query, new object[] { foodID, count, tableID });
         }
     }
 }

@@ -17,12 +17,17 @@ namespace QuanLyQuanCafe
 {
     public partial class fTableManager : DevExpress.XtraEditors.XtraForm
     {
+        Dictionary<int, SimpleButton> btnTable = new Dictionary<int, SimpleButton>();
+        int tableIDChosen = 1;
+        float totalPriceOfTableChosen = 0;
+
         public fTableManager()
         {
             InitializeComponent();
 
             LoadFoodCategoryList();
             LoadTableList();
+            GetBillByTableID(tableIDChosen);
         }
 
         void LoadFoodCategoryList()
@@ -39,28 +44,42 @@ namespace QuanLyQuanCafe
             cbxFood.DisplayMember = "Name";
         }
 
+        void UpdateTableStatus(SimpleButton btnTableFood, string name, string status)
+        {
+            btnTableFood.Text = name + "\n" + status;
+            btnTableFood.Appearance.BackColor = Color.LightGray;
+            if (status.Equals("Trống"))
+            {
+                btnTableFood.Appearance.BackColor = Color.LightGreen;
+            }
+        }
+
+        void LoadTableStatus(int idTable)
+        {
+            TableFood table = DAL_TableFood.Instance.LoadTableStatus(idTable);
+            UpdateTableStatus(btnTable[idTable], table.Name, table.Status);
+        }
+
         void LoadTableList()
         {
-            flowLayoutPanel.Controls.Clear();
-            List<TableFood> tableList = DAL_TableFood.Instance.LoadTableFoodList();
+            List<TableFood> tableList = DAL_TableFood.Instance.LoadTableList();
             foreach(TableFood tableFood in tableList)
             {
-                SimpleButton btnTable = new SimpleButton() { Width = tableFood.Width, Height = tableFood.Height };
-                btnTable.Tag = tableFood.ID;
-                btnTable.Click += LoadBillByTableID;
-                btnTable.Text = tableFood.Name + "\n" + tableFood.Status;
-                btnTable.Appearance.BackColor = Color.LightGray;
-                if (tableFood.Status.Equals("Trống"))
-                {
-                    btnTable.Appearance.BackColor = Color.LightGreen;
-                }
-                flowLayoutPanel.AddControl(btnTable);
+                SimpleButton btnTableFood = new SimpleButton() { Width = tableFood.Width, Height = tableFood.Height };
+                btnTableFood.Tag = tableFood.ID;
+                btnTableFood.Click += LoadBillByTableID;
+                UpdateTableStatus(btnTableFood, tableFood.Name, tableFood.Status);
+
+                flowLayoutPanel.AddControl(btnTableFood);
+                btnTable.Add(tableFood.ID, btnTableFood);
             }
+            cbxTableList.DataSource = tableList;
+            cbxTableList.DisplayMember = "Name";
         }
 
         void GetBillByTableID(int idTable)
         {
-            float totalPrice = 0;
+            totalPriceOfTableChosen = 0;
             List<BillTableInfo> billTableInfoList = DAL_BillTableInfo.Instance.GetBillTableInfoByTableID(idTable);
             lvBill.Items.Clear();
             foreach(BillTableInfo item in billTableInfoList)
@@ -71,35 +90,24 @@ namespace QuanLyQuanCafe
                 listViewItem.SubItems.Add(item.TotalPrice.ToString());
                 lvBill.Items.Add(listViewItem);
 
-                totalPrice += item.TotalPrice;
+                totalPriceOfTableChosen += item.TotalPrice;
             }
 
             // Show bill total price
             CultureInfo cultureInfo = new CultureInfo("vi-VN");
-            ListViewItem lvTotalPriceItem = new ListViewItem("Tổng hóa đơn: " + totalPrice.ToString("c", cultureInfo));
+            ListViewItem lvTotalPriceItem = new ListViewItem("Tổng tiền bàn số " + idTable + ":");
+            lvTotalPriceItem.SubItems.Add("");
+            lvTotalPriceItem.SubItems.Add("");
+            lvTotalPriceItem.SubItems.Add(totalPriceOfTableChosen.ToString("c", cultureInfo));
+            lvTotalPriceItem.Font = new Font(lvTotalPriceItem.Font, FontStyle.Bold);
             lvBill.Items.Add(lvTotalPriceItem);
-        }
-
-        void AddFood()
-        {
-            int foodID = (cbxFood.SelectedItem as Food).ID;
-            int count = (int)nmrCount.Value;
-            int tableID = (int)lvBill.Tag;
-            DAL_Food.Instance.AddFood(foodID, count, tableID);
-            nmrCount.Value = 1;
         }
 
         void LoadBillByTableID(object sender, EventArgs e)
         {
             int tableID = (int)(sender as SimpleButton).Tag;
             GetBillByTableID(tableID);
-            lvBill.Tag = tableID;
-        }
-
-        void CheckOutForTable(int tableID)
-        {
-            DAL_Bill.Instance.CheckOutForTable(tableID);
-            GetBillByTableID(tableID);
+            tableIDChosen = tableID;
         }
 
         private void cbxFoodCategory_SelectedIndexChanged(object sender, EventArgs e)
@@ -110,17 +118,39 @@ namespace QuanLyQuanCafe
 
         private void btnAddFood_Click(object sender, EventArgs e)
         {
-            AddFood();
-            int tableID = (int)lvBill.Tag;
-            GetBillByTableID(tableID);
-            LoadTableList();
+            int foodID = (cbxFood.SelectedItem as Food).ID;
+            int count = (int)nmrCount.Value;
+
+            DAL_Food.Instance.AddFood(foodID, count, tableIDChosen);
+            nmrCount.Value = 1;
+
+            GetBillByTableID(tableIDChosen);
+            LoadTableStatus(tableIDChosen);
         }
 
         private void btnCheckOut_Click(object sender, EventArgs e)
         {
-            int tableID = (int)lvBill.Tag;
-            CheckOutForTable(tableID);
-            LoadTableList();
+            if (btnTable[tableIDChosen].Text.Contains("Trống"))
+            {
+                XtraMessageBox.Show("Đây là bàn trống, bạn phải chọn bàn đã có người!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else if (XtraMessageBox.Show(string.Format("Bạn có muốn thanh toán cho bàn số " + tableIDChosen + "?\n"
+                     + ((nmrDiscount.Value == 0) ? "Tổng tiền là " + totalPriceOfTableChosen.ToString("c", new CultureInfo("vi-VN")) + "!": "Tổng tiền sau khi được giảm giá " + nmrDiscount.Value + "% là " + (totalPriceOfTableChosen - (totalPriceOfTableChosen * (float)nmrDiscount.Value) / 100).ToString("c", new CultureInfo("vi-VN")) + "!")),
+                     "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                int discount = Convert.ToInt32(nmrDiscount.Value);
+                DAL_Bill.Instance.CheckOutForTable(tableIDChosen, discount);
+                GetBillByTableID(tableIDChosen);
+                LoadTableStatus(tableIDChosen);
+            }
+        }
+
+        private void btnMoveTable_Click(object sender, EventArgs e)
+        {
+            int secondTableID = (cbxTableList.SelectedItem as TableFood).ID;
+            DAL_TableFood.Instance.MoveTable(tableIDChosen, secondTableID);
+            LoadTableStatus(tableIDChosen);
+            LoadTableStatus(secondTableID);
         }
     }
 }
