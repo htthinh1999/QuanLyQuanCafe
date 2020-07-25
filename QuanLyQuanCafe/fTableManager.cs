@@ -147,10 +147,18 @@ namespace QuanLyQuanCafe
 
         private void btnMoveTable_Click(object sender, EventArgs e)
         {
-            int secondTableID = (cbxTableList.SelectedItem as TableFood).ID;
-            DAL_TableFood.Instance.MoveTable(tableIDChosen, secondTableID);
-            LoadTableStatus(tableIDChosen);
-            LoadTableStatus(secondTableID);
+            if (btnTable[tableIDChosen].Text.Contains("Trống"))
+            {
+                XtraMessageBox.Show("Đây là bàn trống, bạn phải chọn bàn đã có người!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }else if(XtraMessageBox.Show("Bạn có muốn chuyển bàn số " + tableIDChosen + " sang bàn số " + (cbxTableList.SelectedItem as TableFood).ID + "?",
+                            "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                int secondTableID = (cbxTableList.SelectedItem as TableFood).ID;
+                DAL_TableFood.Instance.MoveTable(tableIDChosen, secondTableID);
+                LoadTableStatus(tableIDChosen);
+                GetBillByTableID(tableIDChosen);
+                LoadTableStatus(secondTableID);
+            }
         }
     }
 }

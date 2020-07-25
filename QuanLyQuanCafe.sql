@@ -372,7 +372,7 @@ BEGIN
 
 	IF (@numberOfFoodNameOnTable > 0)
 	BEGIN
-		DECLARE @existFood INT;
+		DECLARE @existFood INT
 		
 		SELECT @existFood = COUNT(*)
 		FROM dbo.BillInfo
@@ -468,9 +468,32 @@ CREATE PROC USP_MoveTable
 @secondTableID INT
 AS
 BEGIN
+	/*
     UPDATE dbo.Bill
 	SET idTable = @secondTableID
+	WHERE idTable = @firstTableID AND status = N'Chưa thanh toán'*/
+
+	DECLARE @oldBillID INT, @newBillID int
+	
+	SELECT @oldBillID = id
+	FROM dbo.Bill
 	WHERE idTable = @firstTableID AND status = N'Chưa thanh toán'
+
+	SELECT @newBillID = id
+	FROM dbo.Bill
+	WHERE idTable = @secondTableID AND status = N'Chưa thanh toán'
+
+	IF(@newBillID IS NULL)
+	BEGIN
+	    INSERT INTO dbo.Bill(idTable) VALUES (@secondTableID)
+		
+		SELECT @newBillID = MAX(id)
+		FROM dbo.Bill
+	END
+
+	UPDATE dbo.BillInfo
+	SET idBill = @newBillID
+	WHERE idBill = @oldBillID
 
 	UPDATE dbo.TableFood
 	SET status = N'Trống'
@@ -524,8 +547,37 @@ BEGIN
 		SET status = N'Trống'
 		WHERE id = @tableID
 	END
+
+	DECLARE @duplicateFood INT, @idFoodInserted INT
+
+	SELECT @idFoodInserted = idFood
+	FROM Inserted
+
+	SELECT @duplicateFood = COUNT(*)
+	FROM dbo.BillInfo
+	WHERE idBill = @billID AND idFood = @idFoodInserted
+
+	IF(@duplicateFood>1)
+	BEGIN
+		DECLARE @firstDuplicateID INT, @secondDuplicateID INT
+
+	    SELECT @firstDuplicateID = MIN(id)
+		FROM dbo.BillInfo
+		WHERE idBill = @billID AND idFood = @idFoodInserted
+
+		SELECT @secondDuplicateID = MAX(id)
+		FROM dbo.BillInfo
+		WHERE idBill = @billID AND idFood = @idFoodInserted
+
+		UPDATE dbo.BillInfo
+		SET count = count + (SELECT count FROM dbo.BillInfo WHERE id = @secondDuplicateID)
+		WHERE id = @firstDuplicateID
+
+		DELETE dbo.BillInfo
+		WHERE id = @secondDuplicateID
+	END
 END
 GO
 
------------------------------------------- END CREATE TRIGGERS ------------------------------------------
 
+------------------------------------------ END CREATE TRIGGERS ------------------------------------------
