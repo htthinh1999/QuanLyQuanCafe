@@ -548,33 +548,49 @@ BEGIN
 		WHERE id = @tableID
 	END
 
-	DECLARE @duplicateFood INT, @idFoodInserted INT
+	-- Check duplicate, update and delete it
 
-	SELECT @idFoodInserted = idFood
+	DECLARE @numberFoodToCheckDuplicate INT
+
+	SELECT @numberFoodToCheckDuplicate = COUNT(*)
 	FROM Inserted
 
-	SELECT @duplicateFood = COUNT(*)
-	FROM dbo.BillInfo
-	WHERE idBill = @billID AND idFood = @idFoodInserted
-
-	IF(@duplicateFood>1)
+	WHILE @numberFoodToCheckDuplicate > 0
 	BEGIN
-		DECLARE @firstDuplicateID INT, @secondDuplicateID INT
+	    DECLARE @duplicateFood INT, @idFoodInserted INT
 
-	    SELECT @firstDuplicateID = MIN(id)
+		SELECT @idFoodInserted = idFood
+		FROM (
+			SELECT ROW_NUMBER() OVER (ORDER BY id) [RowNum], idFood
+			FROM Inserted
+		) TableNthRow
+		WHERE RowNum = @numberFoodToCheckDuplicate
+
+		SELECT @duplicateFood = COUNT(*)
 		FROM dbo.BillInfo
 		WHERE idBill = @billID AND idFood = @idFoodInserted
 
-		SELECT @secondDuplicateID = MAX(id)
-		FROM dbo.BillInfo
-		WHERE idBill = @billID AND idFood = @idFoodInserted
+		IF(@duplicateFood>1)
+		BEGIN
+			DECLARE @firstDuplicateID INT, @secondDuplicateID INT
 
-		UPDATE dbo.BillInfo
-		SET count = count + (SELECT count FROM dbo.BillInfo WHERE id = @secondDuplicateID)
-		WHERE id = @firstDuplicateID
+			SELECT @firstDuplicateID = MIN(id)
+			FROM dbo.BillInfo
+			WHERE idBill = @billID AND idFood = @idFoodInserted
 
-		DELETE dbo.BillInfo
-		WHERE id = @secondDuplicateID
+			SELECT @secondDuplicateID = MAX(id)
+			FROM dbo.BillInfo
+			WHERE idBill = @billID AND idFood = @idFoodInserted
+
+			UPDATE dbo.BillInfo
+			SET count = count + (SELECT count FROM dbo.BillInfo WHERE id = @secondDuplicateID)
+			WHERE id = @firstDuplicateID
+
+			DELETE dbo.BillInfo
+			WHERE id = @secondDuplicateID
+		END
+
+		SET @numberFoodToCheckDuplicate = @numberFoodToCheckDuplicate - 1
 	END
 END
 GO
