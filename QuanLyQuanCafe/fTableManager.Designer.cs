@@ -390,6 +390,7 @@
             this.Controls.Add(this.layoutControl2);
             this.Name = "fTableManager";
             this.Text = "QUẢN LÝ DANH SÁCH BÀN";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.fTableManager_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).EndInit();
             this.layoutControl2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nmrDiscount)).EndInit();

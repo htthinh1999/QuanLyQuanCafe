@@ -142,6 +142,7 @@ namespace QuanLyQuanCafe
                 DAL_Bill.Instance.CheckOutForTable(tableIDChosen, discount);
                 GetBillByTableID(tableIDChosen);
                 LoadTableStatus(tableIDChosen);
+                XtraMessageBox.Show("Thanh toán thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -159,6 +160,12 @@ namespace QuanLyQuanCafe
                 GetBillByTableID(tableIDChosen);
                 LoadTableStatus(secondTableID);
             }
+        }
+
+        private void fTableManager_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
         }
     }
 }

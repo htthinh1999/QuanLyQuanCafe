@@ -25,11 +25,14 @@ namespace QuanLyQuanCafe
 
         private void fChangePassword_FormClosing(object sender, FormClosingEventArgs e)
         {
+            e.Cancel = true;
             if (DataEntering() && XtraMessageBox.Show("Các dữ liệu bạn đang nhập sẽ không được hoàn tác!\nBạn có chắc chắn muốn thoát?",
                                     "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             {
-                e.Cancel = true;
+                return;
             }
+            ClearAllInput();
+            this.Hide();
         }
 
         bool DataEntering()
@@ -46,6 +49,13 @@ namespace QuanLyQuanCafe
             }
 
             return false;
+        }
+
+        void ClearAllInput()
+        {
+            txtPassword.Text = string.Empty;
+            txtNewPassword.Text = string.Empty;
+            txtReEnterPassword.Text = string.Empty;
         }
     }
 }

@@ -297,6 +297,7 @@
             this.Controls.Add(this.barDockControlTop);
             this.Name = "fAccount";
             this.Text = "QUẢN LÝ TÀI KHOẢN";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.fAccount_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
             this.layoutControl1.ResumeLayout(false);

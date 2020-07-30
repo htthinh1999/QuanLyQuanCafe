@@ -169,6 +169,7 @@
             this.Controls.Add(this.layoutControl1);
             this.Name = "fRevenue";
             this.Text = "QUẢN LÝ DOANH THU";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.fRevenue_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
             this.layoutControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dtpkToDate.Properties.CalendarTimeProperties)).EndInit();

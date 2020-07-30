@@ -266,6 +266,7 @@
             this.Controls.Add(this.barDockControlTop);
             this.Name = "fFoodCategory";
             this.Text = "QUẢN LÝ DANH MỤC";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.fFoodCategory_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
             this.layoutControl1.ResumeLayout(false);

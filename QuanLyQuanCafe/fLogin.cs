@@ -25,9 +25,9 @@ namespace QuanLyQuanCafe
             string password = txtPassword.Text;
             if (DAL_Account.Instance.Login(username, password))
             {
-                fTableManager frmTableManager = new fTableManager();
-                frmTableManager.MdiParent = this.MdiParent;
-                frmTableManager.Show();
+                fMain frmMain = this.MdiParent as fMain;
+                frmMain.LoggedIn();
+                frmMain.ShowForm(frmMain.frmTableManager, typeof(fTableManager));
                 Exit();
             }
             else

@@ -17,5 +17,11 @@ namespace QuanLyQuanCafe
         {
             InitializeComponent();
         }
+
+        private void fRevenue_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
+        }
     }
 }

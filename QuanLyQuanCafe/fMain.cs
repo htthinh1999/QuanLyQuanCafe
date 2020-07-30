@@ -8,6 +8,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraBars;
+using DevExpress.XtraEditors;
+using DevExpress.Skins;
+using System.Linq.Expressions;
 
 namespace QuanLyQuanCafe
 {
@@ -15,15 +18,15 @@ namespace QuanLyQuanCafe
     {
         #region All forms except main form
         
-        fLogin frmLogin;
-        fAccount frmAccount;
-        fAccountInfo frmAccountInfo;
-        fChangePassword frmChangePassword;
-        fFood frmFood;
-        fFoodCategory frmFoodCategory;
-        fRevenue frmRevenue;
-        fTableFood frmTableFood;
-        fTableManager frmTableManager;
+        public fLogin frmLogin;
+        public fAccount frmAccount;
+        public fAccountInfo frmAccountInfo;
+        public fChangePassword frmChangePassword;
+        public fFood frmFood;
+        public fFoodCategory frmFoodCategory;
+        public fRevenue frmRevenue;
+        public fTableFood frmTableFood;
+        public fTableManager frmTableManager;
         
         #endregion
 
@@ -63,13 +66,44 @@ namespace QuanLyQuanCafe
             return false;
         }
 
-        void ShowForm(Form form, Type formType)
+        public void ShowForm(Form form, Type formType)
         {
             if (!CheckExist(formType))
             {
                 form.MdiParent = this;
                 form.Show();
             }
+            else
+            {
+                form.Focus();
+            }
+
+        }
+
+        public void LoggedIn()
+        {
+            foreach (BarButtonItem btn in Ribbon.Items.OfType<BarButtonItem>())
+            {
+                btn.Enabled = true;
+            }
+            btnLogin.Enabled = false;
+        }
+
+        public void LogOut()
+        {
+            foreach (Form form in this.MdiChildren)
+            {
+                form.Hide();
+            }
+            foreach (BarButtonItem btn in Ribbon.Items.OfType<BarButtonItem>())
+            {
+                btn.Enabled = false;
+            }
+            btnLogin.Enabled = true;
+            skinRibbonGalleryBarItem1.Enabled = true;
+            btnTutorial.Enabled = true;
+            btnContact.Enabled = true;
+            btnSoftwareInfo.Enabled = true;
         }
 
         #endregion
@@ -121,6 +155,11 @@ namespace QuanLyQuanCafe
             ShowForm(frmTableManager, typeof(fTableManager));
         }
 
+        private void btnLogout_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            LogOut();
+        }
         #endregion
+
     }
 }

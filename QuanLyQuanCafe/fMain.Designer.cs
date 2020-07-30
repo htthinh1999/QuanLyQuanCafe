@@ -38,7 +38,7 @@
             this.btnBackup = new DevExpress.XtraBars.BarButtonItem();
             this.btnRestore = new DevExpress.XtraBars.BarButtonItem();
             this.skinRibbonGalleryBarItem1 = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
-            this.btnInformation = new DevExpress.XtraBars.BarButtonItem();
+            this.btnAccountInformation = new DevExpress.XtraBars.BarButtonItem();
             this.btnRevenue = new DevExpress.XtraBars.BarButtonItem();
             this.btnFoodCategory = new DevExpress.XtraBars.BarButtonItem();
             this.btnTableFood = new DevExpress.XtraBars.BarButtonItem();
@@ -46,6 +46,9 @@
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             this.btnFood = new DevExpress.XtraBars.BarButtonItem();
             this.btnTableManager = new DevExpress.XtraBars.BarButtonItem();
+            this.btnTutorial = new DevExpress.XtraBars.BarButtonItem();
+            this.btnContact = new DevExpress.XtraBars.BarButtonItem();
+            this.btnSoftwareInfo = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.rbpSystem = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.rbpData = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -55,12 +58,9 @@
             this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPage3 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.tabMDI = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
-            this.btnTutorial = new DevExpress.XtraBars.BarButtonItem();
-            this.btnContact = new DevExpress.XtraBars.BarButtonItem();
-            this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageCL)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabMDI)).BeginInit();
@@ -79,7 +79,7 @@
             this.btnBackup,
             this.btnRestore,
             this.skinRibbonGalleryBarItem1,
-            this.btnInformation,
+            this.btnAccountInformation,
             this.btnRevenue,
             this.btnFoodCategory,
             this.btnTableFood,
@@ -89,7 +89,7 @@
             this.btnTableManager,
             this.btnTutorial,
             this.btnContact,
-            this.barButtonItem2});
+            this.btnSoftwareInfo});
             this.ribbon.Location = new System.Drawing.Point(0, 0);
             this.ribbon.MaxItemId = 21;
             this.ribbon.Name = "ribbon";
@@ -158,6 +158,7 @@
             this.btnLogout.Id = 3;
             this.btnLogout.ImageOptions.ImageIndex = 21;
             this.btnLogout.Name = "btnLogout";
+            this.btnLogout.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnLogout_ItemClick);
             // 
             // btnBackup
             // 
@@ -181,16 +182,16 @@
             this.skinRibbonGalleryBarItem1.Id = 7;
             this.skinRibbonGalleryBarItem1.Name = "skinRibbonGalleryBarItem1";
             // 
-            // btnInformation
+            // btnAccountInformation
             // 
-            this.btnInformation.Caption = "Thông tin tài khoản";
-            this.btnInformation.Enabled = false;
-            this.btnInformation.Id = 8;
-            this.btnInformation.ImageOptions.ImageIndex = 0;
-            this.btnInformation.Name = "btnInformation";
-            this.btnInformation.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
+            this.btnAccountInformation.Caption = "Thông tin tài khoản";
+            this.btnAccountInformation.Enabled = false;
+            this.btnAccountInformation.Id = 8;
+            this.btnAccountInformation.ImageOptions.ImageIndex = 0;
+            this.btnAccountInformation.Name = "btnAccountInformation";
+            this.btnAccountInformation.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
             | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
-            this.btnInformation.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnInformation_ItemClick);
+            this.btnAccountInformation.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnInformation_ItemClick);
             // 
             // btnRevenue
             // 
@@ -266,6 +267,33 @@
             | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
             this.btnTableManager.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnTableManager_ItemClick);
             // 
+            // btnTutorial
+            // 
+            this.btnTutorial.Caption = "Hướng dẫn";
+            this.btnTutorial.Id = 18;
+            this.btnTutorial.ImageOptions.ImageIndex = 26;
+            this.btnTutorial.Name = "btnTutorial";
+            this.btnTutorial.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
+            | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
+            // 
+            // btnContact
+            // 
+            this.btnContact.Caption = "Liên hệ";
+            this.btnContact.Id = 19;
+            this.btnContact.ImageOptions.ImageIndex = 25;
+            this.btnContact.Name = "btnContact";
+            this.btnContact.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
+            | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
+            // 
+            // btnSoftwareInfo
+            // 
+            this.btnSoftwareInfo.Caption = "Thông tin phần mềm";
+            this.btnSoftwareInfo.Id = 20;
+            this.btnSoftwareInfo.ImageOptions.ImageIndex = 27;
+            this.btnSoftwareInfo.Name = "btnSoftwareInfo";
+            this.btnSoftwareInfo.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
+            | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -280,7 +308,7 @@
             this.rbpSystem.ItemLinks.Add(this.btnLogin);
             this.rbpSystem.ItemLinks.Add(this.btnChangePass);
             this.rbpSystem.ItemLinks.Add(this.btnLogout);
-            this.rbpSystem.ItemLinks.Add(this.btnInformation);
+            this.rbpSystem.ItemLinks.Add(this.btnAccountInformation);
             this.rbpSystem.Name = "rbpSystem";
             this.rbpSystem.Text = "Hệ thống";
             // 
@@ -336,6 +364,12 @@
             this.ribbonPageGroup5.Name = "ribbonPageGroup5";
             this.ribbonPageGroup5.Text = "Trợ giúp";
             // 
+            // ribbonPageGroup2
+            // 
+            this.ribbonPageGroup2.ItemLinks.Add(this.btnSoftwareInfo);
+            this.ribbonPageGroup2.Name = "ribbonPageGroup2";
+            this.ribbonPageGroup2.Text = "Thông tin";
+            // 
             // ribbonStatusBar
             // 
             this.ribbonStatusBar.Location = new System.Drawing.Point(0, 600);
@@ -346,39 +380,6 @@
             // tabMDI
             // 
             this.tabMDI.MdiParent = this;
-            // 
-            // btnTutorial
-            // 
-            this.btnTutorial.Caption = "Hướng dẫn";
-            this.btnTutorial.Id = 18;
-            this.btnTutorial.ImageOptions.ImageIndex = 26;
-            this.btnTutorial.Name = "btnTutorial";
-            this.btnTutorial.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
-            | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
-            // 
-            // btnContact
-            // 
-            this.btnContact.Caption = "Liên hệ";
-            this.btnContact.Id = 19;
-            this.btnContact.ImageOptions.ImageIndex = 25;
-            this.btnContact.Name = "btnContact";
-            this.btnContact.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
-            | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
-            // 
-            // ribbonPageGroup2
-            // 
-            this.ribbonPageGroup2.ItemLinks.Add(this.barButtonItem2);
-            this.ribbonPageGroup2.Name = "ribbonPageGroup2";
-            this.ribbonPageGroup2.Text = "Thông tin";
-            // 
-            // barButtonItem2
-            // 
-            this.barButtonItem2.Caption = "Thông tin phần mềm";
-            this.barButtonItem2.Id = 20;
-            this.barButtonItem2.ImageOptions.ImageIndex = 27;
-            this.barButtonItem2.Name = "barButtonItem2";
-            this.barButtonItem2.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
-            | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
             // 
             // fMain
             // 
@@ -420,7 +421,7 @@
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage3;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup5;
         private DevExpress.Utils.ImageCollection imageCL;
-        private DevExpress.XtraBars.BarButtonItem btnInformation;
+        private DevExpress.XtraBars.BarButtonItem btnAccountInformation;
         private DevExpress.XtraTabbedMdi.XtraTabbedMdiManager tabMDI;
         private DevExpress.XtraBars.BarButtonItem btnRevenue;
         private DevExpress.XtraBars.BarButtonItem btnFoodCategory;
@@ -432,7 +433,7 @@
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
         private DevExpress.XtraBars.BarButtonItem btnTutorial;
         private DevExpress.XtraBars.BarButtonItem btnContact;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem2;
+        private DevExpress.XtraBars.BarButtonItem btnSoftwareInfo;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
     }
 }
