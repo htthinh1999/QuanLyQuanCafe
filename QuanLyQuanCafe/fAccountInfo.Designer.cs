@@ -38,13 +38,15 @@
             this.txtSex = new DevExpress.XtraEditors.TextEdit();
             this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
             this.panelControl4 = new DevExpress.XtraEditors.PanelControl();
-            this.txtDateBorn = new DevExpress.XtraEditors.TextEdit();
             this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
             this.panelControl5 = new DevExpress.XtraEditors.PanelControl();
             this.txtAddress = new DevExpress.XtraEditors.TextEdit();
             this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
             this.btnExit = new DevExpress.XtraEditors.SimpleButton();
             this.btnUpdate = new DevExpress.XtraEditors.SimpleButton();
+            this.dtpkBirthday = new DevExpress.XtraEditors.DateEdit();
+            this.rdoMale = new System.Windows.Forms.RadioButton();
+            this.rdoFemale = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).BeginInit();
             this.panelControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtDisplayName.Properties)).BeginInit();
@@ -56,10 +58,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtSex.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl4)).BeginInit();
             this.panelControl4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDateBorn.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl5)).BeginInit();
             this.panelControl5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtAddress.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtpkBirthday.Properties.CalendarTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtpkBirthday.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // panelControl2
@@ -125,6 +128,8 @@
             // panelControl3
             // 
             this.panelControl3.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.panelControl3.Controls.Add(this.rdoFemale);
+            this.panelControl3.Controls.Add(this.rdoMale);
             this.panelControl3.Controls.Add(this.txtSex);
             this.panelControl3.Controls.Add(this.labelControl3);
             this.panelControl3.Location = new System.Drawing.Point(12, 87);
@@ -155,22 +160,12 @@
             // panelControl4
             // 
             this.panelControl4.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            this.panelControl4.Controls.Add(this.txtDateBorn);
+            this.panelControl4.Controls.Add(this.dtpkBirthday);
             this.panelControl4.Controls.Add(this.labelControl4);
             this.panelControl4.Location = new System.Drawing.Point(12, 124);
             this.panelControl4.Name = "panelControl4";
             this.panelControl4.Size = new System.Drawing.Size(378, 31);
             this.panelControl4.TabIndex = 6;
-            // 
-            // txtDateBorn
-            // 
-            this.txtDateBorn.Location = new System.Drawing.Point(130, 3);
-            this.txtDateBorn.Name = "txtDateBorn";
-            this.txtDateBorn.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDateBorn.Properties.Appearance.Options.UseFont = true;
-            this.txtDateBorn.Properties.ReadOnly = true;
-            this.txtDateBorn.Size = new System.Drawing.Size(238, 26);
-            this.txtDateBorn.TabIndex = 1;
             // 
             // labelControl4
             // 
@@ -237,6 +232,49 @@
             this.btnUpdate.Size = new System.Drawing.Size(75, 23);
             this.btnUpdate.TabIndex = 8;
             this.btnUpdate.Text = "Thay đổi";
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
+            // dtpkBirthday
+            // 
+            this.dtpkBirthday.EditValue = null;
+            this.dtpkBirthday.Location = new System.Drawing.Point(130, 3);
+            this.dtpkBirthday.Name = "dtpkBirthday";
+            this.dtpkBirthday.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.dtpkBirthday.Properties.Appearance.Options.UseFont = true;
+            this.dtpkBirthday.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dtpkBirthday.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dtpkBirthday.Properties.ReadOnly = true;
+            this.dtpkBirthday.Size = new System.Drawing.Size(238, 26);
+            this.dtpkBirthday.TabIndex = 1;
+            // 
+            // rdoMale
+            // 
+            this.rdoMale.AutoSize = true;
+            this.rdoMale.Checked = true;
+            this.rdoMale.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.rdoMale.Location = new System.Drawing.Point(130, 4);
+            this.rdoMale.Name = "rdoMale";
+            this.rdoMale.Size = new System.Drawing.Size(60, 23);
+            this.rdoMale.TabIndex = 2;
+            this.rdoMale.TabStop = true;
+            this.rdoMale.Text = "Nam";
+            this.rdoMale.UseVisualStyleBackColor = true;
+            this.rdoMale.Visible = false;
+            // 
+            // rdoFemale
+            // 
+            this.rdoFemale.AutoSize = true;
+            this.rdoFemale.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.rdoFemale.Location = new System.Drawing.Point(212, 4);
+            this.rdoFemale.Name = "rdoFemale";
+            this.rdoFemale.Size = new System.Drawing.Size(48, 23);
+            this.rdoFemale.TabIndex = 3;
+            this.rdoFemale.TabStop = true;
+            this.rdoFemale.Text = "Nữ";
+            this.rdoFemale.UseVisualStyleBackColor = true;
+            this.rdoFemale.Visible = false;
             // 
             // fAccountInfo
             // 
@@ -270,11 +308,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.panelControl4)).EndInit();
             this.panelControl4.ResumeLayout(false);
             this.panelControl4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDateBorn.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl5)).EndInit();
             this.panelControl5.ResumeLayout(false);
             this.panelControl5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtAddress.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtpkBirthday.Properties.CalendarTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtpkBirthday.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -291,12 +330,14 @@
         private DevExpress.XtraEditors.TextEdit txtSex;
         private DevExpress.XtraEditors.LabelControl labelControl3;
         private DevExpress.XtraEditors.PanelControl panelControl4;
-        private DevExpress.XtraEditors.TextEdit txtDateBorn;
         private DevExpress.XtraEditors.LabelControl labelControl4;
         private DevExpress.XtraEditors.PanelControl panelControl5;
         private DevExpress.XtraEditors.TextEdit txtAddress;
         private DevExpress.XtraEditors.LabelControl labelControl5;
         private DevExpress.XtraEditors.SimpleButton btnExit;
         private DevExpress.XtraEditors.SimpleButton btnUpdate;
+        private DevExpress.XtraEditors.DateEdit dtpkBirthday;
+        private System.Windows.Forms.RadioButton rdoFemale;
+        private System.Windows.Forms.RadioButton rdoMale;
     }
 }

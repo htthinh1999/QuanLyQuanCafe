@@ -78,6 +78,7 @@
             this.btnViewBill.StyleController = this.layoutControl1;
             this.btnViewBill.TabIndex = 6;
             this.btnViewBill.Text = "Thống kê";
+            this.btnViewBill.Click += new System.EventHandler(this.btnViewBill_Click);
             // 
             // dtpkToDate
             // 

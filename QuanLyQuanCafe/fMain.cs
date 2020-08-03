@@ -11,13 +11,15 @@ using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.Skins;
 using System.Linq.Expressions;
+using QuanLyQuanCafe.DTO;
 
 namespace QuanLyQuanCafe
 {
     public partial class fMain : DevExpress.XtraBars.Ribbon.RibbonForm
     {
         #region All forms except main form
-        
+
+        fMain frmMain;
         public fLogin frmLogin;
         public fAccount frmAccount;
         public fAccountInfo frmAccountInfo;
@@ -27,8 +29,10 @@ namespace QuanLyQuanCafe
         public fRevenue frmRevenue;
         public fTableFood frmTableFood;
         public fTableManager frmTableManager;
-        
+
         #endregion
+
+        Account account;
 
         public fMain()
         {
@@ -42,6 +46,7 @@ namespace QuanLyQuanCafe
 
         void PreLoadAllForms()
         {
+            frmMain = this;
             frmLogin = new fLogin();
             frmAccount = new fAccount();
             frmAccountInfo = new fAccountInfo();
@@ -59,7 +64,6 @@ namespace QuanLyQuanCafe
             {
                 if (form.GetType() == fType)
                 {
-                    form.Focus();
                     return true;
                 }
             }
@@ -70,14 +74,9 @@ namespace QuanLyQuanCafe
         {
             if (!CheckExist(formType))
             {
-                form.MdiParent = this;
-                form.Show();
+                form.MdiParent = frmMain;
             }
-            else
-            {
-                form.Focus();
-            }
-
+            form.Show();
         }
 
         public void LoggedIn()
@@ -87,6 +86,10 @@ namespace QuanLyQuanCafe
                 btn.Enabled = true;
             }
             btnLogin.Enabled = false;
+            if(account.Type != 1)   // account of staff
+            {
+
+            }
         }
 
         public void LogOut()
@@ -104,6 +107,12 @@ namespace QuanLyQuanCafe
             btnTutorial.Enabled = true;
             btnContact.Enabled = true;
             btnSoftwareInfo.Enabled = true;
+        }
+
+        public void SetAccount(Account acc)
+        {
+            account = acc;
+            frmAccountInfo.SetAccount(acc);
         }
 
         #endregion
@@ -159,6 +168,7 @@ namespace QuanLyQuanCafe
         {
             LogOut();
         }
+
         #endregion
 
     }

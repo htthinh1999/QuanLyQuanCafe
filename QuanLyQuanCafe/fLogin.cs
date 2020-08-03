@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using QuanLyQuanCafe.DAL;
+using QuanLyQuanCafe.DTO;
 
 namespace QuanLyQuanCafe
 {
@@ -25,7 +26,9 @@ namespace QuanLyQuanCafe
             string password = txtPassword.Text;
             if (DAL_Account.Instance.Login(username, password))
             {
+                Account acc = DAL_Account.Instance.GetAccountInfoByUsername(username);
                 fMain frmMain = this.MdiParent as fMain;
+                frmMain.SetAccount(acc);
                 frmMain.LoggedIn();
                 frmMain.ShowForm(frmMain.frmTableManager, typeof(fTableManager));
                 Exit();

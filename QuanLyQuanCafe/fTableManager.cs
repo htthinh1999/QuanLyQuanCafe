@@ -139,7 +139,7 @@ namespace QuanLyQuanCafe
                      "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 int discount = Convert.ToInt32(nmrDiscount.Value);
-                DAL_Bill.Instance.CheckOutForTable(tableIDChosen, discount);
+                DAL_Bill.Instance.CheckOutForTable(tableIDChosen, totalPriceOfTableChosen * (1 - discount / 100f), discount);
                 GetBillByTableID(tableIDChosen);
                 LoadTableStatus(tableIDChosen);
                 XtraMessageBox.Show("Thanh toán thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);

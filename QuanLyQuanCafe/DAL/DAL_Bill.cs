@@ -1,4 +1,5 @@
-﻿using QuanLyQuanCafe.DTO;
+﻿using DevExpress.ClipboardSource.SpreadsheetML;
+using QuanLyQuanCafe.DTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -40,10 +41,17 @@ namespace QuanLyQuanCafe.DAL
             return billList;
         }
 
-        public void CheckOutForTable(int tableID, int discount)
+        public void CheckOutForTable(int tableID, float totalPrice, int discount)
         {
             string query = "USP_CheckOutTable";
-            DataProvider.ExecuteQuery(query, new object[] { tableID, discount });
+            DataProvider.ExecuteQuery(query, new object[] { tableID, totalPrice, discount });
         }
+
+        public DataTable GetListBillCheckedOutByDate(DateTime fromDate, DateTime toDate)
+        {
+            string query = "USP_GetListBillByDate";
+            return DataProvider.ExecuteQuery(query, new object[] { fromDate, toDate });
+        }
+
     }
 }

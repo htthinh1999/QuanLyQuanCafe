@@ -24,7 +24,10 @@ CREATE TABLE Account
 	username VARCHAR(100) PRIMARY KEY,
 	password VARCHAR(1000) NOT NULL,
 	displayName NVARCHAR(100) NOT NULL DEFAULT N'Nguyễn Văn A',
-	type INT NOT NULL DEFAULT 1 -- 0: Quản trị viên, 1: Nhân viên
+	type INT NOT NULL DEFAULT 1, -- 0: Quản trị viên, 1: Nhân viên
+	sex NVARCHAR(5) NOT NULL DEFAULT N'Nam', -- Nam / Nữ
+	birthday DATE NOT NULL,
+	address NVARCHAR(100) NOT NULL
 )
 GO
 
@@ -50,6 +53,7 @@ CREATE TABLE Bill
 (
 	id INT IDENTITY PRIMARY KEY,
 	idTable INT NOT NULL,
+	totalPrice FLOAT NOT NULL DEFAULT 0,
 	discount INT NOT NULL DEFAULT 0,
 	timeIn DATETIME NOT NULL DEFAULT GETDATE(),
 	timeOut DATETIME DEFAULT NULL,
@@ -78,13 +82,19 @@ INSERT INTO dbo.Account
     username,
     password,
     displayName,
-    type
+    type,
+    sex,
+    birthday,
+    address
 )
 VALUES
-(   'admin',  -- username - varchar(100)
-    'admin',  -- password - varchar(1000)
-    N'ADMIN', -- displayName - nvarchar(100)
-    1    -- type - int
+(   'admin',        -- username - varchar(100)
+    'admin',        -- password - varchar(1000)
+    N'ADMIN',       -- displayName - nvarchar(100)
+    1,         -- type - int
+    N'Nam',       -- sex - nvarchar(5)
+    '19990927', -- birthday - date
+    N'Khánh Hòa'        -- address - nvarchar(50)
     )
 GO
 
@@ -93,13 +103,19 @@ INSERT INTO dbo.Account
     username,
     password,
     displayName,
-    type
+    type,
+    sex,
+    birthday,
+    address
 )
 VALUES
-(   'htthinh',  -- username - varchar(100)
-    '123',  -- password - varchar(1000)
-    N'Huỳnh Tấn Thịnh', -- displayName - nvarchar(100)
-    0    -- type - int
+(   'htthinh',        -- username - varchar(100)
+    '123',        -- password - varchar(1000)
+    N'Huỳnh Tấn Thịnh',       -- displayName - nvarchar(100)
+    0,         -- type - int
+    N'Nam',       -- sex - nvarchar(5)
+    '19990927', -- birthday - date
+    N'Khánh Hòa'        -- address - nvarchar(50)
     )
 GO
 
@@ -190,7 +206,7 @@ VALUES
 INSERT INTO dbo.Bill(idTable) VALUES(1)
 INSERT INTO dbo.Bill(idTable) VALUES(4)
 INSERT INTO dbo.Bill(idTable) VALUES(5)
-INSERT INTO dbo.Bill(idTable, timeOut, status) VALUES(10, GETDATE(), N'Đã thanh toán')
+INSERT INTO dbo.Bill(idTable) VALUES(10)
 
 INSERT INTO dbo.BillInfo
 (
@@ -302,7 +318,7 @@ VALUES
 
 UPDATE dbo.TableFood
 SET status = N'Đã có người'
-WHERE id = 1 OR id = 4 OR id =5
+WHERE id = 1 OR id = 4 OR id = 5 OR id = 10
 
 SELECT * FROM dbo.FoodCategory
 SELECT * FROM dbo.Food
@@ -436,6 +452,7 @@ GO
 
 CREATE PROC USP_CheckOutTable
 @tableID INT,
+@totalPrice FLOAT,
 @discount INT
 AS
 BEGIN
@@ -446,15 +463,7 @@ BEGIN
 	WHERE idTable = @tableID AND status = N'Chưa thanh toán'
 
 	UPDATE dbo.Bill
-	SET discount = @discount
-	WHERE id = @billID
-
-	UPDATE dbo.Bill
-	SET timeOut = GETDATE()
-	WHERE id = @billID
-
-	UPDATE dbo.Bill
-	SET status = N'Đã thanh toán'
+	SET timeOut = GETDATE(), totalPrice = @totalPrice, discount = @discount, status = N'Đã thanh toán'
 	WHERE id = @billID
 
 	UPDATE dbo.TableFood
@@ -468,11 +477,6 @@ CREATE PROC USP_MoveTable
 @secondTableID INT
 AS
 BEGIN
-	/*
-    UPDATE dbo.Bill
-	SET idTable = @secondTableID
-	WHERE idTable = @firstTableID AND status = N'Chưa thanh toán'*/
-
 	DECLARE @oldBillID INT, @newBillID int
 	
 	SELECT @oldBillID = id
@@ -505,7 +509,40 @@ BEGIN
 END
 GO
 
+CREATE PROC USP_GetListBillByDate
+@fromDate DATETIME,
+@toDate DATETIME
+AS
+BEGIN
+    SELECT name [Tên bàn] , timeIn [Thời gian vào], timeOut [Thời gian ra], totalPrice [Tổng hóa đơn], discount [Giảm giá]
+	FROM dbo.Bill INNER JOIN dbo.TableFood ON TableFood.id = Bill.idTable
+	WHERE Bill.status = N'Đã thanh toán' AND timeOut >= @fromDate AND timeOut <= @toDate + 1
+END
+GO
 
+CREATE PROC USP_GetAccountInfoByUsername
+@username VARCHAR(100)
+AS
+BEGIN
+    SELECT *
+	FROM dbo.Account
+	WHERE username = @username
+END
+GO
+
+CREATE PROC USP_UpdateAccountInfo
+@username VARCHAR(100),
+@displayName NVARCHAR(100),
+@sex NVARCHAR(5),
+@birthday DATE,
+@address NVARCHAR(100)
+AS
+BEGIN
+    UPDATE dbo.Account
+	SET displayName = @displayName, sex = @sex, birthday = @birthday, address = @address
+	WHERE username = @username
+END
+GO
 
 ------------------------------------------ END CREATE PROCEDURES ------------------------------------------
 
