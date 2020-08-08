@@ -45,12 +45,11 @@ namespace QuanLyQuanCafe
         private void fAccountInfo_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
-            if (DataEntering() && XtraMessageBox.Show("Các dữ liệu bạn đang nhập sẽ không được hoàn tác!\nBạn có chắc chắn muốn thoát?",
+            if (!(this.MdiParent as fMain).LoggingOut && DataEntering() && XtraMessageBox.Show("Các dữ liệu bạn đang nhập sẽ không được hoàn tác!\nBạn có chắc chắn muốn thoát?",
                                     "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             {
                 return;
             }
-
             ControlsEditable(false);
             LoadAccountInfo();
             this.Hide();
@@ -95,18 +94,21 @@ namespace QuanLyQuanCafe
             }
             else
             {
-                if(txtDisplayName.Text.Equals(string.Empty) || txtAddress.Text.Equals(string.Empty))
+                if(!txtDisplayName.Text.Equals("") && !txtAddress.Text.Equals(""))
+                {
+                    if (XtraMessageBox.Show("Bạn có muốn cập nhật thông tin tài khoản?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        DAL_Account.Instance.UpdateAccountInfo(txtUsername.Text, txtDisplayName.Text, rdoMale.Checked ? "Nam" : "Nữ", dtpkBirthday.DateTime, txtAddress.Text);
+                        ControlsEditable(false);
+                        account = DAL_Account.Instance.GetAccountInfoByUsername(txtUsername.Text);
+                        LoadAccountInfo();
+
+                        XtraMessageBox.Show("Thay đổi thông tin thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                else
                 {
                     XtraMessageBox.Show("Bạn cần nhập đầy đủ thông tin tài khoản!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                else if (XtraMessageBox.Show("Bạn có muốn cập nhật thông tin tài khoản?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    DAL_Account.Instance.UpdateAccountInfo(txtUsername.Text, txtDisplayName.Text, rdoMale.Checked ? "Nam" : "Nữ", dtpkBirthday.DateTime, txtAddress.Text);
-
-                    ControlsEditable(false);
-
-                    account = DAL_Account.Instance.GetAccountInfoByUsername(txtUsername.Text);
-                    LoadAccountInfo();
                 }
 
             }

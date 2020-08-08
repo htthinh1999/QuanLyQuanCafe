@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,10 +26,25 @@ namespace QuanLyQuanCafe.DAL
         }
         public DAL_Account() { }
 
+        string EncryptMD5(string text)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(text));
+
+            byte[] result = md5.Hash;
+
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < result.Length; i++)
+            {
+                stringBuilder.Append(result[i].ToString("x2")); // Change it into 2 hexadecimal digits
+            }
+            return stringBuilder.ToString();
+        }
+
         public bool Login(string username, string password)
         {
             string query = "USP_Login";
-            DataTable data = DataProvider.ExecuteQuery(query, new object[] { username, password });
+            DataTable data = DataProvider.ExecuteQuery(query, new object[] { username, EncryptMD5(password) });
             return data.Rows.Count > 0;
         }
 
@@ -49,6 +65,12 @@ namespace QuanLyQuanCafe.DAL
                 account = new Account(row);
             }
             return account;
+        }
+
+        public void UpdatePassword(string username, string newPassword)
+        {
+            string query = "USP_UpdatePassword";
+            DataProvider.ExecuteQuery(query, new object[] { username, EncryptMD5(newPassword) });
         }
     }
 }

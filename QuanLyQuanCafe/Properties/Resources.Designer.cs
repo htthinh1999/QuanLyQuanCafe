@@ -61,6 +61,16 @@ namespace QuanLyQuanCafe.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type DevExpress.Utils.Svg.SvgImage.
+        /// </summary>
+        internal static DevExpress.Utils.Svg.SvgImage actions_zoom {
+            get {
+                object obj = ResourceManager.GetObject("actions_zoom", resourceCulture);
+                return ((DevExpress.Utils.Svg.SvgImage)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap add_16x16 {
@@ -116,6 +126,16 @@ namespace QuanLyQuanCafe.Properties {
         internal static System.Drawing.Bitmap editname_32x32 {
             get {
                 object obj = ResourceManager.GetObject("editname_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap search_7_16 {
+            get {
+                object obj = ResourceManager.GetObject("search-7-16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

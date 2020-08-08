@@ -49,14 +49,14 @@
             this.btnTutorial = new DevExpress.XtraBars.BarButtonItem();
             this.btnContact = new DevExpress.XtraBars.BarButtonItem();
             this.btnSoftwareInfo = new DevExpress.XtraBars.BarButtonItem();
-            this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.rbpSys = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.rbpSystem = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.rbpData = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.rbpTheme = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.rbpManagement = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.ribbonPage3 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.rbpHelp = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
@@ -94,9 +94,9 @@
             this.ribbon.MaxItemId = 21;
             this.ribbon.Name = "ribbon";
             this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
-            this.ribbonPage1,
-            this.ribbonPage2,
-            this.ribbonPage3});
+            this.rbpSys,
+            this.rbpManagement,
+            this.rbpHelp});
             this.ribbon.Size = new System.Drawing.Size(1094, 158);
             this.ribbon.StatusBar = this.ribbonStatusBar;
             // 
@@ -294,14 +294,14 @@
             this.btnSoftwareInfo.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
             | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
             // 
-            // ribbonPage1
+            // rbpSys
             // 
-            this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.rbpSys.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.rbpSystem,
             this.rbpData,
             this.rbpTheme});
-            this.ribbonPage1.Name = "ribbonPage1";
-            this.ribbonPage1.Text = "Hệ thống";
+            this.rbpSys.Name = "rbpSys";
+            this.rbpSys.Text = "Hệ thống";
             // 
             // rbpSystem
             // 
@@ -325,13 +325,13 @@
             this.rbpTheme.Name = "rbpTheme";
             this.rbpTheme.Text = "Giao diện";
             // 
-            // ribbonPage2
+            // rbpManagement
             // 
-            this.ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.rbpManagement.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1,
             this.ribbonPageGroup4});
-            this.ribbonPage2.Name = "ribbonPage2";
-            this.ribbonPage2.Text = "Quản lý";
+            this.rbpManagement.Name = "rbpManagement";
+            this.rbpManagement.Text = "Quản lý";
             // 
             // ribbonPageGroup1
             // 
@@ -349,13 +349,13 @@
             this.ribbonPageGroup4.Name = "ribbonPageGroup4";
             this.ribbonPageGroup4.Text = "Quản trị viên";
             // 
-            // ribbonPage3
+            // rbpHelp
             // 
-            this.ribbonPage3.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.rbpHelp.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup5,
             this.ribbonPageGroup2});
-            this.ribbonPage3.Name = "ribbonPage3";
-            this.ribbonPage3.Text = "Trợ giúp";
+            this.rbpHelp.Name = "rbpHelp";
+            this.rbpHelp.Text = "Trợ giúp";
             // 
             // ribbonPageGroup5
             // 
@@ -405,7 +405,7 @@
         #endregion
 
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbon;
-        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
+        private DevExpress.XtraBars.Ribbon.RibbonPage rbpSys;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbpSystem;
         private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar;
         private DevExpress.XtraBars.BarButtonItem btnLogin;
@@ -416,9 +416,9 @@
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbpData;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbpTheme;
         private DevExpress.XtraBars.SkinRibbonGalleryBarItem skinRibbonGalleryBarItem1;
-        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
+        private DevExpress.XtraBars.Ribbon.RibbonPage rbpManagement;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
-        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage3;
+        private DevExpress.XtraBars.Ribbon.RibbonPage rbpHelp;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup5;
         private DevExpress.Utils.ImageCollection imageCL;
         private DevExpress.XtraBars.BarButtonItem btnAccountInformation;

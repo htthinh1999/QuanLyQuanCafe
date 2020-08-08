@@ -278,6 +278,7 @@
             // 
             this.gridView1.GridControl = this.gridControl;
             this.gridView1.Name = "gridView1";
+            this.gridView1.OptionsView.ShowGroupPanel = false;
             // 
             // fTableFood
             // 

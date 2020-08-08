@@ -75,6 +75,7 @@
             this.btnUpdate.Size = new System.Drawing.Size(75, 23);
             this.btnUpdate.TabIndex = 13;
             this.btnUpdate.Text = "Thay đổi";
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // panelControl3
             // 
@@ -162,9 +163,9 @@
             this.labelControl1.Appearance.Options.UseFont = true;
             this.labelControl1.Location = new System.Drawing.Point(3, 7);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(99, 19);
+            this.labelControl1.Size = new System.Drawing.Size(143, 19);
             this.labelControl1.TabIndex = 0;
-            this.labelControl1.Text = "Mật khẩu cũ";
+            this.labelControl1.Text = "Mật khẩu hiện tại";
             // 
             // fChangePassword
             // 

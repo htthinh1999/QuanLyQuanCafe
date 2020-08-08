@@ -89,6 +89,8 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.dtpkToDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dtpkToDate.Properties.DisplayFormat.FormatString = "dd\'/\'MM\'/\'yyyy";
+            this.dtpkToDate.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
             this.dtpkToDate.Size = new System.Drawing.Size(163, 20);
             this.dtpkToDate.StyleController = this.layoutControl1;
             this.dtpkToDate.TabIndex = 5;
@@ -102,6 +104,8 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.dtpkFromDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dtpkFromDate.Properties.DisplayFormat.FormatString = "dd\'/\'MM\'/\'yyyy";
+            this.dtpkFromDate.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
             this.dtpkFromDate.Size = new System.Drawing.Size(163, 20);
             this.dtpkFromDate.StyleController = this.layoutControl1;
             this.dtpkFromDate.TabIndex = 4;
@@ -160,6 +164,7 @@
             // 
             this.gridView1.GridControl = this.gridControl;
             this.gridView1.Name = "gridView1";
+            this.gridView1.OptionsView.ShowGroupPanel = false;
             // 
             // fRevenue
             // 

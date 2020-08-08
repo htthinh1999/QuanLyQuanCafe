@@ -22,8 +22,8 @@ GO
 CREATE TABLE Account
 (
 	username VARCHAR(100) PRIMARY KEY,
-	password VARCHAR(1000) NOT NULL,
-	displayName NVARCHAR(100) NOT NULL DEFAULT N'Nguyễn Văn A',
+	password VARCHAR(1000) NOT NULL DEFAULT 'c4ca4238a0b923820dcc509a6f75849b', -- default password = '1'
+	displayName NVARCHAR(100) NOT NULL,
 	type INT NOT NULL DEFAULT 1, -- 0: Quản trị viên, 1: Nhân viên
 	sex NVARCHAR(5) NOT NULL DEFAULT N'Nam', -- Nam / Nữ
 	birthday DATE NOT NULL,
@@ -89,7 +89,7 @@ INSERT INTO dbo.Account
 )
 VALUES
 (   'admin',        -- username - varchar(100)
-    'admin',        -- password - varchar(1000)
+    '21232f297a57a5a743894a0e4a801fc3',        -- password - varchar(1000) = 'admin'
     N'ADMIN',       -- displayName - nvarchar(100)
     1,         -- type - int
     N'Nam',       -- sex - nvarchar(5)
@@ -110,7 +110,7 @@ INSERT INTO dbo.Account
 )
 VALUES
 (   'htthinh',        -- username - varchar(100)
-    '123',        -- password - varchar(1000)
+    '202cb962ac59075b964b07152d234b70',        -- password - varchar(1000) = '123'
     N'Huỳnh Tấn Thịnh',       -- displayName - nvarchar(100)
     0,         -- type - int
     N'Nam',       -- sex - nvarchar(5)
@@ -370,7 +370,7 @@ BEGIN
 END
 GO
 
-CREATE PROC USP_AddFood
+CREATE PROC USP_AddFoodToTable
 @foodID INT,
 @count INT,
 @tableID INT
@@ -540,6 +540,17 @@ AS
 BEGIN
     UPDATE dbo.Account
 	SET displayName = @displayName, sex = @sex, birthday = @birthday, address = @address
+	WHERE username = @username
+END
+GO
+
+CREATE PROC USP_UpdatePassword
+@username VARCHAR(100),
+@newPass VARCHAR(100)
+AS
+BEGIN
+	UPDATE dbo.Account
+	SET password = @newPass
 	WHERE username = @username
 END
 GO

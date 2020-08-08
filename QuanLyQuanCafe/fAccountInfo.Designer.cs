@@ -35,18 +35,18 @@
             this.txtUsername = new DevExpress.XtraEditors.TextEdit();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.panelControl3 = new DevExpress.XtraEditors.PanelControl();
+            this.rdoFemale = new System.Windows.Forms.RadioButton();
+            this.rdoMale = new System.Windows.Forms.RadioButton();
             this.txtSex = new DevExpress.XtraEditors.TextEdit();
             this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
             this.panelControl4 = new DevExpress.XtraEditors.PanelControl();
+            this.dtpkBirthday = new DevExpress.XtraEditors.DateEdit();
             this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
             this.panelControl5 = new DevExpress.XtraEditors.PanelControl();
             this.txtAddress = new DevExpress.XtraEditors.TextEdit();
             this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
             this.btnExit = new DevExpress.XtraEditors.SimpleButton();
             this.btnUpdate = new DevExpress.XtraEditors.SimpleButton();
-            this.dtpkBirthday = new DevExpress.XtraEditors.DateEdit();
-            this.rdoMale = new System.Windows.Forms.RadioButton();
-            this.rdoFemale = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).BeginInit();
             this.panelControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtDisplayName.Properties)).BeginInit();
@@ -58,11 +58,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtSex.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl4)).BeginInit();
             this.panelControl4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dtpkBirthday.Properties.CalendarTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtpkBirthday.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl5)).BeginInit();
             this.panelControl5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtAddress.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dtpkBirthday.Properties.CalendarTimeProperties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dtpkBirthday.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // panelControl2
@@ -137,6 +137,33 @@
             this.panelControl3.Size = new System.Drawing.Size(378, 31);
             this.panelControl3.TabIndex = 5;
             // 
+            // rdoFemale
+            // 
+            this.rdoFemale.AutoSize = true;
+            this.rdoFemale.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.rdoFemale.Location = new System.Drawing.Point(212, 4);
+            this.rdoFemale.Name = "rdoFemale";
+            this.rdoFemale.Size = new System.Drawing.Size(48, 23);
+            this.rdoFemale.TabIndex = 3;
+            this.rdoFemale.TabStop = true;
+            this.rdoFemale.Text = "Nữ";
+            this.rdoFemale.UseVisualStyleBackColor = true;
+            this.rdoFemale.Visible = false;
+            // 
+            // rdoMale
+            // 
+            this.rdoMale.AutoSize = true;
+            this.rdoMale.Checked = true;
+            this.rdoMale.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.rdoMale.Location = new System.Drawing.Point(130, 4);
+            this.rdoMale.Name = "rdoMale";
+            this.rdoMale.Size = new System.Drawing.Size(60, 23);
+            this.rdoMale.TabIndex = 2;
+            this.rdoMale.TabStop = true;
+            this.rdoMale.Text = "Nam";
+            this.rdoMale.UseVisualStyleBackColor = true;
+            this.rdoMale.Visible = false;
+            // 
             // txtSex
             // 
             this.txtSex.Location = new System.Drawing.Point(130, 3);
@@ -166,6 +193,23 @@
             this.panelControl4.Name = "panelControl4";
             this.panelControl4.Size = new System.Drawing.Size(378, 31);
             this.panelControl4.TabIndex = 6;
+            // 
+            // dtpkBirthday
+            // 
+            this.dtpkBirthday.EditValue = null;
+            this.dtpkBirthday.Location = new System.Drawing.Point(130, 3);
+            this.dtpkBirthday.Name = "dtpkBirthday";
+            this.dtpkBirthday.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.dtpkBirthday.Properties.Appearance.Options.UseFont = true;
+            this.dtpkBirthday.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dtpkBirthday.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dtpkBirthday.Properties.DisplayFormat.FormatString = "dd\'/\'MM\'/\'yyyy";
+            this.dtpkBirthday.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.dtpkBirthday.Properties.ReadOnly = true;
+            this.dtpkBirthday.Size = new System.Drawing.Size(238, 26);
+            this.dtpkBirthday.TabIndex = 1;
             // 
             // labelControl4
             // 
@@ -234,48 +278,6 @@
             this.btnUpdate.Text = "Thay đổi";
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
-            // dtpkBirthday
-            // 
-            this.dtpkBirthday.EditValue = null;
-            this.dtpkBirthday.Location = new System.Drawing.Point(130, 3);
-            this.dtpkBirthday.Name = "dtpkBirthday";
-            this.dtpkBirthday.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.dtpkBirthday.Properties.Appearance.Options.UseFont = true;
-            this.dtpkBirthday.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dtpkBirthday.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dtpkBirthday.Properties.ReadOnly = true;
-            this.dtpkBirthday.Size = new System.Drawing.Size(238, 26);
-            this.dtpkBirthday.TabIndex = 1;
-            // 
-            // rdoMale
-            // 
-            this.rdoMale.AutoSize = true;
-            this.rdoMale.Checked = true;
-            this.rdoMale.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.rdoMale.Location = new System.Drawing.Point(130, 4);
-            this.rdoMale.Name = "rdoMale";
-            this.rdoMale.Size = new System.Drawing.Size(60, 23);
-            this.rdoMale.TabIndex = 2;
-            this.rdoMale.TabStop = true;
-            this.rdoMale.Text = "Nam";
-            this.rdoMale.UseVisualStyleBackColor = true;
-            this.rdoMale.Visible = false;
-            // 
-            // rdoFemale
-            // 
-            this.rdoFemale.AutoSize = true;
-            this.rdoFemale.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.rdoFemale.Location = new System.Drawing.Point(212, 4);
-            this.rdoFemale.Name = "rdoFemale";
-            this.rdoFemale.Size = new System.Drawing.Size(48, 23);
-            this.rdoFemale.TabIndex = 3;
-            this.rdoFemale.TabStop = true;
-            this.rdoFemale.Text = "Nữ";
-            this.rdoFemale.UseVisualStyleBackColor = true;
-            this.rdoFemale.Visible = false;
-            // 
             // fAccountInfo
             // 
             this.AcceptButton = this.btnUpdate;
@@ -308,12 +310,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.panelControl4)).EndInit();
             this.panelControl4.ResumeLayout(false);
             this.panelControl4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dtpkBirthday.Properties.CalendarTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtpkBirthday.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl5)).EndInit();
             this.panelControl5.ResumeLayout(false);
             this.panelControl5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtAddress.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dtpkBirthday.Properties.CalendarTimeProperties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dtpkBirthday.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }

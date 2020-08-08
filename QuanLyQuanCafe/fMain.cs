@@ -12,6 +12,8 @@ using DevExpress.XtraEditors;
 using DevExpress.Skins;
 using System.Linq.Expressions;
 using QuanLyQuanCafe.DTO;
+using DevExpress.XtraReports.Serialization;
+using DevExpress.XtraBars.Ribbon;
 
 namespace QuanLyQuanCafe
 {
@@ -31,6 +33,8 @@ namespace QuanLyQuanCafe
         public fTableManager frmTableManager;
 
         #endregion
+
+        public bool LoggingOut { get; private set; } = false;
 
         Account account;
 
@@ -81,6 +85,7 @@ namespace QuanLyQuanCafe
 
         public void LoggedIn()
         {
+            LoggingOut = false;
             foreach (BarButtonItem btn in Ribbon.Items.OfType<BarButtonItem>())
             {
                 btn.Enabled = true;
@@ -88,31 +93,43 @@ namespace QuanLyQuanCafe
             btnLogin.Enabled = false;
             if(account.Type != 1)   // account of staff
             {
-
+                foreach (BarButtonItemLink btn in ribbonPageGroup4.ItemLinks)
+                {
+                    btn.Item.Enabled = false;
+                }
+                btnTableManager.Enabled = true;
             }
         }
 
         public void LogOut()
         {
+            LoggingOut = true;
             foreach (Form form in this.MdiChildren)
             {
-                form.Hide();
+                if (form.Visible)
+                    form.Close();
             }
             foreach (BarButtonItem btn in Ribbon.Items.OfType<BarButtonItem>())
             {
                 btn.Enabled = false;
             }
+            foreach (RibbonPageGroup rbpGroup in rbpHelp.Groups)
+            {
+                foreach (BarButtonItemLink btn in ribbonPageGroup4.ItemLinks)
+                {
+                    btn.Item.Enabled = true;
+                }
+            }
             btnLogin.Enabled = true;
             skinRibbonGalleryBarItem1.Enabled = true;
-            btnTutorial.Enabled = true;
-            btnContact.Enabled = true;
-            btnSoftwareInfo.Enabled = true;
+            ShowForm(frmLogin, typeof(fLogin));
         }
 
         public void SetAccount(Account acc)
         {
             account = acc;
             frmAccountInfo.SetAccount(acc);
+            frmChangePassword.SetAccount(acc);
         }
 
         #endregion
@@ -166,7 +183,10 @@ namespace QuanLyQuanCafe
 
         private void btnLogout_ItemClick(object sender, ItemClickEventArgs e)
         {
-            LogOut();
+            if (XtraMessageBox.Show("Bạn có muốn đăng xuất tài khoản?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                LogOut();
+            }
         }
 
         #endregion

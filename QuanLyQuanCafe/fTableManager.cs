@@ -39,7 +39,7 @@ namespace QuanLyQuanCafe
 
         void LoadFoodList(int idFoodCategory)
         {
-            List<Food> foodList = DAL_Food.Instance.LoadFoodList(idFoodCategory);
+            List<Food> foodList = DAL_Food.Instance.LoadFoodListByCategoryID(idFoodCategory);
             cbxFood.DataSource = foodList;
             cbxFood.DisplayMember = "Name";
         }
@@ -121,7 +121,7 @@ namespace QuanLyQuanCafe
             int foodID = (cbxFood.SelectedItem as Food).ID;
             int count = (int)nmrCount.Value;
 
-            DAL_Food.Instance.AddFood(foodID, count, tableIDChosen);
+            DAL_Food.Instance.AddFoodToTable(foodID, count, tableIDChosen);
             nmrCount.Value = 1;
 
             GetBillByTableID(tableIDChosen);

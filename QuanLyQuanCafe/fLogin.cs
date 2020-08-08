@@ -31,7 +31,7 @@ namespace QuanLyQuanCafe
                 frmMain.SetAccount(acc);
                 frmMain.LoggedIn();
                 frmMain.ShowForm(frmMain.frmTableManager, typeof(fTableManager));
-                Exit();
+                this.Close();
             }
             else
             {
@@ -47,20 +47,21 @@ namespace QuanLyQuanCafe
             txtUsername.Focus();
         }
 
-        void Exit()
-        {
-            ClearAllInput();
-            this.Hide();
-        }
-
         private void btnExit_Click(object sender, EventArgs e)
         {
-            Exit();
+            this.Close();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
             Login();
+        }
+
+        private void fLogin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            ClearAllInput();
+            this.Hide();
         }
     }
 }
