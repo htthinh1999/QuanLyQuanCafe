@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
 
 namespace QuanLyQuanCafe.DTO
 {
@@ -15,7 +10,7 @@ namespace QuanLyQuanCafe.DTO
         public float TotalPrice { get; private set; }
 
         public BillTableInfo() { }
-        public BillTableInfo(string foodName, int count , float price, float totalPrice)
+        public BillTableInfo(string foodName, int count, float price, float totalPrice)
         {
             FoodName = foodName;
             Count = count;

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using DevExpress.XtraEditors;
-using QuanLyQuanCafe.DTO;
+﻿using DevExpress.XtraEditors;
 using QuanLyQuanCafe.DAL;
+using QuanLyQuanCafe.DTO;
+using System;
+using System.Data;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace QuanLyQuanCafe
 {
@@ -123,7 +118,7 @@ namespace QuanLyQuanCafe
                     }
                 }
             }
-            
+
 
         }
     }

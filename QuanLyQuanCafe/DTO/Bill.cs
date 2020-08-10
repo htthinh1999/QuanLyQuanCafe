@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuanLyQuanCafe.DTO
 {
@@ -37,7 +33,7 @@ namespace QuanLyQuanCafe.DTO
             TotalPrice = (int)row["totalPrice"];
             Discount = (int)row["discount"];
             TimeIn = (DateTime)row["timeIn"];
-            if(row["timeOut"] != null)
+            if (row["timeOut"] != null)
             {
                 TimeOut = (DateTime)row["timeOut"];
             }

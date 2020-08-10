@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using DevExpress.Utils.Extensions;
 using DevExpress.XtraEditors;
-using QuanLyQuanCafe.DTO;
 using QuanLyQuanCafe.DAL;
-using DevExpress.Utils.Extensions;
+using QuanLyQuanCafe.DTO;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
+using System.Windows.Forms;
 
 namespace QuanLyQuanCafe
 {
@@ -63,7 +58,7 @@ namespace QuanLyQuanCafe
         void LoadTableList()
         {
             List<TableFood> tableList = DAL_TableFood.Instance.LoadTableList();
-            foreach(TableFood tableFood in tableList)
+            foreach (TableFood tableFood in tableList)
             {
                 SimpleButton btnTableFood = new SimpleButton() { Width = tableFood.Width, Height = tableFood.Height };
                 btnTableFood.Tag = tableFood.ID;
@@ -82,7 +77,7 @@ namespace QuanLyQuanCafe
             totalPriceOfTableChosen = 0;
             List<BillTableInfo> billTableInfoList = DAL_BillTableInfo.Instance.GetBillTableInfoByTableID(idTable);
             lvBill.Items.Clear();
-            foreach(BillTableInfo item in billTableInfoList)
+            foreach (BillTableInfo item in billTableInfoList)
             {
                 ListViewItem listViewItem = new ListViewItem(item.FoodName.ToString());
                 listViewItem.SubItems.Add(item.Count.ToString());
@@ -135,7 +130,7 @@ namespace QuanLyQuanCafe
                 XtraMessageBox.Show("Đây là bàn trống, bạn phải chọn bàn đã có người!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else if (XtraMessageBox.Show(string.Format("Bạn có muốn thanh toán cho bàn số " + tableIDChosen + "?\n"
-                     + ((nmrDiscount.Value == 0) ? "Tổng tiền là " + totalPriceOfTableChosen.ToString("c", new CultureInfo("vi-VN")) + "!": "Tổng tiền sau khi được giảm giá " + nmrDiscount.Value + "% là " + (totalPriceOfTableChosen - (totalPriceOfTableChosen * (float)nmrDiscount.Value) / 100).ToString("c", new CultureInfo("vi-VN")) + "!")),
+                     + ((nmrDiscount.Value == 0) ? "Tổng tiền là " + totalPriceOfTableChosen.ToString("c", new CultureInfo("vi-VN")) + "!" : "Tổng tiền sau khi được giảm giá " + nmrDiscount.Value + "% là " + (totalPriceOfTableChosen - (totalPriceOfTableChosen * (float)nmrDiscount.Value) / 100).ToString("c", new CultureInfo("vi-VN")) + "!")),
                      "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 int discount = Convert.ToInt32(nmrDiscount.Value);
@@ -151,8 +146,9 @@ namespace QuanLyQuanCafe
             if (btnTable[tableIDChosen].Text.Contains("Trống"))
             {
                 XtraMessageBox.Show("Đây là bàn trống, bạn phải chọn bàn đã có người!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }else if(XtraMessageBox.Show("Bạn có muốn chuyển bàn số " + tableIDChosen + " sang bàn số " + (cbxTableList.SelectedItem as TableFood).ID + "?",
-                            "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            }
+            else if (XtraMessageBox.Show("Bạn có muốn chuyển bàn số " + tableIDChosen + " sang bàn số " + (cbxTableList.SelectedItem as TableFood).ID + "?",
+                           "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 int secondTableID = (cbxTableList.SelectedItem as TableFood).ID;
                 DAL_TableFood.Instance.MoveTable(tableIDChosen, secondTableID);

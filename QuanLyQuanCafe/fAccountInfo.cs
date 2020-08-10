@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using DevExpress.XtraEditors;
-using QuanLyQuanCafe.DTO;
+﻿using DevExpress.XtraEditors;
 using QuanLyQuanCafe.DAL;
+using QuanLyQuanCafe.DTO;
+using System;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace QuanLyQuanCafe
 {
@@ -72,7 +66,7 @@ namespace QuanLyQuanCafe
 
         void ControlsEditable(bool allow)
         {
-            btnUpdate.Text = allow?"Cập nhật":"Thay đổi";
+            btnUpdate.Text = allow ? "Cập nhật" : "Thay đổi";
             foreach (PanelControl panel in this.Controls.OfType<PanelControl>())
             {
                 foreach (TextEdit textEdit in panel.Controls.OfType<TextEdit>())
@@ -88,13 +82,13 @@ namespace QuanLyQuanCafe
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if(btnUpdate.Text.Equals("Thay đổi"))
+            if (btnUpdate.Text.Equals("Thay đổi"))
             {
                 ControlsEditable(true);
             }
             else
             {
-                if(!txtDisplayName.Text.Equals("") && !txtAddress.Text.Equals(""))
+                if (!txtDisplayName.Text.Equals("") && !txtAddress.Text.Equals(""))
                 {
                     if (XtraMessageBox.Show("Bạn có muốn cập nhật thông tin tài khoản?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {

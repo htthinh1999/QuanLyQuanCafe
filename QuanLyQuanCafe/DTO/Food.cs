@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
 
 namespace QuanLyQuanCafe.DTO
 {
@@ -15,7 +10,7 @@ namespace QuanLyQuanCafe.DTO
         public float Price { get; private set; }
 
         public Food() { }
-        
+
         public Food(int id, string name, int idFoodCategory, float price)
         {
             ID = id;

@@ -1,11 +1,6 @@
-﻿using DevExpress.XtraEditors.Filtering.Templates.Choice;
-using QuanLyQuanCafe.DTO;
-using System;
+﻿using QuanLyQuanCafe.DTO;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuanLyQuanCafe.DAL
 {
@@ -34,7 +29,7 @@ namespace QuanLyQuanCafe.DAL
             string query = "SELECT * FROM Food WHERE idCategory = " + idFoodCategory;
             DataTable dataTable = DataProvider.ExecuteQuery(query);
 
-            foreach(DataRow row in dataTable.Rows)
+            foreach (DataRow row in dataTable.Rows)
             {
                 Food food = new Food(row);
                 foodList.Add(food);

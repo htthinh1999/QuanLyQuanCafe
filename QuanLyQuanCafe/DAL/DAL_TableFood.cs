@@ -1,10 +1,6 @@
 ﻿using QuanLyQuanCafe.DTO;
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuanLyQuanCafe.DAL
 {
@@ -38,7 +34,7 @@ namespace QuanLyQuanCafe.DAL
 
             string query = "USP_LoadTableList";
             DataTable data = DataProvider.ExecuteQuery(query);
-            foreach(DataRow row in data.Rows)
+            foreach (DataRow row in data.Rows)
             {
                 TableFood tableFood = new TableFood(row);
                 listTableFood.Add(tableFood);

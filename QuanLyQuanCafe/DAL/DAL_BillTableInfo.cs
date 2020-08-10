@@ -1,10 +1,6 @@
 ﻿using QuanLyQuanCafe.DTO;
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuanLyQuanCafe.DAL
 {
@@ -25,7 +21,7 @@ namespace QuanLyQuanCafe.DAL
         }
 
         public DAL_BillTableInfo() { }
-        
+
         public List<BillTableInfo> GetBillTableInfoByTableID(int idTable)
         {
             List<BillTableInfo> billTableInfoList = new List<BillTableInfo>();

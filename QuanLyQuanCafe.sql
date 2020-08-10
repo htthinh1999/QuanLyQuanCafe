@@ -319,11 +319,6 @@ VALUES
 UPDATE dbo.TableFood
 SET status = N'Đã có người'
 WHERE id = 1 OR id = 4 OR id = 5 OR id = 10
-
-SELECT * FROM dbo.FoodCategory
-SELECT * FROM dbo.Food
-SELECT * FROM dbo.Bill
-SELECT * FROM dbo.BillInfo
 GO
 
 ------------------------------------------ END INSERT DATA ------------------------------------------
@@ -509,14 +504,32 @@ BEGIN
 END
 GO
 
+-- This procdure load all bill -> slow
+/*
 CREATE PROC USP_GetListBillByDate
 @fromDate DATETIME,
 @toDate DATETIME
 AS
 BEGIN
-    SELECT name [Tên bàn] , timeIn [Thời gian vào], timeOut [Thời gian ra], totalPrice [Tổng hóa đơn], discount [Giảm giá]
+    SELECT name [Tên bàn], CONVERT(VARCHAR(20), timeIn, 100) [Thời gian vào], CONVERT(VARCHAR(20), timeOut, 100) [Thời gian ra], totalPrice [Tổng hóa đơn], discount [Giảm giá]
 	FROM dbo.Bill INNER JOIN dbo.TableFood ON TableFood.id = Bill.idTable
 	WHERE Bill.status = N'Đã thanh toán' AND timeOut >= @fromDate AND timeOut <= @toDate + 1
+END
+GO
+*/
+
+CREATE PROC USP_GetListBillByDateAndPage
+@fromDate DATETIME,
+@toDate DATETIME,
+@page INT,
+@rowsPerPage int
+AS
+BEGIN
+    SELECT rowNumber [STT] ,name [Tên bàn], CONVERT(VARCHAR(20), timeIn, 100) [Thời gian vào], CONVERT(VARCHAR(20), timeOut, 100) [Thời gian ra], totalPrice [Tổng hóa đơn], discount [Giảm giá]
+	FROM (SELECT ROW_NUMBER() OVER(ORDER BY Bill.ID) rowNumber, name, timeIn, timeOut, totalPrice, discount
+			FROM dbo.Bill INNER JOIN dbo.TableFood ON TableFood.id = Bill.idTable
+			WHERE Bill.status = N'Đã thanh toán' AND timeOut >= @fromDate AND timeOut <= @toDate + 1) tableWithPage
+	WHERE rowNumber BETWEEN (@page-1)*@rowsPerPage+1 AND @page*@rowsPerPage
 END
 GO
 

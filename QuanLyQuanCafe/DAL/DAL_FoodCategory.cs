@@ -1,10 +1,6 @@
 ﻿using QuanLyQuanCafe.DTO;
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuanLyQuanCafe.DAL
 {
@@ -15,7 +11,7 @@ namespace QuanLyQuanCafe.DAL
         {
             get
             {
-                if(instance == null)
+                if (instance == null)
                 {
                     instance = new DAL_FoodCategory();
                 }
@@ -23,7 +19,7 @@ namespace QuanLyQuanCafe.DAL
             }
             private set { instance = value; }
         }
-        
+
         public DAL_FoodCategory() { }
 
         public List<FoodCategory> LoadFoodCategoryList()
@@ -31,7 +27,7 @@ namespace QuanLyQuanCafe.DAL
             List<FoodCategory> foodCategoryList = new List<FoodCategory>();
             string query = "SELECT * FROM FoodCategory";
             DataTable dataTable = DataProvider.ExecuteQuery(query);
-            foreach(DataRow row in dataTable.Rows)
+            foreach (DataRow row in dataTable.Rows)
             {
                 FoodCategory foodCategory = new FoodCategory(row);
                 foodCategoryList.Add(foodCategory);

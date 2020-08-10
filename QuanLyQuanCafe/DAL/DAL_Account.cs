@@ -1,12 +1,8 @@
-﻿using DevExpress.ClipboardSource.SpreadsheetML;
-using QuanLyQuanCafe.DTO;
+﻿using QuanLyQuanCafe.DTO;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace QuanLyQuanCafe.DAL
 {
@@ -60,7 +56,7 @@ namespace QuanLyQuanCafe.DAL
             DataTable dataTable = DataProvider.ExecuteQuery(query, new object[] { username });
 
             Account account = new Account();
-            foreach(DataRow row in dataTable.Rows)
+            foreach (DataRow row in dataTable.Rows)
             {
                 account = new Account(row);
             }

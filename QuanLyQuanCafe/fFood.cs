@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using QuanLyQuanCafe.DAL;
 using QuanLyQuanCafe.DTO;
+using System.Windows.Forms;
 
 namespace QuanLyQuanCafe
 {
@@ -93,7 +85,7 @@ namespace QuanLyQuanCafe
 
         private void btnUpdate_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if(DataAvailable() && XtraMessageBox.Show("Bạn có muốn sửa thông tin món này?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (DataAvailable() && XtraMessageBox.Show("Bạn có muốn sửa thông tin món này?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 DAL_Food.Instance.UpdateFood(int.Parse(txtID.Text), txtFoodName.Text, (cbxCategoryName.SelectedValue as FoodCategory).ID, (float)nrPrice.Value);
                 LoadData();
@@ -102,7 +94,7 @@ namespace QuanLyQuanCafe
 
         private void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if(XtraMessageBox.Show("Bạn có muốn xóa món này khỏi danh sách món?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (XtraMessageBox.Show("Bạn có muốn xóa món này khỏi danh sách món?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 DAL_Food.Instance.DeleteFood(int.Parse(txtID.Text));
                 LoadData();

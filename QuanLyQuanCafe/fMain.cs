@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using DevExpress.XtraBars;
-using DevExpress.XtraEditors;
-using DevExpress.Skins;
-using System.Linq.Expressions;
-using QuanLyQuanCafe.DTO;
-using DevExpress.XtraReports.Serialization;
+﻿using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraEditors;
+using QuanLyQuanCafe.DTO;
+using System;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace QuanLyQuanCafe
 {
@@ -91,7 +82,7 @@ namespace QuanLyQuanCafe
                 btn.Enabled = true;
             }
             btnLogin.Enabled = false;
-            if(account.Type != 1)   // account of staff
+            if (account.Type != 1)   // account of staff
             {
                 foreach (BarButtonItemLink btn in ribbonPageGroup4.ItemLinks)
                 {
