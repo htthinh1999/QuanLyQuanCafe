@@ -7,18 +7,18 @@ namespace QuanLyQuanCafe.DTO
     {
         public string Username { get; private set; }
         public string DisplayName { get; private set; }
-        public int Type { get; private set; }
+        public int TypeID { get; private set; }
         public string Password { get; private set; }
         public string Sex { get; private set; }
         public DateTime Birthday { get; private set; }
         public string Address { get; private set; }
 
         public Account() { }
-        public Account(string username, string displayName, int type, string sex, DateTime birthday, string address, string password = null)
+        public Account(string username, string displayName, int typeID, string sex, DateTime birthday, string address, string password = null)
         {
             Username = username;
             DisplayName = displayName;
-            Type = type;
+            TypeID = typeID;
             Sex = sex;
             Birthday = birthday;
             Address = address;
@@ -29,7 +29,7 @@ namespace QuanLyQuanCafe.DTO
         {
             Username = row["username"].ToString();
             DisplayName = row["displayName"].ToString();
-            Type = (int)row["type"];
+            TypeID = (int)row["typeID"];
             Sex = row["sex"].ToString();
             Birthday = (DateTime)row["birthday"];
             Address = row["address"].ToString();

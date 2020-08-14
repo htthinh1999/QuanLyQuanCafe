@@ -51,6 +51,14 @@ namespace QuanLyQuanCafe.DAL
             return DataProvider.ExecuteQuery(query);
         }
 
+        public DataTable Search(string text)
+        {
+            string query = "SELECT f.id [ID], f.name [Tên món], fc.name [Loại món], price [Giá tiền] " +
+                            "FROM dbo.Food f INNER JOIN dbo.FoodCategory fc ON fc.id = f.idCategory " +
+                            "WHERE dbo.fuConvertToUnsign(f.name) LIKE dbo.fuConvertToUnsign(N'%" + text + "%')";
+            return DataProvider.ExecuteQuery(query);
+        }
+
         public void AddFood(string foodName, int idCategory, float price)
         {
             string query = "INSERT INTO dbo.Food VALUES(N'" + foodName + "', " + idCategory + ", " + price + ")";

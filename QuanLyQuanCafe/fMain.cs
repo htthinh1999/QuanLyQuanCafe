@@ -72,6 +72,7 @@ namespace QuanLyQuanCafe
                 form.MdiParent = frmMain;
             }
             form.Show();
+            form.Activate();
         }
 
         public void LoggedIn()
@@ -82,9 +83,9 @@ namespace QuanLyQuanCafe
                 btn.Enabled = true;
             }
             btnLogin.Enabled = false;
-            if (account.Type != 1)   // account of staff
+            if (account.TypeID != 1)   // account of staff
             {
-                foreach (BarButtonItemLink btn in ribbonPageGroup4.ItemLinks)
+                foreach (BarButtonItemLink btn in rbpgAdmin.ItemLinks)
                 {
                     btn.Item.Enabled = false;
                 }
@@ -106,11 +107,12 @@ namespace QuanLyQuanCafe
             }
             foreach (RibbonPageGroup rbpGroup in rbpHelp.Groups)
             {
-                foreach (BarButtonItemLink btn in ribbonPageGroup4.ItemLinks)
+                foreach (BarButtonItemLink btn in rbpgHelp.ItemLinks)
                 {
                     btn.Item.Enabled = true;
                 }
             }
+            btnSoftwareInfo.Enabled = true;
             btnLogin.Enabled = true;
             skinRibbonGalleryBarItem1.Enabled = true;
             ShowForm(frmLogin, typeof(fLogin));
@@ -121,6 +123,7 @@ namespace QuanLyQuanCafe
             account = acc;
             frmAccountInfo.SetAccount(acc);
             frmChangePassword.SetAccount(acc);
+            frmAccount.SetAccount(acc);
         }
 
         #endregion

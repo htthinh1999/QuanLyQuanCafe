@@ -1,5 +1,6 @@
 ﻿using QuanLyQuanCafe.DTO;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Security.Cryptography;
 using System.Text;
@@ -21,6 +22,13 @@ namespace QuanLyQuanCafe.DAL
             }
         }
         public DAL_Account() { }
+
+        public DataTable GetAccountList()
+        {
+            string query = "SELECT username [Tên tài khoản], displayName [Tên hiển thị], t.name [Loại tài khoản], sex [Giới tính], birthday [Ngày sinh], address [Địa chỉ] " +
+                            "FROM Account a INNER JOIN dbo.AccountType t ON t.id = a.typeID";
+            return DataProvider.ExecuteQuery(query);
+        }
 
         string EncryptMD5(string text)
         {
@@ -44,10 +52,10 @@ namespace QuanLyQuanCafe.DAL
             return data.Rows.Count > 0;
         }
 
-        public void UpdateAccountInfo(string username, string displayName, string sex, DateTime birthDay, string address)
+        public void UpdateAccountInfo(string username, string displayName, int typeID, string sex, DateTime birthDay, string address)
         {
             string query = "USP_UpdateAccountInfo";
-            DataProvider.ExecuteQuery(query, new object[] { username, displayName, sex, birthDay, address });
+            DataProvider.ExecuteQuery(query, new object[] { username, displayName, typeID, sex, birthDay, address });
         }
 
         public Account GetAccountInfoByUsername(string username)
@@ -67,6 +75,30 @@ namespace QuanLyQuanCafe.DAL
         {
             string query = "USP_UpdatePassword";
             DataProvider.ExecuteQuery(query, new object[] { username, EncryptMD5(newPassword) });
+        }
+
+        public void AddAccount(string username, string displayName, int typeID, string sex, DateTime birthday, string address)
+        {
+            string query = "USP_AddAccount";
+            DataProvider.ExecuteQuery(query, new object[] { username, displayName, typeID, sex, birthday, address });
+        }
+
+        public void DeleteAccount(string username)
+        {
+            string query = "USP_DeleteAccount";
+            DataProvider.ExecuteQuery(query, new object[] { username });
+        }
+
+        public bool ExistAccount(string username)
+        {
+            string query = "SELECT * FROM Account WHERE username = '" + username + "'";
+            return DataProvider.ExecuteQuery(query).Rows.Count > 0;
+        }
+
+        public void ResetPassword(string username)
+        {
+            string query = "USP_ResetPassword";
+            DataProvider.ExecuteQuery(query, new object[] { username });
         }
     }
 }

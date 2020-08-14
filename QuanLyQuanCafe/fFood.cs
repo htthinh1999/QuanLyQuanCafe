@@ -101,6 +101,16 @@ namespace QuanLyQuanCafe
             }
         }
 
+        private void btnSearch_Click(object sender, System.EventArgs e)
+        {
+            bindingSource.DataSource = DAL_Food.Instance.Search(txtSearch.Text);
+        }
+
         #endregion
+
+        private void btnRefresh_Click(object sender, System.EventArgs e)
+        {
+            LoadData();
+        }
     }
 }

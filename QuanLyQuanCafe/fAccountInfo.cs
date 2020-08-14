@@ -92,7 +92,7 @@ namespace QuanLyQuanCafe
                 {
                     if (XtraMessageBox.Show("Bạn có muốn cập nhật thông tin tài khoản?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        DAL_Account.Instance.UpdateAccountInfo(txtUsername.Text, txtDisplayName.Text, rdoMale.Checked ? "Nam" : "Nữ", dtpkBirthday.DateTime, txtAddress.Text);
+                        DAL_Account.Instance.UpdateAccountInfo(txtUsername.Text, txtDisplayName.Text, account.TypeID, rdoMale.Checked ? "Nam" : "Nữ", dtpkBirthday.DateTime, txtAddress.Text);
                         ControlsEditable(false);
                         account = DAL_Account.Instance.GetAccountInfoByUsername(txtUsername.Text);
                         LoadAccountInfo();

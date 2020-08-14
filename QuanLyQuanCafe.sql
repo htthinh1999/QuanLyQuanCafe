@@ -19,12 +19,19 @@ CREATE TABLE TableFood
 )
 GO
 
+CREATE TABLE AccountType
+(
+	id INT IDENTITY PRIMARY KEY,
+	name NVARCHAR(50) NOT NULL
+)
+GO
+
 CREATE TABLE Account
 (
 	username VARCHAR(100) PRIMARY KEY,
 	password VARCHAR(1000) NOT NULL DEFAULT 'c4ca4238a0b923820dcc509a6f75849b', -- default password = '1'
 	displayName NVARCHAR(100) NOT NULL,
-	type INT NOT NULL DEFAULT 1, -- 0: Quản trị viên, 1: Nhân viên
+	typeID INT REFERENCES dbo.AccountType(id) NOT NULL DEFAULT 2, -- 1: Quản trị viên, 2: Nhân viên
 	sex NVARCHAR(5) NOT NULL DEFAULT N'Nam', -- Nam / Nữ
 	birthday DATE NOT NULL,
 	address NVARCHAR(100) NOT NULL
@@ -76,13 +83,33 @@ CREATE TABLE BillInfo
 GO
 
 ------------------------------------------ INSERT DATA ------------------------------------------
+SELECT username [Tên tài khoản], displayName [Tên hiển thị], t.name [Loại tài khoản], sex [Giới tính], birthday [Ngày sinh], address [Địa chỉ]
+FROM Account a INNER JOIN dbo.AccountType t ON t.id = a.typeID
+
+INSERT INTO dbo.AccountType
+(
+    name
+)
+VALUES
+(N'Quản trị viên' -- name - nvarchar(50)
+    )
+GO
+
+INSERT INTO dbo.AccountType
+(
+    name
+)
+VALUES
+(N'Nhân viên' -- name - nvarchar(50)
+    )
+GO    
 
 INSERT INTO dbo.Account
 (
     username,
     password,
     displayName,
-    type,
+    typeID,
     sex,
     birthday,
     address
@@ -103,7 +130,7 @@ INSERT INTO dbo.Account
     username,
     password,
     displayName,
-    type,
+    typeID,
     sex,
     birthday,
     address
@@ -112,10 +139,31 @@ VALUES
 (   'htthinh',        -- username - varchar(100)
     '202cb962ac59075b964b07152d234b70',        -- password - varchar(1000) = '123'
     N'Huỳnh Tấn Thịnh',       -- displayName - nvarchar(100)
-    0,         -- type - int
+    2,         -- type - int
     N'Nam',       -- sex - nvarchar(5)
     '19990927', -- birthday - date
     N'Khánh Hòa'        -- address - nvarchar(50)
+    )
+GO
+
+INSERT INTO dbo.Account
+(
+    username,
+    password,
+    displayName,
+    typeID,
+    sex,
+    birthday,
+    address
+)
+VALUES
+(   'thoathoa',        -- username - varchar(100)
+    '202cb962ac59075b964b07152d234b70',        -- password - varchar(1000) = '123'
+    N'Nguyễn Thị Kim Thoa',       -- displayName - nvarchar(100)
+    1,         -- typeID - int
+    N'Nữ',       -- sex - nvarchar(5)
+    '19990512', -- birthday - date
+    N'Khánh Hòa'        -- address - nvarchar(100)
     )
 GO
 
@@ -546,13 +594,14 @@ GO
 CREATE PROC USP_UpdateAccountInfo
 @username VARCHAR(100),
 @displayName NVARCHAR(100),
+@typeID INT,
 @sex NVARCHAR(5),
 @birthday DATE,
 @address NVARCHAR(100)
 AS
 BEGIN
     UPDATE dbo.Account
-	SET displayName = @displayName, sex = @sex, birthday = @birthday, address = @address
+	SET displayName = @displayName, typeID = @typeID, sex = @sex, birthday = @birthday, address = @address
 	WHERE username = @username
 END
 GO
@@ -567,6 +616,40 @@ BEGIN
 	WHERE username = @username
 END
 GO
+
+CREATE PROC USP_AddAccount
+@username VARCHAR(100),
+@displayName NVARCHAR(100),
+@typeID INT,
+@sex NVARCHAR(5),
+@birthday DATE,
+@address NVARCHAR(100)
+AS
+BEGIN
+    INSERT INTO dbo.Account
+    (username, displayName, typeID, sex, birthday, address)
+    VALUES
+    (@username, @displayName, @typeID, @sex, @birthday, @address)
+END
+GO
+
+CREATE PROC USP_DeleteAccount
+@username VARCHAR(100)
+AS
+BEGIN
+    DELETE FROM dbo.Account
+	WHERE username = @username
+END
+GO
+
+CREATE PROC USP_ResetPassword
+@username VARCHAR(100)
+AS
+BEGIN
+    UPDATE dbo.Account
+	SET password = 'c4ca4238a0b923820dcc509a6f75849b'
+	WHERE username = @username
+END
 
 ------------------------------------------ END CREATE PROCEDURES ------------------------------------------
 
@@ -658,3 +741,58 @@ GO
 
 
 ------------------------------------------ END CREATE TRIGGERS ------------------------------------------
+
+
+------------------------------------------ CREATE FUNCTIONS ---------------------------------------------
+
+CREATE FUNCTION [dbo].[fuConvertToUnsign]
+(
+@strInput NVARCHAR(4000)
+)
+RETURNS NVARCHAR(4000)
+AS
+BEGIN 
+	IF @strInput IS NULL RETURN @strInput
+	IF @strInput = '' RETURN @strInput
+	DECLARE @RT NVARCHAR(4000)
+	DECLARE @SIGN_CHARS NCHAR(136)
+	DECLARE @UNSIGN_CHARS NCHAR (136)
+	SET @SIGN_CHARS = N'ăâđêôơưàảãạáằẳẵặắầẩẫậấèẻẽẹéềểễệế
+	ìỉĩịíòỏõọóồổỗộốờởỡợớùủũụúừửữựứỳỷỹỵý
+	ĂÂĐÊÔƠƯÀẢÃẠÁẰẲẴẶẮẦẨẪẬẤÈẺẼẸÉỀỂỄỆẾÌỈĨỊÍ
+	ÒỎÕỌÓỒỔỖỘỐỜỞỠỢỚÙỦŨỤÚỪỬỮỰỨỲỶỸỴÝ'
+	+NCHAR(272)+ NCHAR(208)
+	SET @UNSIGN_CHARS = N'aadeoouaaaaaaaaaaaaaaaeeeeeeeeee
+	iiiiiooooooooooooooouuuuuuuuuuyyyyy
+	AADEOOUAAAAAAAAAAAAAAAEEEEEEEEEEIIIII
+	OOOOOOOOOOOOOOOUUUUUUUUUUYYYYYDD'
+	DECLARE @COUNTER int
+	DECLARE @COUNTER1 int
+	SET @COUNTER = 1
+	WHILE (@COUNTER <=LEN(@strInput))
+	BEGIN 
+		SET @COUNTER1 = 1
+		WHILE (@COUNTER1 <=LEN(@SIGN_CHARS)+1)
+		BEGIN
+			IF UNICODE(SUBSTRING(@SIGN_CHARS, @COUNTER1,1))
+			= UNICODE(SUBSTRING(@strInput,@COUNTER ,1) )
+			BEGIN 
+				IF @COUNTER=1
+					SET @strInput = SUBSTRING(@UNSIGN_CHARS, @COUNTER1,1)
+					+ SUBSTRING(@strInput, @COUNTER+1,LEN(@strInput)-1) 
+				ELSE
+					SET @strInput = SUBSTRING(@strInput, 1, @COUNTER-1)
+					+SUBSTRING(@UNSIGN_CHARS, @COUNTER1,1)
+					+ SUBSTRING(@strInput, @COUNTER+1,LEN(@strInput)- @COUNTER)
+				BREAK
+			END
+			SET @COUNTER1 = @COUNTER1 +1
+		END
+		SET @COUNTER = @COUNTER +1
+	END
+	SET @strInput = replace(@strInput,' ','-')
+	RETURN @strInput
+END
+GO
+
+------------------------------------------ END CREATE FUNCTIONS -----------------------------------------

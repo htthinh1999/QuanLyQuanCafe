@@ -54,11 +54,11 @@
             this.rbpData = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.rbpTheme = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.rbpManagement = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.rbpgStaff = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.rbpgAdmin = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.rbpHelp = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            this.ribbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.rbpgHelp = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.rbpgInfomation = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.tabMDI = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
@@ -328,47 +328,47 @@
             // rbpManagement
             // 
             this.rbpManagement.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup1,
-            this.ribbonPageGroup4});
+            this.rbpgStaff,
+            this.rbpgAdmin});
             this.rbpManagement.Name = "rbpManagement";
             this.rbpManagement.Text = "Quản lý";
             // 
-            // ribbonPageGroup1
+            // rbpgStaff
             // 
-            this.ribbonPageGroup1.ItemLinks.Add(this.btnTableManager);
-            this.ribbonPageGroup1.Name = "ribbonPageGroup1";
-            this.ribbonPageGroup1.Text = "Nhân viên";
+            this.rbpgStaff.ItemLinks.Add(this.btnTableManager);
+            this.rbpgStaff.Name = "rbpgStaff";
+            this.rbpgStaff.Text = "Nhân viên";
             // 
-            // ribbonPageGroup4
+            // rbpgAdmin
             // 
-            this.ribbonPageGroup4.ItemLinks.Add(this.btnRevenue);
-            this.ribbonPageGroup4.ItemLinks.Add(this.btnFood);
-            this.ribbonPageGroup4.ItemLinks.Add(this.btnFoodCategory);
-            this.ribbonPageGroup4.ItemLinks.Add(this.btnTableFood);
-            this.ribbonPageGroup4.ItemLinks.Add(this.btnAccount);
-            this.ribbonPageGroup4.Name = "ribbonPageGroup4";
-            this.ribbonPageGroup4.Text = "Quản trị viên";
+            this.rbpgAdmin.ItemLinks.Add(this.btnRevenue);
+            this.rbpgAdmin.ItemLinks.Add(this.btnFood);
+            this.rbpgAdmin.ItemLinks.Add(this.btnFoodCategory);
+            this.rbpgAdmin.ItemLinks.Add(this.btnTableFood);
+            this.rbpgAdmin.ItemLinks.Add(this.btnAccount);
+            this.rbpgAdmin.Name = "rbpgAdmin";
+            this.rbpgAdmin.Text = "Quản trị viên";
             // 
             // rbpHelp
             // 
             this.rbpHelp.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup5,
-            this.ribbonPageGroup2});
+            this.rbpgHelp,
+            this.rbpgInfomation});
             this.rbpHelp.Name = "rbpHelp";
             this.rbpHelp.Text = "Trợ giúp";
             // 
-            // ribbonPageGroup5
+            // rbpgHelp
             // 
-            this.ribbonPageGroup5.ItemLinks.Add(this.btnTutorial);
-            this.ribbonPageGroup5.ItemLinks.Add(this.btnContact);
-            this.ribbonPageGroup5.Name = "ribbonPageGroup5";
-            this.ribbonPageGroup5.Text = "Trợ giúp";
+            this.rbpgHelp.ItemLinks.Add(this.btnTutorial);
+            this.rbpgHelp.ItemLinks.Add(this.btnContact);
+            this.rbpgHelp.Name = "rbpgHelp";
+            this.rbpgHelp.Text = "Trợ giúp";
             // 
-            // ribbonPageGroup2
+            // rbpgInfomation
             // 
-            this.ribbonPageGroup2.ItemLinks.Add(this.btnSoftwareInfo);
-            this.ribbonPageGroup2.Name = "ribbonPageGroup2";
-            this.ribbonPageGroup2.Text = "Thông tin";
+            this.rbpgInfomation.ItemLinks.Add(this.btnSoftwareInfo);
+            this.rbpgInfomation.Name = "rbpgInfomation";
+            this.rbpgInfomation.Text = "Thông tin";
             // 
             // ribbonStatusBar
             // 
@@ -417,9 +417,9 @@
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbpTheme;
         private DevExpress.XtraBars.SkinRibbonGalleryBarItem skinRibbonGalleryBarItem1;
         private DevExpress.XtraBars.Ribbon.RibbonPage rbpManagement;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbpgAdmin;
         private DevExpress.XtraBars.Ribbon.RibbonPage rbpHelp;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup5;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbpgHelp;
         private DevExpress.Utils.ImageCollection imageCL;
         private DevExpress.XtraBars.BarButtonItem btnAccountInformation;
         private DevExpress.XtraTabbedMdi.XtraTabbedMdiManager tabMDI;
@@ -430,10 +430,10 @@
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;
         private DevExpress.XtraBars.BarButtonItem btnFood;
         private DevExpress.XtraBars.BarButtonItem btnTableManager;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbpgStaff;
         private DevExpress.XtraBars.BarButtonItem btnTutorial;
         private DevExpress.XtraBars.BarButtonItem btnContact;
         private DevExpress.XtraBars.BarButtonItem btnSoftwareInfo;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbpgInfomation;
     }
 }
