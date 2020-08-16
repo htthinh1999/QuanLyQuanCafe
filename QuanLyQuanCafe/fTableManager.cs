@@ -51,7 +51,7 @@ namespace QuanLyQuanCafe
 
         void LoadTableStatus(int idTable)
         {
-            TableFood table = DAL_TableFood.Instance.LoadTableStatus(idTable);
+            TableFood table = DAL_TableFood.Instance.LoadTableStatusByID(idTable);
             UpdateTableStatus(btnTable[idTable], table.Name, table.Status);
         }
 
@@ -134,7 +134,7 @@ namespace QuanLyQuanCafe
                      "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 int discount = Convert.ToInt32(nmrDiscount.Value);
-                DAL_Bill.Instance.CheckOutForTable(tableIDChosen, totalPriceOfTableChosen * (1 - discount / 100f), discount);
+                DAL_Bill.Instance.CheckoutTable(tableIDChosen, totalPriceOfTableChosen * (1 - discount / 100f), discount);
                 GetBillByTableID(tableIDChosen);
                 LoadTableStatus(tableIDChosen);
                 XtraMessageBox.Show("Thanh toán thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);

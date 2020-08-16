@@ -24,10 +24,10 @@ namespace QuanLyQuanCafe.DAL
             private set { instance = value; }
         }
 
-        public List<AccountType> LoadAcountTypeList()
+        public List<AccountType> LoadAccountTypeList()
         {
             List<AccountType> accountTypeList = new List<AccountType>();
-            string query = "SELECT * FROM AccountType";
+            string query = "USP_LoadAccountTypeList";
             DataTable dataTable = DataProvider.ExecuteQuery(query);
             foreach(DataRow row in dataTable.Rows)
             {

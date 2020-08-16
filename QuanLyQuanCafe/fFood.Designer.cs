@@ -270,40 +270,41 @@
             // 
             // cbxCategoryName
             // 
+            this.cbxCategoryName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxCategoryName.FormattingEnabled = true;
-            this.cbxCategoryName.Location = new System.Drawing.Point(57, 60);
+            this.cbxCategoryName.Location = new System.Drawing.Point(62, 60);
             this.cbxCategoryName.Name = "cbxCategoryName";
-            this.cbxCategoryName.Size = new System.Drawing.Size(489, 21);
+            this.cbxCategoryName.Size = new System.Drawing.Size(484, 21);
             this.cbxCategoryName.TabIndex = 8;
             // 
             // nrPrice
             // 
-            this.nrPrice.Location = new System.Drawing.Point(57, 85);
+            this.nrPrice.Location = new System.Drawing.Point(62, 85);
             this.nrPrice.Maximum = new decimal(new int[] {
             10000000,
             0,
             0,
             0});
             this.nrPrice.Name = "nrPrice";
-            this.nrPrice.Size = new System.Drawing.Size(489, 21);
+            this.nrPrice.Size = new System.Drawing.Size(484, 21);
             this.nrPrice.TabIndex = 7;
             // 
             // txtFoodName
             // 
-            this.txtFoodName.Location = new System.Drawing.Point(57, 36);
+            this.txtFoodName.Location = new System.Drawing.Point(62, 36);
             this.txtFoodName.MenuManager = this.barManager1;
             this.txtFoodName.Name = "txtFoodName";
-            this.txtFoodName.Size = new System.Drawing.Size(489, 20);
+            this.txtFoodName.Size = new System.Drawing.Size(484, 20);
             this.txtFoodName.StyleController = this.layoutControl1;
             this.txtFoodName.TabIndex = 5;
             // 
             // txtID
             // 
-            this.txtID.Location = new System.Drawing.Point(57, 12);
+            this.txtID.Location = new System.Drawing.Point(62, 12);
             this.txtID.MenuManager = this.barManager1;
             this.txtID.Name = "txtID";
             this.txtID.Properties.ReadOnly = true;
-            this.txtID.Size = new System.Drawing.Size(489, 20);
+            this.txtID.Size = new System.Drawing.Size(484, 20);
             this.txtID.StyleController = this.layoutControl1;
             this.txtID.TabIndex = 4;
             // 
@@ -331,7 +332,7 @@
             this.layoutControlItem1.Name = "layoutControlItem1";
             this.layoutControlItem1.Size = new System.Drawing.Size(538, 24);
             this.layoutControlItem1.Text = "ID";
-            this.layoutControlItem1.TextSize = new System.Drawing.Size(42, 13);
+            this.layoutControlItem1.TextSize = new System.Drawing.Size(47, 13);
             // 
             // layoutControlItem2
             // 
@@ -340,7 +341,7 @@
             this.layoutControlItem2.Name = "layoutControlItem2";
             this.layoutControlItem2.Size = new System.Drawing.Size(538, 24);
             this.layoutControlItem2.Text = "Tên món";
-            this.layoutControlItem2.TextSize = new System.Drawing.Size(42, 13);
+            this.layoutControlItem2.TextSize = new System.Drawing.Size(47, 13);
             // 
             // layoutControlItem4
             // 
@@ -349,7 +350,7 @@
             this.layoutControlItem4.Name = "layoutControlItem4";
             this.layoutControlItem4.Size = new System.Drawing.Size(538, 24);
             this.layoutControlItem4.Text = "Giá";
-            this.layoutControlItem4.TextSize = new System.Drawing.Size(42, 13);
+            this.layoutControlItem4.TextSize = new System.Drawing.Size(47, 13);
             // 
             // layoutControlItem5
             // 
@@ -357,8 +358,8 @@
             this.layoutControlItem5.Location = new System.Drawing.Point(0, 48);
             this.layoutControlItem5.Name = "layoutControlItem5";
             this.layoutControlItem5.Size = new System.Drawing.Size(538, 25);
-            this.layoutControlItem5.Text = "Loại món";
-            this.layoutControlItem5.TextSize = new System.Drawing.Size(42, 13);
+            this.layoutControlItem5.Text = "Danh mục";
+            this.layoutControlItem5.TextSize = new System.Drawing.Size(47, 13);
             // 
             // layoutControlItem6
             // 

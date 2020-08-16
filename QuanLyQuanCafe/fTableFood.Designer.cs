@@ -34,36 +34,35 @@
             this.btnAdd = new DevExpress.XtraBars.BarButtonItem();
             this.btnUpdate = new DevExpress.XtraBars.BarButtonItem();
             this.btnDelete = new DevExpress.XtraBars.BarButtonItem();
-            this.btnWatch = new DevExpress.XtraBars.BarButtonItem();
             this.bar3 = new DevExpress.XtraBars.Bar();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+            this.btnWatch = new DevExpress.XtraBars.BarButtonItem();
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
-            this.txtStatus = new DevExpress.XtraEditors.ComboBoxEdit();
+            this.cbxStatus = new System.Windows.Forms.ComboBox();
             this.txtTableName = new DevExpress.XtraEditors.TextEdit();
             this.txtID = new DevExpress.XtraEditors.TextEdit();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
             this.gridControl = new DevExpress.XtraGrid.GridControl();
-            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtStatus.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTableName.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtID.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
             this.SuspendLayout();
             // 
             // barManager1
@@ -105,6 +104,7 @@
             this.btnAdd.Id = 0;
             this.btnAdd.ImageOptions.Image = global::QuanLyQuanCafe.Properties.Resources.add_16x16;
             this.btnAdd.Name = "btnAdd";
+            this.btnAdd.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnAdd_ItemClick);
             // 
             // btnUpdate
             // 
@@ -112,6 +112,7 @@
             this.btnUpdate.Id = 1;
             this.btnUpdate.ImageOptions.Image = global::QuanLyQuanCafe.Properties.Resources.editname_16x16;
             this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnUpdate_ItemClick);
             // 
             // btnDelete
             // 
@@ -119,12 +120,7 @@
             this.btnDelete.Id = 2;
             this.btnDelete.ImageOptions.Image = global::QuanLyQuanCafe.Properties.Resources.clear_16x16;
             this.btnDelete.Name = "btnDelete";
-            // 
-            // btnWatch
-            // 
-            this.btnWatch.Caption = "Xem";
-            this.btnWatch.Id = 3;
-            this.btnWatch.Name = "btnWatch";
+            this.btnDelete.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDelete_ItemClick);
             // 
             // bar3
             // 
@@ -170,9 +166,15 @@
             this.barDockControlRight.Manager = this.barManager1;
             this.barDockControlRight.Size = new System.Drawing.Size(0, 424);
             // 
+            // btnWatch
+            // 
+            this.btnWatch.Caption = "Xem";
+            this.btnWatch.Id = 3;
+            this.btnWatch.Name = "btnWatch";
+            // 
             // layoutControl1
             // 
-            this.layoutControl1.Controls.Add(this.txtStatus);
+            this.layoutControl1.Controls.Add(this.cbxStatus);
             this.layoutControl1.Controls.Add(this.txtTableName);
             this.layoutControl1.Controls.Add(this.txtID);
             this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -184,16 +186,14 @@
             this.layoutControl1.TabIndex = 5;
             this.layoutControl1.Text = "layoutControl1";
             // 
-            // txtStatus
+            // cbxStatus
             // 
-            this.txtStatus.Location = new System.Drawing.Point(64, 60);
-            this.txtStatus.MenuManager = this.barManager1;
-            this.txtStatus.Name = "txtStatus";
-            this.txtStatus.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.txtStatus.Size = new System.Drawing.Size(482, 20);
-            this.txtStatus.StyleController = this.layoutControl1;
-            this.txtStatus.TabIndex = 6;
+            this.cbxStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxStatus.FormattingEnabled = true;
+            this.cbxStatus.Location = new System.Drawing.Point(64, 60);
+            this.cbxStatus.Name = "cbxStatus";
+            this.cbxStatus.Size = new System.Drawing.Size(482, 21);
+            this.cbxStatus.TabIndex = 7;
             // 
             // txtTableName
             // 
@@ -222,7 +222,7 @@
             this.layoutControlItem1,
             this.emptySpaceItem1,
             this.layoutControlItem2,
-            this.layoutControlItem3});
+            this.layoutControlItem4});
             this.Root.Name = "Root";
             this.Root.Size = new System.Drawing.Size(558, 151);
             this.Root.TextVisible = false;
@@ -239,9 +239,9 @@
             // emptySpaceItem1
             // 
             this.emptySpaceItem1.AllowHotTrack = false;
-            this.emptySpaceItem1.Location = new System.Drawing.Point(0, 72);
+            this.emptySpaceItem1.Location = new System.Drawing.Point(0, 73);
             this.emptySpaceItem1.Name = "emptySpaceItem1";
-            this.emptySpaceItem1.Size = new System.Drawing.Size(538, 59);
+            this.emptySpaceItem1.Size = new System.Drawing.Size(538, 58);
             this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             // 
             // layoutControlItem2
@@ -253,31 +253,31 @@
             this.layoutControlItem2.Text = "Tên bàn";
             this.layoutControlItem2.TextSize = new System.Drawing.Size(49, 13);
             // 
-            // layoutControlItem3
+            // layoutControlItem4
             // 
-            this.layoutControlItem3.Control = this.txtStatus;
-            this.layoutControlItem3.Location = new System.Drawing.Point(0, 48);
-            this.layoutControlItem3.Name = "layoutControlItem3";
-            this.layoutControlItem3.Size = new System.Drawing.Size(538, 24);
-            this.layoutControlItem3.Text = "Trạng thái";
-            this.layoutControlItem3.TextSize = new System.Drawing.Size(49, 13);
+            this.layoutControlItem4.Control = this.cbxStatus;
+            this.layoutControlItem4.Location = new System.Drawing.Point(0, 48);
+            this.layoutControlItem4.Name = "layoutControlItem4";
+            this.layoutControlItem4.Size = new System.Drawing.Size(538, 25);
+            this.layoutControlItem4.Text = "Trạng thái";
+            this.layoutControlItem4.TextSize = new System.Drawing.Size(49, 13);
             // 
             // gridControl
             // 
             this.gridControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridControl.Location = new System.Drawing.Point(0, 175);
-            this.gridControl.MainView = this.gridView1;
+            this.gridControl.MainView = this.gridView;
             this.gridControl.Name = "gridControl";
             this.gridControl.Size = new System.Drawing.Size(558, 273);
             this.gridControl.TabIndex = 6;
             this.gridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView1});
+            this.gridView});
             // 
-            // gridView1
+            // gridView
             // 
-            this.gridView1.GridControl = this.gridControl;
-            this.gridView1.Name = "gridView1";
-            this.gridView1.OptionsView.ShowGroupPanel = false;
+            this.gridView.GridControl = this.gridControl;
+            this.gridView.Name = "gridView";
+            this.gridView.OptionsView.ShowGroupPanel = false;
             // 
             // fTableFood
             // 
@@ -296,16 +296,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
             this.layoutControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.txtStatus.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTableName.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtID.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -332,8 +331,8 @@
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
         private DevExpress.XtraGrid.GridControl gridControl;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
-        private DevExpress.XtraEditors.ComboBoxEdit txtStatus;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView;
+        private System.Windows.Forms.ComboBox cbxStatus;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
     }
 }

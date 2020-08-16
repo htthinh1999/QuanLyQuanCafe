@@ -1,10 +1,12 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Filtering.Templates;
 using DevExpress.XtraReports.Design;
 using QuanLyQuanCafe.DAL;
 using QuanLyQuanCafe.DTO;
 using System;
 using System.Data;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Windows.Forms;
 
@@ -39,14 +41,14 @@ namespace QuanLyQuanCafe
 
         void LoadAccountTypeList()
         {
-            cbxType.DataSource = DAL_AccountType.Instance.LoadAcountTypeList();
+            cbxType.DataSource = DAL_AccountType.Instance.LoadAccountTypeList();
             cbxType.DisplayMember = "name";
         }
 
         void LoadData()
         {
             gridControl.DataSource = bindingSource;
-            bindingSource.DataSource = DAL_Account.Instance.GetAccountList();
+            bindingSource.DataSource = DAL_Account.Instance.LoadAccountList();
         }
 
         void BindingData()
@@ -57,6 +59,27 @@ namespace QuanLyQuanCafe
             rdgSex.DataBindings.Add(new Binding("EditValue", bindingSource, "Giới tính", true, DataSourceUpdateMode.Never));
             dtpkBirthday.DataBindings.Add(new Binding("DateTime", bindingSource, "Ngày sinh", true, DataSourceUpdateMode.Never));
             txtAddress.DataBindings.Add(new Binding("Text", bindingSource, "Địa chỉ", true, DataSourceUpdateMode.Never));
+        }
+
+        bool DataAvailable(bool mustExistUsername)
+        {
+            foreach(TextEdit txt in layoutControl1.Controls.OfType<TextEdit>())
+            {
+                if (txt.Text.Equals(""))
+                {
+                    XtraMessageBox.Show("Bạn cần phải nhập đầy đủ thông tin!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txt.Focus();
+                    return false;
+                }
+            }
+
+            if (mustExistUsername != DAL_Account.Instance.ExistAccount(txtUsername.Text))
+            {
+                XtraMessageBox.Show("Tài khoản " + txtUsername.Text + ((mustExistUsername)?" không":" đã") + " tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
         }
 
         public void SetAccount(Account acc)
@@ -74,49 +97,35 @@ namespace QuanLyQuanCafe
 
         private void btnAdd_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (!DAL_Account.Instance.ExistAccount(txtUsername.Text))
+            if (DataAvailable(false) && XtraMessageBox.Show("Bạn có chắc chắn thêm tài khoản này?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                if (XtraMessageBox.Show("Bạn có chắc chắn thêm tài khoản này?", "Thông báo!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    DAL_Account.Instance.AddAccount(txtUsername.Text, txtDisplayName.Text, (cbxType.SelectedItem as AccountType).ID, rdgSex.EditValue.ToString(), dtpkBirthday.DateTime, txtAddress.Text);
-                    XtraMessageBox.Show("Thêm tài khoản thành công!\nMật khẩu mặc định của tài khoản là 1", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadData();
-                }
-            }
-            else
-            {
-                XtraMessageBox.Show("Tên tài khoản bạn chọn đã có người sử dụng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DAL_Account.Instance.AddAccount(txtUsername.Text, txtDisplayName.Text, (cbxType.SelectedItem as AccountType).ID, rdgSex.EditValue.ToString(), dtpkBirthday.DateTime, txtAddress.Text);
+                LoadData();
+                XtraMessageBox.Show("Thêm tài khoản thành công!\nMật khẩu mặc định của tài khoản là 1", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void btnUpdate_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (DAL_Account.Instance.ExistAccount(txtUsername.Text))
+            if (DataAvailable(true) && XtraMessageBox.Show("Bạn có muốn sửa thông tin tài khoản " + txtUsername.Text + "?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                if (XtraMessageBox.Show("Bạn có muốn sửa thông tin tài khoản " + txtUsername.Text + "?", "Thông báo!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    DAL_Account.Instance.UpdateAccountInfo(txtUsername.Text, txtDisplayName.Text, (cbxType.SelectedItem as AccountType).ID, rdgSex.EditValue.ToString(), dtpkBirthday.DateTime, txtAddress.Text);
-                    XtraMessageBox.Show("Cập nhật thông tin tài khoản thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadData();
-                }
-            }
-            else
-            {
-                XtraMessageBox.Show("Không có tài khoản nào có tên là " + txtUsername.Text + "!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DAL_Account.Instance.UpdateAccountInfo(txtUsername.Text, txtDisplayName.Text, (cbxType.SelectedItem as AccountType).ID, rdgSex.EditValue.ToString(), dtpkBirthday.DateTime, txtAddress.Text);
+                LoadData();
+                XtraMessageBox.Show("Cập nhật thông tin tài khoản thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (DAL_Account.Instance.ExistAccount(txtUsername.Text))
+            if (DataAvailable(true))
             {
                 if (!txtUsername.Text.Equals(account.Username))
                 {
-                    if (XtraMessageBox.Show("Bạn có muốn xóa tài khoản " + txtUsername.Text + "?", "Thông báo!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    if (XtraMessageBox.Show("Bạn có muốn xóa tài khoản " + txtUsername.Text + "?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         DAL_Account.Instance.DeleteAccount(txtUsername.Text);
-                        XtraMessageBox.Show("Xóa tài khoản thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         LoadData();
+                        XtraMessageBox.Show("Xóa tài khoản thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 else
@@ -124,25 +133,17 @@ namespace QuanLyQuanCafe
                     XtraMessageBox.Show("Bạn không thể xóa chính bạn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-            else
-            {
-                XtraMessageBox.Show("Không có tài khoản nào có tên là " + txtUsername.Text + "!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
         }
 
         private void btnResetPassword_Click(object sender, EventArgs e)
         {
-            if (DAL_Account.Instance.ExistAccount(txtUsername.Text))
+            if (DataAvailable(true))
             {
-                if (XtraMessageBox.Show("Bạn có muốn đặt lại mật khẩu cho tài khoản " + txtUsername.Text + "?", "Thông báo!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (XtraMessageBox.Show("Bạn có muốn đặt lại mật khẩu cho tài khoản " + txtUsername.Text + "?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     DAL_Account.Instance.ResetPassword(txtUsername.Text);
                     XtraMessageBox.Show("Đặt lại mật khẩu thành công!\nMật khẩu hiện tại là 1", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-            }
-            else
-            {
-                XtraMessageBox.Show("Không có tài khoản nào có tên là " + txtUsername.Text + "!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

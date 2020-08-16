@@ -4,6 +4,8 @@ GO
 USE QuanLyQuanCafe
 GO
 
+--**************************************** CREATE TABLES ****************************************--
+
 -- Food
 -- Table
 -- FoodCategory
@@ -82,9 +84,10 @@ CREATE TABLE BillInfo
 )
 GO
 
------------------------------------------- INSERT DATA ------------------------------------------
-SELECT username [Tên tài khoản], displayName [Tên hiển thị], t.name [Loại tài khoản], sex [Giới tính], birthday [Ngày sinh], address [Địa chỉ]
-FROM Account a INNER JOIN dbo.AccountType t ON t.id = a.typeID
+--**************************************** END CREATE TABLES ****************************************--
+
+
+--**************************************** INSERT DATA ****************************************--
 
 INSERT INTO dbo.AccountType
 (
@@ -369,48 +372,69 @@ SET status = N'Đã có người'
 WHERE id = 1 OR id = 4 OR id = 5 OR id = 10
 GO
 
------------------------------------------- END INSERT DATA ------------------------------------------
+--**************************************** END INSERT DATA ****************************************--
 
 
------------------------------------------- CREATE PROCEDURES ------------------------------------------
+--**************************************** CREATE PROCEDURES ****************************************--
 
-CREATE PROC USP_Login
-@username VARCHAR(100),
-@password VARCHAR(100)
+------------------------------ PROCEDURES OF dbo.FoodCategory ------------------------------
+
+CREATE PROC USP_LoadFoodCategoryList
 AS
-BEGIN
-	SELECT username
-	FROM dbo.Account
-	WHERE username = @username AND password = @password
-END
+	SELECT * FROM dbo.FoodCategory
 GO
 
-CREATE PROC USP_LoadTableStatus
-@tableID INT
+CREATE PROC	USP_ExistCategory
+@categoryName NVARCHAR(100)
 AS
-BEGIN
-    SELECT id, name, status
-	FROM dbo.TableFood
-	WHERE id = @tableID
-END
+	SELECT *
+	FROM dbo.FoodCategory
+	WHERE Name = @categoryName
 GO
 
-CREATE PROC USP_LoadTableList
+CREATE PROC USP_AddFoodCategory
+@categoryName NVARCHAR(100)
 AS
-BEGIN
-	SELECT id, name, status FROM dbo.TableFood
-END
+    INSERT INTO dbo.FoodCategory
+	VALUES(@categoryName)
 GO
 
-CREATE PROC USP_GetBillByTableID
-@idTable INT
+CREATE PROC USP_UpdateFoodCategory
+@id INT,
+@categoryName NVARCHAR(100)
 AS
-BEGIN
-	SELECT f.name, bi.count, f.price, totalPrice = f.price * count
-	FROM dbo.Food f INNER JOIN dbo.BillInfo bi ON bi.idFood = f.id
-					INNER JOIN dbo.Bill b ON b.id = bi.idBill
-	WHERE b.idTable = @idTable AND b.status = N'Chưa thanh toán'
-END
+    UPDATE dbo.FoodCategory SET name = @categoryName
+	WHERE id = @id
+GO
+
+CREATE PROC USP_DeleteFoodCategory
+@id INT
+AS
+	DELETE dbo.FoodCategory WHERE id = @id
+GO
+
+------------------------------ END PROCEDURES OF dbo.FoodCategory ------------------------------
+
+------------------------------ PROCEDURES OF dbo.Food ------------------------------
+
+CREATE PROC USP_LoadFoodList
+AS
+	SELECT f.id [ID], f.name [Tên món], fc.name [Danh mục], price [Giá tiền]
+    FROM dbo.Food f INNER JOIN dbo.FoodCategory fc ON fc.id = f.idCategory
+GO
+
+CREATE PROC USP_LoadFoodListByCategoryID
+@idCategory INT
+AS
+	SELECT *
+	FROM dbo.Food
+	WHERE idCategory = @idCategory
+GO
+
+CREATE PROC USP_ExistFood
+@foodName NVARCHAR(100)
+AS
+	SELECT * FROM dbo.Food where name = @foodName
 GO
 
 CREATE PROC USP_AddFoodToTable
@@ -493,7 +517,52 @@ BEGIN
 END
 GO
 
-CREATE PROC USP_CheckOutTable
+CREATE PROC USP_SearchFood
+@text NVARCHAR(100)
+AS
+	SELECT f.id [ID], f.name [Tên món], fc.name [Loại món], price [Giá tiền]
+	FROM dbo.Food f INNER JOIN dbo.FoodCategory fc ON fc.id = f.idCategory
+	WHERE dbo.fuConvertToUnsign(f.name) LIKE dbo.fuConvertToUnsign(@text)
+GO
+
+CREATE PROC USP_AddFood
+@foodName NVARCHAR(100),
+@idCategory INT,
+@price FLOAT
+AS
+	INSERT INTO dbo.Food VALUES(@foodName, @idCategory, @price)
+GO
+
+CREATE PROC USP_UpdateFood
+@idFood INT,
+@foodName NVARCHAR(100),
+@idCategory INT,
+@price FLOAT
+AS
+	UPDATE dbo.Food
+	SET name = @foodName, idCategory = @idCategory, price = @price
+	WHERE id = @idFood
+GO
+
+CREATE PROC USP_DeleteFood
+@idFood INT
+AS
+	DELETE dbo.Food WHERE id = @idFood
+GO
+
+------------------------------ END PROCEDURES OF dbo.Food ------------------------------
+
+------------------------------ PROCEDURES OF dbo.Bill & dbo.BillInfo ------------------------------
+
+CREATE PROC USP_GetBillUnCheckOutByTableID
+@idTable INT
+AS
+	SELECT *
+	FROM Bill
+	WHERE status = N'Chưa thanh toán' AND idTable = @idTable
+GO
+
+CREATE PROC USP_CheckoutTable
 @tableID INT,
 @totalPrice FLOAT,
 @discount INT
@@ -513,6 +582,175 @@ BEGIN
 	SET status = N'Trống'
 	WHERE id = @tableID
 END
+GO
+
+-- This procdure load all bill -> slow
+/*
+CREATE PROC USP_GetListBillCheckedOutByDate
+@fromDate DATETIME,
+@toDate DATETIME
+AS
+BEGIN
+    SELECT name [Tên bàn], CONVERT(VARCHAR(20), timeIn, 100) [Thời gian vào], CONVERT(VARCHAR(20), timeOut, 100) [Thời gian ra], totalPrice [Tổng hóa đơn], discount [Giảm giá]
+	FROM dbo.Bill INNER JOIN dbo.TableFood ON TableFood.id = Bill.idTable
+	WHERE Bill.status = N'Đã thanh toán' AND timeOut >= @fromDate AND timeOut <= @toDate + 1
+END
+GO
+*/
+
+CREATE PROC USP_GetListBillCheckedOutByDateAndPage
+@fromDate DATETIME,
+@toDate DATETIME,
+@page INT,
+@rowsPerPage int
+AS
+    SELECT rowNumber [STT] ,name [Tên bàn], CONVERT(VARCHAR(20), timeIn, 100) [Thời gian vào], CONVERT(VARCHAR(20), timeOut, 100) [Thời gian ra], totalPrice [Tổng hóa đơn], discount [Giảm giá]
+	FROM (SELECT ROW_NUMBER() OVER(ORDER BY Bill.ID) rowNumber, name, timeIn, timeOut, totalPrice, discount
+			FROM dbo.Bill INNER JOIN dbo.TableFood ON TableFood.id = Bill.idTable
+			WHERE Bill.status = N'Đã thanh toán' AND timeOut >= @fromDate AND timeOut <= @toDate + 1) tableWithPage
+	WHERE rowNumber BETWEEN (@page-1)*@rowsPerPage+1 AND @page*@rowsPerPage
+GO
+
+CREATE PROC USP_GetMaxPageOfListBillCheckedOutByDate
+@fromDate DATETIME,
+@toDate DATETIME
+AS
+    SELECT COUNT(*)
+	FROM dbo.Bill INNER JOIN dbo.TableFood ON dbo.TableFood.id = Bill.idTable
+	WHERE Bill.status = N'Đã thanh toán' AND timeOut >= @fromDate AND timeOut <= @toDate + 1
+GO
+
+CREATE PROC USP_GetBillByTableID
+@idTable INT
+AS
+	SELECT f.name, bi.count, f.price, totalPrice = f.price * count
+	FROM dbo.Food f INNER JOIN dbo.BillInfo bi ON bi.idFood = f.id
+					INNER JOIN dbo.Bill b ON b.id = bi.idBill
+	WHERE b.idTable = @idTable AND b.status = N'Chưa thanh toán'
+GO
+
+------------------------------ END PROCEDURES OF dbo.Bill & dbo.BillInfo ------------------------------
+
+------------------------------ PROCEDURES OF dbo.Account & dbo.AccountInfo ------------------------------
+
+CREATE PROC USP_LoadAccountList
+AS
+	SELECT username [Tên tài khoản], displayName [Tên hiển thị], t.name [Loại tài khoản], sex [Giới tính], birthday [Ngày sinh], address [Địa chỉ]
+    FROM dbo.Account a INNER JOIN dbo.AccountType t ON t.id = a.typeID
+GO
+
+CREATE PROC USP_LoadAccountTypeList
+AS
+	SELECT *
+	FROM AccountType
+GO
+
+CREATE PROC USP_ExistAccount
+@username VARCHAR(100)
+AS
+	SELECT *
+	FROM Account
+	WHERE username = @username
+GO
+
+CREATE PROC USP_Login
+@username VARCHAR(100),
+@password VARCHAR(100)
+AS
+	SELECT username
+	FROM dbo.Account
+	WHERE username = @username AND password = @password
+GO
+
+CREATE PROC USP_GetAccountInfoByUsername
+@username VARCHAR(100)
+AS
+    SELECT *
+	FROM dbo.Account
+	WHERE username = @username
+GO
+
+CREATE PROC USP_UpdateAccountInfo
+@username VARCHAR(100),
+@displayName NVARCHAR(100),
+@typeID INT,
+@sex NVARCHAR(5),
+@birthday DATE,
+@address NVARCHAR(100)
+AS
+    UPDATE dbo.Account
+	SET displayName = @displayName, typeID = @typeID, sex = @sex, birthday = @birthday, address = @address
+	WHERE username = @username
+GO
+
+CREATE PROC USP_UpdatePassword
+@username VARCHAR(100),
+@newPass VARCHAR(100)
+AS
+	UPDATE dbo.Account
+	SET password = @newPass
+	WHERE username = @username
+GO
+
+CREATE PROC USP_AddAccount
+@username VARCHAR(100),
+@displayName NVARCHAR(100),
+@typeID INT,
+@sex NVARCHAR(5),
+@birthday DATE,
+@address NVARCHAR(100)
+AS
+    INSERT INTO dbo.Account
+    (username, displayName, typeID, sex, birthday, address)
+    VALUES
+    (@username, @displayName, @typeID, @sex, @birthday, @address)
+GO
+
+CREATE PROC USP_DeleteAccount
+@username VARCHAR(100)
+AS
+    DELETE FROM dbo.Account
+	WHERE username = @username
+GO
+
+CREATE PROC USP_ResetPassword
+@username VARCHAR(100)
+AS
+    UPDATE dbo.Account
+	SET password = 'c4ca4238a0b923820dcc509a6f75849b'
+	WHERE username = @username
+GO
+
+------------------------------ END PROCEDURES OF dbo.Account & dbo.AccountInfo ------------------------------
+
+------------------------------ PROCEDURES OF dbo.TableFood ------------------------------
+
+CREATE PROC USP_LoadTableList
+AS
+	SELECT * FROM dbo.TableFood
+GO
+
+CREATE PROC USP_ExistTableFood
+@tableName NVARCHAR(100)
+AS
+BEGIN
+    SELECT *
+	FROM dbo.TableFood
+	WHERE name = @tableName
+END
+GO
+
+CREATE PROC USP_LoadTableStatusByID
+@tableID INT
+AS
+    SELECT id, name, status
+	FROM dbo.TableFood
+	WHERE id = @tableID
+GO
+
+CREATE PROC USP_LoadTableStatusList
+AS
+    SELECT DISTINCT(status) FROM TableFood
 GO
 
 CREATE PROC USP_MoveTable
@@ -552,109 +790,38 @@ BEGIN
 END
 GO
 
--- This procdure load all bill -> slow
-/*
-CREATE PROC USP_GetListBillByDate
-@fromDate DATETIME,
-@toDate DATETIME
+CREATE PROC USP_AddTableFood
+@tableName NVARCHAR(100)
 AS
 BEGIN
-    SELECT name [Tên bàn], CONVERT(VARCHAR(20), timeIn, 100) [Thời gian vào], CONVERT(VARCHAR(20), timeOut, 100) [Thời gian ra], totalPrice [Tổng hóa đơn], discount [Giảm giá]
-	FROM dbo.Bill INNER JOIN dbo.TableFood ON TableFood.id = Bill.idTable
-	WHERE Bill.status = N'Đã thanh toán' AND timeOut >= @fromDate AND timeOut <= @toDate + 1
-END
-GO
-*/
-
-CREATE PROC USP_GetListBillByDateAndPage
-@fromDate DATETIME,
-@toDate DATETIME,
-@page INT,
-@rowsPerPage int
-AS
-BEGIN
-    SELECT rowNumber [STT] ,name [Tên bàn], CONVERT(VARCHAR(20), timeIn, 100) [Thời gian vào], CONVERT(VARCHAR(20), timeOut, 100) [Thời gian ra], totalPrice [Tổng hóa đơn], discount [Giảm giá]
-	FROM (SELECT ROW_NUMBER() OVER(ORDER BY Bill.ID) rowNumber, name, timeIn, timeOut, totalPrice, discount
-			FROM dbo.Bill INNER JOIN dbo.TableFood ON TableFood.id = Bill.idTable
-			WHERE Bill.status = N'Đã thanh toán' AND timeOut >= @fromDate AND timeOut <= @toDate + 1) tableWithPage
-	WHERE rowNumber BETWEEN (@page-1)*@rowsPerPage+1 AND @page*@rowsPerPage
+    INSERT INTO dbo.TableFood
+    (name) VALUES(@tableName)
 END
 GO
 
-CREATE PROC USP_GetAccountInfoByUsername
-@username VARCHAR(100)
+CREATE PROC USP_UpdateTableFood
+@id INT,
+@tableName NVARCHAR(100)
 AS
 BEGIN
-    SELECT *
-	FROM dbo.Account
-	WHERE username = @username
+    UPDATE dbo.TableFood
+	SET name = @tableName
+	WHERE id = @id
 END
 GO
 
-CREATE PROC USP_UpdateAccountInfo
-@username VARCHAR(100),
-@displayName NVARCHAR(100),
-@typeID INT,
-@sex NVARCHAR(5),
-@birthday DATE,
-@address NVARCHAR(100)
+CREATE PROC USP_DeleteTableFood
+@id INT
 AS
-BEGIN
-    UPDATE dbo.Account
-	SET displayName = @displayName, typeID = @typeID, sex = @sex, birthday = @birthday, address = @address
-	WHERE username = @username
-END
+	DELETE dbo.TableFood
+	WHERE id = @id
 GO
+------------------------------ END PROCEDURES OF dbo.TableFood ------------------------------
 
-CREATE PROC USP_UpdatePassword
-@username VARCHAR(100),
-@newPass VARCHAR(100)
-AS
-BEGIN
-	UPDATE dbo.Account
-	SET password = @newPass
-	WHERE username = @username
-END
-GO
-
-CREATE PROC USP_AddAccount
-@username VARCHAR(100),
-@displayName NVARCHAR(100),
-@typeID INT,
-@sex NVARCHAR(5),
-@birthday DATE,
-@address NVARCHAR(100)
-AS
-BEGIN
-    INSERT INTO dbo.Account
-    (username, displayName, typeID, sex, birthday, address)
-    VALUES
-    (@username, @displayName, @typeID, @sex, @birthday, @address)
-END
-GO
-
-CREATE PROC USP_DeleteAccount
-@username VARCHAR(100)
-AS
-BEGIN
-    DELETE FROM dbo.Account
-	WHERE username = @username
-END
-GO
-
-CREATE PROC USP_ResetPassword
-@username VARCHAR(100)
-AS
-BEGIN
-    UPDATE dbo.Account
-	SET password = 'c4ca4238a0b923820dcc509a6f75849b'
-	WHERE username = @username
-END
-
------------------------------------------- END CREATE PROCEDURES ------------------------------------------
+--**************************************** END CREATE PROCEDURES ****************************************--
 
 
------------------------------------------- CREATE TRIGGERS ------------------------------------------
+--**************************************** CREATE TRIGGERS ****************************************--
 
 CREATE TRIGGER UTG_UpdateBillInfo
 ON dbo.BillInfo FOR INSERT, UPDATE
@@ -739,11 +906,10 @@ BEGIN
 END
 GO
 
+--**************************************** END CREATE TRIGGERS ****************************************--
 
------------------------------------------- END CREATE TRIGGERS ------------------------------------------
 
-
------------------------------------------- CREATE FUNCTIONS ---------------------------------------------
+--**************************************** CREATE FUNCTIONS ****************************************--
 
 CREATE FUNCTION [dbo].[fuConvertToUnsign]
 (
@@ -795,4 +961,4 @@ BEGIN
 END
 GO
 
------------------------------------------- END CREATE FUNCTIONS -----------------------------------------
+--**************************************** END CREATE FUNCTIONS ****************************************--

@@ -25,7 +25,7 @@ namespace QuanLyQuanCafe.DAL
         public List<FoodCategory> LoadFoodCategoryList()
         {
             List<FoodCategory> foodCategoryList = new List<FoodCategory>();
-            string query = "SELECT * FROM FoodCategory";
+            string query = "USP_LoadFoodCategoryList";
             DataTable dataTable = DataProvider.ExecuteQuery(query);
             foreach (DataRow row in dataTable.Rows)
             {
@@ -34,6 +34,30 @@ namespace QuanLyQuanCafe.DAL
             }
 
             return foodCategoryList;
+        }
+
+        public bool ExistCategory(string categoryName)
+        {
+            string query = "USP_ExistCategory";
+            return DataProvider.ExecuteQuery(query, new object[] { categoryName }).Rows.Count > 0;
+        }
+
+        public void AddFoodCategory(string categoryName)
+        {
+            string query = "USP_AddFoodCategory";
+            DataProvider.ExecuteQuery(query, new object[] { categoryName });
+        }
+
+        public void UpdateFoodCategory(string id, string categoryName)
+        {
+            string query = "USP_UpdateFoodCategory";
+            DataProvider.ExecuteQuery(query, new object[] { id, categoryName });
+        }
+
+        public void DeleteFoodCategory(string id)
+        {
+            string query = "USP_DeleteFoodCategory";
+            DataProvider.ExecuteQuery(query, new object[] { id });
         }
     }
 }

@@ -40,28 +40,33 @@ namespace QuanLyQuanCafe
         {
             txtID.DataBindings.Add(new Binding("Text", bindingSource, "ID", true, DataSourceUpdateMode.Never));
             txtFoodName.DataBindings.Add(new Binding("Text", bindingSource, "Tên món", true, DataSourceUpdateMode.Never));
-            cbxCategoryName.DataBindings.Add(new Binding("Text", bindingSource, "Loại món", true, DataSourceUpdateMode.Never));
+            cbxCategoryName.DataBindings.Add(new Binding("Text", bindingSource, "Danh mục", true, DataSourceUpdateMode.Never));
             nrPrice.DataBindings.Add(new Binding("Value", bindingSource, "Giá tiền", true, DataSourceUpdateMode.Never));
         }
 
-        bool DataAvailable()
+        bool DataAvailable(bool mustExistFood)
         {
-            if (!txtFoodName.Text.Equals("") && !cbxCategoryName.Text.Equals("") && nrPrice.Value != 0)
+            if (txtFoodName.Text.Equals(""))
             {
-                if (cbxCategoryName.SelectedValue != null)
-                {
-                    return true;
-                }
-                else
-                {
-                    XtraMessageBox.Show("Bạn cần phải chọn đúng loại món!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                XtraMessageBox.Show("Bạn cần phải nhập tên món!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtFoodName.Focus();
+                return false;
             }
-            else
+
+            if (nrPrice.Value == 0)
             {
-                XtraMessageBox.Show("Bạn cần phải nhập đầy đủ thông tin!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                XtraMessageBox.Show("Bạn cần phải nhập giá món!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                nrPrice.Focus();
+                return false;
             }
-            return false;
+
+            if(mustExistFood != DAL_Food.Instance.ExistFood(txtFoodName.Text))
+            {
+                XtraMessageBox.Show("Món " + txtFoodName.Text + ((mustExistFood) ? " không" : " đã") + " tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
         }
 
         #endregion
@@ -76,34 +81,37 @@ namespace QuanLyQuanCafe
 
         private void btnAdd_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (DataAvailable() && XtraMessageBox.Show("Bạn có muốn thêm món này vào danh sách món?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (DataAvailable(false) && XtraMessageBox.Show("Bạn có muốn thêm món " + txtFoodName.Text + " vào danh sách món?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 DAL_Food.Instance.AddFood(txtFoodName.Text, (cbxCategoryName.SelectedValue as FoodCategory).ID, (float)nrPrice.Value);
                 LoadData();
+                XtraMessageBox.Show("Thêm món thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void btnUpdate_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (DataAvailable() && XtraMessageBox.Show("Bạn có muốn sửa thông tin món này?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (DataAvailable(true) && XtraMessageBox.Show("Bạn có muốn sửa thông tin món " + txtFoodName.Text + "?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 DAL_Food.Instance.UpdateFood(int.Parse(txtID.Text), txtFoodName.Text, (cbxCategoryName.SelectedValue as FoodCategory).ID, (float)nrPrice.Value);
                 LoadData();
+                XtraMessageBox.Show("Cập nhật thông tin món thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (XtraMessageBox.Show("Bạn có muốn xóa món này khỏi danh sách món?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (DataAvailable(true) && XtraMessageBox.Show("Bạn có muốn xóa món " + txtFoodName.Text + " khỏi danh sách món?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 DAL_Food.Instance.DeleteFood(int.Parse(txtID.Text));
                 LoadData();
+                XtraMessageBox.Show("Xóa món thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void btnSearch_Click(object sender, System.EventArgs e)
         {
-            bindingSource.DataSource = DAL_Food.Instance.Search(txtSearch.Text);
+            bindingSource.DataSource = DAL_Food.Instance.SearchFood(txtSearch.Text);
         }
 
         #endregion

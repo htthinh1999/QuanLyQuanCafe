@@ -68,6 +68,8 @@
             // 
             // ribbon
             // 
+            this.ribbon.AutoHideEmptyItems = true;
+            this.ribbon.AutoSizeItems = true;
             this.ribbon.ExpandCollapseItem.Id = 0;
             this.ribbon.Images = this.imageCL;
             this.ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
@@ -91,14 +93,16 @@
             this.btnContact,
             this.btnSoftwareInfo});
             this.ribbon.Location = new System.Drawing.Point(0, 0);
-            this.ribbon.MaxItemId = 21;
+            this.ribbon.MaxItemId = 245;
             this.ribbon.Name = "ribbon";
             this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.rbpSys,
             this.rbpManagement,
             this.rbpHelp});
+            this.ribbon.ShowItemCaptionsInPageHeader = true;
             this.ribbon.Size = new System.Drawing.Size(1094, 158);
             this.ribbon.StatusBar = this.ribbonStatusBar;
+            this.ribbon.TransparentEditorsMode = DevExpress.Utils.DefaultBoolean.True;
             // 
             // imageCL
             // 
@@ -148,6 +152,8 @@
             this.btnChangePass.Enabled = false;
             this.btnChangePass.Id = 2;
             this.btnChangePass.ImageOptions.ImageIndex = 12;
+            this.btnChangePass.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+                | System.Windows.Forms.Keys.C));
             this.btnChangePass.Name = "btnChangePass";
             this.btnChangePass.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnChangePass_ItemClick);
             // 
@@ -157,6 +163,8 @@
             this.btnLogout.Enabled = false;
             this.btnLogout.Id = 3;
             this.btnLogout.ImageOptions.ImageIndex = 21;
+            this.btnLogout.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+                | System.Windows.Forms.Keys.E));
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnLogout_ItemClick);
             // 
@@ -166,6 +174,7 @@
             this.btnBackup.Enabled = false;
             this.btnBackup.Id = 5;
             this.btnBackup.ImageOptions.ImageIndex = 11;
+            this.btnBackup.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S));
             this.btnBackup.Name = "btnBackup";
             // 
             // btnRestore
@@ -174,6 +183,7 @@
             this.btnRestore.Enabled = false;
             this.btnRestore.Id = 6;
             this.btnRestore.ImageOptions.ImageIndex = 5;
+            this.btnRestore.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R));
             this.btnRestore.Name = "btnRestore";
             // 
             // skinRibbonGalleryBarItem1
@@ -188,6 +198,8 @@
             this.btnAccountInformation.Enabled = false;
             this.btnAccountInformation.Id = 8;
             this.btnAccountInformation.ImageOptions.ImageIndex = 0;
+            this.btnAccountInformation.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+                | System.Windows.Forms.Keys.I));
             this.btnAccountInformation.Name = "btnAccountInformation";
             this.btnAccountInformation.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
             | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
@@ -199,6 +211,7 @@
             this.btnRevenue.Enabled = false;
             this.btnRevenue.Id = 9;
             this.btnRevenue.ImageOptions.ImageIndex = 4;
+            this.btnRevenue.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D2));
             this.btnRevenue.Name = "btnRevenue";
             this.btnRevenue.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
             | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
@@ -210,6 +223,7 @@
             this.btnFoodCategory.Enabled = false;
             this.btnFoodCategory.Id = 11;
             this.btnFoodCategory.ImageOptions.ImageIndex = 20;
+            this.btnFoodCategory.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D4));
             this.btnFoodCategory.Name = "btnFoodCategory";
             this.btnFoodCategory.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
             | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
@@ -221,6 +235,7 @@
             this.btnTableFood.Enabled = false;
             this.btnTableFood.Id = 12;
             this.btnTableFood.ImageOptions.ImageIndex = 23;
+            this.btnTableFood.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D5));
             this.btnTableFood.Name = "btnTableFood";
             this.btnTableFood.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
             | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
@@ -232,6 +247,7 @@
             this.btnAccount.Enabled = false;
             this.btnAccount.Id = 13;
             this.btnAccount.ImageOptions.ImageIndex = 2;
+            this.btnAccount.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D6));
             this.btnAccount.Name = "btnAccount";
             this.btnAccount.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
             | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
@@ -251,6 +267,7 @@
             this.btnFood.Enabled = false;
             this.btnFood.Id = 16;
             this.btnFood.ImageOptions.ImageIndex = 22;
+            this.btnFood.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D3));
             this.btnFood.Name = "btnFood";
             this.btnFood.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
             | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
@@ -262,6 +279,7 @@
             this.btnTableManager.Enabled = false;
             this.btnTableManager.Id = 17;
             this.btnTableManager.ImageOptions.ImageIndex = 24;
+            this.btnTableManager.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1));
             this.btnTableManager.Name = "btnTableManager";
             this.btnTableManager.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
             | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
@@ -272,6 +290,7 @@
             this.btnTutorial.Caption = "Hướng dẫn";
             this.btnTutorial.Id = 18;
             this.btnTutorial.ImageOptions.ImageIndex = 26;
+            this.btnTutorial.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F1);
             this.btnTutorial.Name = "btnTutorial";
             this.btnTutorial.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
             | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
@@ -281,6 +300,7 @@
             this.btnContact.Caption = "Liên hệ";
             this.btnContact.Id = 19;
             this.btnContact.ImageOptions.ImageIndex = 25;
+            this.btnContact.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F2);
             this.btnContact.Name = "btnContact";
             this.btnContact.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
             | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
@@ -290,6 +310,7 @@
             this.btnSoftwareInfo.Caption = "Thông tin phần mềm";
             this.btnSoftwareInfo.Id = 20;
             this.btnSoftwareInfo.ImageOptions.ImageIndex = 27;
+            this.btnSoftwareInfo.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F3);
             this.btnSoftwareInfo.Name = "btnSoftwareInfo";
             this.btnSoftwareInfo.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
             | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
