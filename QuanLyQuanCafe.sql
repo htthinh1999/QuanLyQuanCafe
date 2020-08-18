@@ -585,7 +585,6 @@ END
 GO
 
 -- This procdure load all bill -> slow
-/*
 CREATE PROC USP_GetListBillCheckedOutByDate
 @fromDate DATETIME,
 @toDate DATETIME
@@ -596,7 +595,6 @@ BEGIN
 	WHERE Bill.status = N'Đã thanh toán' AND timeOut >= @fromDate AND timeOut <= @toDate + 1
 END
 GO
-*/
 
 CREATE PROC USP_GetListBillCheckedOutByDateAndPage
 @fromDate DATETIME,

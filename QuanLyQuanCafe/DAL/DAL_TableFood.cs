@@ -45,7 +45,7 @@ namespace QuanLyQuanCafe.DAL
 
         public TableFood LoadTableStatusByID(int tableID)
         {
-            string query = "LoadTableStatusByID";
+            string query = "USP_LoadTableStatusByID";
             DataTable data = DataProvider.ExecuteQuery(query, new object[] { tableID });
             return new TableFood(data.Rows[0]);
         }

@@ -52,6 +52,8 @@
             this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
             this.gridControl = new DevExpress.XtraGrid.GridControl();
             this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.btnReport = new DevExpress.XtraEditors.SimpleButton();
+            this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtPageNumber.Properties)).BeginInit();
@@ -73,10 +75,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
             this.SuspendLayout();
             // 
             // layoutControl1
             // 
+            this.layoutControl1.Controls.Add(this.btnReport);
             this.layoutControl1.Controls.Add(this.cbxRowsPerPage);
             this.layoutControl1.Controls.Add(this.txtPageNumber);
             this.layoutControl1.Controls.Add(this.btnFirst);
@@ -229,7 +233,8 @@
             this.layoutControlItem5,
             this.layoutControlItem7,
             this.emptySpaceItem2,
-            this.layoutControlItem9});
+            this.layoutControlItem9,
+            this.layoutControlItem10});
             this.Root.Name = "Root";
             this.Root.Size = new System.Drawing.Size(558, 75);
             this.Root.TextVisible = false;
@@ -285,9 +290,9 @@
             // emptySpaceItem1
             // 
             this.emptySpaceItem1.AllowHotTrack = false;
-            this.emptySpaceItem1.Location = new System.Drawing.Point(0, 26);
+            this.emptySpaceItem1.Location = new System.Drawing.Point(86, 26);
             this.emptySpaceItem1.Name = "emptySpaceItem1";
-            this.emptySpaceItem1.Size = new System.Drawing.Size(172, 29);
+            this.emptySpaceItem1.Size = new System.Drawing.Size(86, 29);
             this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             // 
             // layoutControlItem8
@@ -354,6 +359,29 @@
             this.gridView.Name = "gridView";
             this.gridView.OptionsView.ShowGroupPanel = false;
             // 
+            // btnReport
+            // 
+            this.btnReport.Appearance.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnReport.Appearance.BorderColor = System.Drawing.Color.Black;
+            this.btnReport.Appearance.Options.UseBackColor = true;
+            this.btnReport.Appearance.Options.UseBorderColor = true;
+            this.btnReport.Location = new System.Drawing.Point(12, 38);
+            this.btnReport.Name = "btnReport";
+            this.btnReport.Size = new System.Drawing.Size(82, 22);
+            this.btnReport.StyleController = this.layoutControl1;
+            this.btnReport.TabIndex = 14;
+            this.btnReport.Text = "Xuất báo cáo";
+            this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
+            // 
+            // layoutControlItem10
+            // 
+            this.layoutControlItem10.Control = this.btnReport;
+            this.layoutControlItem10.Location = new System.Drawing.Point(0, 26);
+            this.layoutControlItem10.Name = "layoutControlItem10";
+            this.layoutControlItem10.Size = new System.Drawing.Size(86, 29);
+            this.layoutControlItem10.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem10.TextVisible = false;
+            // 
             // fRevenue
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -385,6 +413,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -415,5 +444,7 @@
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem2;
         private System.Windows.Forms.ComboBox cbxRowsPerPage;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
+        private DevExpress.XtraEditors.SimpleButton btnReport;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
     }
 }

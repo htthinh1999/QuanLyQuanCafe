@@ -147,6 +147,10 @@ namespace QuanLyQuanCafe
             {
                 XtraMessageBox.Show("Đây là bàn trống, bạn phải chọn bàn đã có người!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            else if (tableIDChosen == (cbxTableList.SelectedItem as TableFood).ID)
+            {
+                XtraMessageBox.Show("Không thể chuyển bàn vào chính bàn đang chọn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             else if (XtraMessageBox.Show("Bạn có muốn chuyển bàn số " + tableIDChosen + " sang bàn số " + (cbxTableList.SelectedItem as TableFood).ID + "?",
                            "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {

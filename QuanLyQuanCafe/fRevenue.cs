@@ -1,4 +1,5 @@
-﻿using QuanLyQuanCafe.DAL;
+﻿using DevExpress.XtraReports.UI;
+using QuanLyQuanCafe.DAL;
 using System;
 using System.Windows.Forms;
 
@@ -76,6 +77,13 @@ namespace QuanLyQuanCafe
             rowsPerPage = Convert.ToInt32((sender as ComboBox).Text);
             maxPage = DAL_Bill.Instance.GetMaxPageOfListBillCheckedOutByDate(fromDate, toDate, rowsPerPage);
             MoveToPage(1);
+        }
+
+        private void btnReport_Click(object sender, EventArgs e)
+        {
+            fReport frmReport = new fReport();
+            frmReport.Submit(fromDate, toDate);
+            frmReport.ShowPreviewDialog();
         }
 
         private void btnLast_Click(object sender, EventArgs e)
