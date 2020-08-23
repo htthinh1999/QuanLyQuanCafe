@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">All</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>9083ec97-818b-41c1-a479-721d9e128b42</ProjectGuid>
+    <ProjectGuid>167a69b5-e05f-4993-83cb-89d3bf36265c</ProjectGuid>
     <OutputType>msi</OutputType>
     <ProjectHome>.</ProjectHome>
     <StartupFile>Coffee Shop Management.aip</StartupFile>
@@ -21,14 +21,6 @@
     <Compile Include="Coffee Shop Management.aip">
       <SubType>Code</SubType>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\QuanLyQuanCafe\QuanLyQuanCafe.csproj">
-      <Name>QuanLyQuanCafe</Name>
-      <Project>{762f953b-3467-4d86-a641-b540425fa23d}</Project>
-      <Private>True</Private>
-      <OutputsToImport>PrimaryOutput;References;ContentOutput;DocumentationOutput;LocalizedResourcesOutput;SymbolsOutput;ComTypeLibraryOutput</OutputsToImport>
-    </ProjectReference>
   </ItemGroup>
   <Target Name="Build">
     <Error Text="This project requires Advanced Installer tool. Please download it from https://www.advancedinstaller.com/download.html" />

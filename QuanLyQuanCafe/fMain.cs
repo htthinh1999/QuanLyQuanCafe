@@ -190,7 +190,7 @@ namespace QuanLyQuanCafe
             using (XtraSaveFileDialog saveFileDialog = new XtraSaveFileDialog())
             {
                 saveFileDialog.FileName = string.Format("backup_{0}.bak", DateTime.Now.ToString("ddMMyyy_hhmmss"));
-                saveFileDialog.InitialDirectory = Application.StartupPath + "\\Backup";
+                saveFileDialog.InitialDirectory = Application.StartupPath + "\\data\\backup";
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     new fBackup(saveFileDialog.FileName).ShowDialog();
@@ -203,7 +203,7 @@ namespace QuanLyQuanCafe
         {
             using (XtraOpenFileDialog openFileDialog = new XtraOpenFileDialog())
             {
-                openFileDialog.InitialDirectory = Application.StartupPath + "\\Backup";
+                openFileDialog.InitialDirectory = Application.StartupPath + "\\data\\backup";
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     new fRestore(openFileDialog.FileName).ShowDialog();

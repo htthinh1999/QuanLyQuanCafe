@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuanLyQuanCafe", "QuanLyQuanCafe\QuanLyQuanCafe.csproj", "{762F953B-3467-4D86-A641-B540425FA23D}"
 EndProject
+Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "Coffee Shop Management", "Coffee Shop Management\Coffee Shop Management.aiproj", "{167A69B5-E05F-4993-83CB-89D3BF36265C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All|Any CPU = All|Any CPU
@@ -18,6 +20,9 @@ Global
 		{762F953B-3467-4D86-A641-B540425FA23D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{762F953B-3467-4D86-A641-B540425FA23D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{762F953B-3467-4D86-A641-B540425FA23D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{167A69B5-E05F-4993-83CB-89D3BF36265C}.All|Any CPU.ActiveCfg = DefaultBuild
+		{167A69B5-E05F-4993-83CB-89D3BF36265C}.Debug|Any CPU.ActiveCfg = DefaultBuild
+		{167A69B5-E05F-4993-83CB-89D3BF36265C}.Release|Any CPU.ActiveCfg = DefaultBuild
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
