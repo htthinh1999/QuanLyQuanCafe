@@ -1,10 +1,6 @@
 ﻿using QuanLyQuanCafe.DTO;
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuanLyQuanCafe.DAL
 {
@@ -29,7 +25,7 @@ namespace QuanLyQuanCafe.DAL
             List<AccountType> accountTypeList = new List<AccountType>();
             string query = "USP_LoadAccountTypeList";
             DataTable dataTable = DataProvider.ExecuteQuery(query);
-            foreach(DataRow row in dataTable.Rows)
+            foreach (DataRow row in dataTable.Rows)
             {
                 accountTypeList.Add(new AccountType(row));
             }

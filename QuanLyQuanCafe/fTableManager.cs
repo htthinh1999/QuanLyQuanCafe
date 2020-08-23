@@ -10,16 +10,23 @@ using System.Windows.Forms;
 
 namespace QuanLyQuanCafe
 {
-    public partial class fTableManager : DevExpress.XtraEditors.XtraForm
+    public partial class fTableManager : XtraForm
     {
         Dictionary<int, SimpleButton> btnTable = new Dictionary<int, SimpleButton>();
+        int tableSize = 95;
         int tableIDChosen = 1;
         float totalPriceOfTableChosen = 0;
 
         public fTableManager()
         {
             InitializeComponent();
+            LoadData();
+        }
 
+        #region Methods
+
+        void LoadData()
+        {
             LoadFoodCategoryList();
             LoadTableList();
             GetBillByTableID(tableIDChosen);
@@ -60,7 +67,7 @@ namespace QuanLyQuanCafe
             List<TableFood> tableList = DAL_TableFood.Instance.LoadTableList();
             foreach (TableFood tableFood in tableList)
             {
-                SimpleButton btnTableFood = new SimpleButton() { Width = tableFood.Width, Height = tableFood.Height };
+                SimpleButton btnTableFood = new SimpleButton() { Width = tableSize, Height = tableSize };
                 btnTableFood.Tag = tableFood.ID;
                 btnTableFood.Click += LoadBillByTableID;
                 UpdateTableStatus(btnTableFood, tableFood.Name, tableFood.Status);
@@ -104,6 +111,10 @@ namespace QuanLyQuanCafe
             GetBillByTableID(tableID);
             tableIDChosen = tableID;
         }
+
+        #endregion
+
+        #region Events
 
         private void cbxFoodCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -167,5 +178,7 @@ namespace QuanLyQuanCafe
             e.Cancel = true;
             this.Hide();
         }
+
+        #endregion
     }
 }

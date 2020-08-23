@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace QuanLyQuanCafe
 {
-    public partial class fFood : DevExpress.XtraEditors.XtraForm
+    public partial class fFood : XtraForm
     {
         BindingSource bindingSource = new BindingSource();
 
@@ -60,7 +60,7 @@ namespace QuanLyQuanCafe
                 return false;
             }
 
-            if(mustExistFood != DAL_Food.Instance.ExistFood(txtFoodName.Text))
+            if (mustExistFood != DAL_Food.Instance.ExistFood(txtFoodName.Text))
             {
                 XtraMessageBox.Show("Món " + txtFoodName.Text + ((mustExistFood) ? " không" : " đã") + " tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
@@ -114,11 +114,11 @@ namespace QuanLyQuanCafe
             bindingSource.DataSource = DAL_Food.Instance.SearchFood(txtSearch.Text);
         }
 
-        #endregion
-
         private void btnRefresh_Click(object sender, System.EventArgs e)
         {
             LoadData();
         }
+
+        #endregion
     }
 }

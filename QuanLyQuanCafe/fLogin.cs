@@ -6,12 +6,14 @@ using System.Windows.Forms;
 
 namespace QuanLyQuanCafe
 {
-    public partial class fLogin : DevExpress.XtraEditors.XtraForm
+    public partial class fLogin : XtraForm
     {
         public fLogin()
         {
             InitializeComponent();
         }
+
+        #region Methods
 
         void Login()
         {
@@ -40,6 +42,10 @@ namespace QuanLyQuanCafe
             txtUsername.Focus();
         }
 
+        #endregion
+
+        #region Events
+
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -56,5 +62,7 @@ namespace QuanLyQuanCafe
             ClearAllInput();
             this.Hide();
         }
+
+        #endregion
     }
 }

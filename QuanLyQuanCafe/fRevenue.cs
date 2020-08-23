@@ -18,6 +18,8 @@ namespace QuanLyQuanCafe
             Init();
         }
 
+        #region Methods
+
         void Init()
         {
             LoadDateTimePickerAndMaxPage();
@@ -41,6 +43,10 @@ namespace QuanLyQuanCafe
             txtPageNumber.Text = currentPage.ToString() + "/" + maxPage;
             gridControl.DataSource = DAL_Bill.Instance.GetListBillCheckedOutByDateAndPage(fromDate, toDate, currentPage, rowsPerPage);
         }
+
+        #endregion
+
+        #region Events
 
         private void fRevenue_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -90,5 +96,7 @@ namespace QuanLyQuanCafe
         {
             MoveToPage(maxPage);
         }
+
+        #endregion
     }
 }

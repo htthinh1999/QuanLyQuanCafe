@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace QuanLyQuanCafe
 {
-    public partial class fFoodCategory : DevExpress.XtraEditors.XtraForm
+    public partial class fFoodCategory : XtraForm
     {
         BindingSource bindingSource = new BindingSource();
 
@@ -13,6 +13,8 @@ namespace QuanLyQuanCafe
             InitializeComponent();
             Init();
         }
+
+        #region Methods
 
         void Init()
         {
@@ -43,7 +45,7 @@ namespace QuanLyQuanCafe
                 return false;
             }
 
-            if(mustExistCategory != DAL_FoodCategory.Instance.ExistCategory(txtCategoryName.Text))
+            if (mustExistCategory != DAL_FoodCategory.Instance.ExistCategory(txtCategoryName.Text))
             {
                 XtraMessageBox.Show("Danh mục " + txtCategoryName.Text + ((mustExistCategory) ? " không" : " đã") + " tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
@@ -51,6 +53,10 @@ namespace QuanLyQuanCafe
 
             return true;
         }
+
+        #endregion
+
+        #region Events
 
         private void fFoodCategory_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -87,5 +93,7 @@ namespace QuanLyQuanCafe
                 XtraMessageBox.Show("Xóa danh mục thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+        #endregion
     }
 }

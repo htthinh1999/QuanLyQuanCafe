@@ -1,7 +1,8 @@
 ﻿using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
-using DevExpress.XtraReports.UI;
+using DevExpress.XtraSplashScreen;
+using QuanLyQuanCafe.DAL;
 using QuanLyQuanCafe.DTO;
 using System;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Windows.Forms;
 
 namespace QuanLyQuanCafe
 {
-    public partial class fMain : DevExpress.XtraBars.Ribbon.RibbonForm
+    public partial class fMain : RibbonForm
     {
         #region All forms except main form
 
@@ -184,7 +185,36 @@ namespace QuanLyQuanCafe
             }
         }
 
-        #endregion
+        private void btnBackup_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            using (XtraSaveFileDialog saveFileDialog = new XtraSaveFileDialog())
+            {
+                saveFileDialog.FileName = string.Format("backup_{0}.bak", DateTime.Now.ToString("ddMMyyy_hhmmss"));
+                saveFileDialog.InitialDirectory = Application.StartupPath + "\\Backup";
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    new fBackup(saveFileDialog.FileName).ShowDialog();
+                }
+            }
 
+        }
+
+        private void btnRestore_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            using (XtraOpenFileDialog openFileDialog = new XtraOpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = Application.StartupPath + "\\Backup";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    new fRestore(openFileDialog.FileName).ShowDialog();
+                    XtraMessageBox.Show("Chương trình sẽ tự khởi chạy lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    Application.Restart();
+                    Environment.Exit(0);
+                }
+            }
+        }
+
+        #endregion
     }
 }

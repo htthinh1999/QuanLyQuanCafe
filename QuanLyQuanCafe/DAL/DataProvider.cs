@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Data;
+using System.Data.Sql;
 using System.Data.SqlClient;
 
 namespace QuanLyQuanCafe.DAL
 {
     public static class DataProvider
     {
-        static string connectionStr = "Data Source=TEAM-LIL;Initial Catalog=QuanLyQuanCafe;User ID=sa;Password=a123456";
-        static SqlConnection con = new SqlConnection(connectionStr);
+        public readonly static string ServerName = "(local)";
+        public readonly static string DatabaseName = "QuanLyQuanCafe";
+
+        static string connectionStr = "Data Source=" + ServerName + ";Initial Catalog=" + DatabaseName + ";Integrated Security=true";
 
         public static DataTable ExecuteQuery(string query, object[] parameter = null)
         {
@@ -27,8 +30,13 @@ namespace QuanLyQuanCafe.DAL
 
             try
             {
-                SqlDataAdapter adapter = new SqlDataAdapter(query, connectionStr);
-                adapter.Fill(data);
+                using (SqlConnection connection = new SqlConnection(connectionStr))
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                {
+                    connection.Open();
+                    adapter.Fill(data);
+                }
             }
             catch (SqlException e)
             {

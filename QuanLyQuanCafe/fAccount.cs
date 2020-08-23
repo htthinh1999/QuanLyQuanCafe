@@ -1,18 +1,14 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
-using DevExpress.XtraEditors.Filtering.Templates;
-using DevExpress.XtraReports.Design;
 using QuanLyQuanCafe.DAL;
 using QuanLyQuanCafe.DTO;
 using System;
-using System.Data;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Windows.Forms;
 
 namespace QuanLyQuanCafe
 {
-    public partial class fAccount : DevExpress.XtraEditors.XtraForm
+    public partial class fAccount : XtraForm
     {
         Account account;
         BindingSource bindingSource = new BindingSource();
@@ -22,6 +18,8 @@ namespace QuanLyQuanCafe
             InitializeComponent();
             Init();
         }
+
+        #region Methods
 
         void Init()
         {
@@ -63,7 +61,7 @@ namespace QuanLyQuanCafe
 
         bool DataAvailable(bool mustExistUsername)
         {
-            foreach(TextEdit txt in layoutControl1.Controls.OfType<TextEdit>())
+            foreach (TextEdit txt in layoutControl1.Controls.OfType<TextEdit>())
             {
                 if (txt.Text.Equals(""))
                 {
@@ -75,7 +73,7 @@ namespace QuanLyQuanCafe
 
             if (mustExistUsername != DAL_Account.Instance.ExistAccount(txtUsername.Text))
             {
-                XtraMessageBox.Show("Tài khoản " + txtUsername.Text + ((mustExistUsername)?" không":" đã") + " tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                XtraMessageBox.Show("Tài khoản " + txtUsername.Text + ((mustExistUsername) ? " không" : " đã") + " tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
@@ -86,6 +84,8 @@ namespace QuanLyQuanCafe
         {
             account = acc;
         }
+
+        #endregion
 
         #region Events
 

@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace QuanLyQuanCafe
 {
-    public partial class fAccountInfo : DevExpress.XtraEditors.XtraForm
+    public partial class fAccountInfo : XtraForm
     {
         Account account;
 
@@ -15,6 +15,8 @@ namespace QuanLyQuanCafe
         {
             InitializeComponent();
         }
+
+        #region Methods
 
         public void SetAccount(Account acc)
         {
@@ -80,6 +82,10 @@ namespace QuanLyQuanCafe
             rdoFemale.Visible = allow;
         }
 
+        #endregion
+
+        #region Events
+
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             if (btnUpdate.Text.Equals("Thay đổi"))
@@ -107,5 +113,7 @@ namespace QuanLyQuanCafe
 
             }
         }
+
+        #endregion
     }
 }

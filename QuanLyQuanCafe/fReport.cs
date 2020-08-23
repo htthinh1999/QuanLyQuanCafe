@@ -1,20 +1,17 @@
-﻿using System;
-using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
-using DevExpress.XtraReports.UI;
-using DevExpress.Data.Controls.ExpressionEditor;
-using DevExpress.XtraReports.Parameters;
+﻿using DevExpress.XtraReports.UI;
+using System;
 
 namespace QuanLyQuanCafe
 {
-    public partial class fReport : DevExpress.XtraReports.UI.XtraReport
+    public partial class fReport : XtraReport
     {
         public fReport()
         {
             InitializeComponent();
             Init();
         }
+
+        #region Methods
 
         void Init()
         {
@@ -31,5 +28,6 @@ namespace QuanLyQuanCafe
             CreateDocument();
         }
 
+        #endregion
     }
 }

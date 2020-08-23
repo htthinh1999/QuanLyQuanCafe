@@ -1,6 +1,5 @@
 ﻿using QuanLyQuanCafe.DTO;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Security.Cryptography;
 using System.Text;

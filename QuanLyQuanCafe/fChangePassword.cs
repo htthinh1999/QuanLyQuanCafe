@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace QuanLyQuanCafe
 {
-    public partial class fChangePassword : DevExpress.XtraEditors.XtraForm
+    public partial class fChangePassword : XtraForm
     {
         Account account;
 
@@ -17,22 +17,7 @@ namespace QuanLyQuanCafe
             InitializeComponent();
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void fChangePassword_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = true;
-            if (!(this.MdiParent as fMain).LoggingOut && DataEntering() && XtraMessageBox.Show("Các dữ liệu bạn đang nhập sẽ không được hoàn tác!\nBạn có chắc chắn muốn thoát?",
-                                    "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-            {
-                return;
-            }
-            ClearAllInput();
-            this.Hide();
-        }
+        #region Methods
 
         bool DataEntering()
         {
@@ -64,6 +49,27 @@ namespace QuanLyQuanCafe
         public void SetAccount(Account acc)
         {
             account = acc;
+        }
+
+        #endregion
+
+        #region Events
+
+        private void fChangePassword_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            if (!(this.MdiParent as fMain).LoggingOut && DataEntering() && XtraMessageBox.Show("Các dữ liệu bạn đang nhập sẽ không được hoàn tác!\nBạn có chắc chắn muốn thoát?",
+                                    "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            {
+                return;
+            }
+            ClearAllInput();
+            this.Hide();
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
@@ -118,8 +124,8 @@ namespace QuanLyQuanCafe
                     }
                 }
             }
-
-
         }
+
+        #endregion
     }
 }

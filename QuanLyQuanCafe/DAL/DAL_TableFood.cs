@@ -1,5 +1,4 @@
 ﻿using QuanLyQuanCafe.DTO;
-using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -53,9 +52,9 @@ namespace QuanLyQuanCafe.DAL
         public List<string> LoadTableStatusList()
         {
             string query = "USP_LoadTableStatusList";
-            DataTable dataTable =  DataProvider.ExecuteQuery(query);
+            DataTable dataTable = DataProvider.ExecuteQuery(query);
             List<string> statusList = new List<string>();
-            foreach(DataRow row in dataTable.Rows)
+            foreach (DataRow row in dataTable.Rows)
             {
                 statusList.Add(row["status"].ToString());
             }

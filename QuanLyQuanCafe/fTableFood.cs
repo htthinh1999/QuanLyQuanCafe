@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace QuanLyQuanCafe
 {
-    public partial class fTableFood : DevExpress.XtraEditors.XtraForm
+    public partial class fTableFood : XtraForm
     {
         BindingSource bindingSource = new BindingSource();
 
@@ -13,6 +13,8 @@ namespace QuanLyQuanCafe
             InitializeComponent();
             Init();
         }
+
+        #region Methods
 
         void Init()
         {
@@ -57,6 +59,10 @@ namespace QuanLyQuanCafe
             return true;
         }
 
+        #endregion
+
+        #region Events
+
         private void fTableFood_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
@@ -92,5 +98,7 @@ namespace QuanLyQuanCafe
                 XtraMessageBox.Show("Xóa bàn thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+        #endregion
     }
 }
