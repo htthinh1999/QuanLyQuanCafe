@@ -24,6 +24,8 @@ namespace QuanLyQuanCafe
         public fRevenue frmRevenue;
         public fTableFood frmTableFood;
         public fTableManager frmTableManager;
+        public fTutorial frmTutorial;
+        public fSoftwareInfo frmSoftwareInfo;
 
         #endregion
 
@@ -53,6 +55,8 @@ namespace QuanLyQuanCafe
             frmRevenue = new fRevenue();
             frmTableFood = new fTableFood();
             frmTableManager = new fTableManager();
+            frmTutorial = new fTutorial();
+            frmSoftwareInfo = new fSoftwareInfo();
         }
 
         bool CheckExist(Type fType)
@@ -107,12 +111,9 @@ namespace QuanLyQuanCafe
             {
                 btn.Enabled = false;
             }
-            foreach (RibbonPageGroup rbpGroup in rbpHelp.Groups)
+            foreach (BarButtonItemLink btn in rbpgHelp.ItemLinks)
             {
-                foreach (BarButtonItemLink btn in rbpgHelp.ItemLinks)
-                {
-                    btn.Item.Enabled = true;
-                }
+                btn.Item.Enabled = true;
             }
             btnSoftwareInfo.Enabled = true;
             btnLogin.Enabled = true;
@@ -177,6 +178,16 @@ namespace QuanLyQuanCafe
             ShowForm(frmTableManager, typeof(fTableManager));
         }
 
+        private void btnTutorial_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ShowForm(frmTutorial, typeof(fTutorial));
+        }
+
+        private void btnSoftwareInfo_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            frmSoftwareInfo.ShowDialog();
+        }
+
         private void btnLogout_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (XtraMessageBox.Show("Bạn có muốn đăng xuất tài khoản?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -212,6 +223,15 @@ namespace QuanLyQuanCafe
                     Application.Restart();
                     Environment.Exit(0);
                 }
+            }
+        }
+
+        private void fMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            if (XtraMessageBox.Show("Bạn có muốn thoát phần mềm?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                Environment.Exit(0);
             }
         }
 

@@ -44,6 +44,7 @@
             this.labelStatus.Size = new System.Drawing.Size(121, 13);
             this.labelStatus.TabIndex = 7;
             this.labelStatus.Text = "Đang khôi phục dữ liệu...";
+            this.labelStatus.UseWaitCursor = true;
             // 
             // peImage
             // 
@@ -60,6 +61,7 @@
             this.peImage.Properties.SvgImageColorizationMode = DevExpress.Utils.SvgImageColorizationMode.None;
             this.peImage.Size = new System.Drawing.Size(398, 100);
             this.peImage.TabIndex = 9;
+            this.peImage.UseWaitCursor = true;
             // 
             // progressBarControl
             // 
@@ -69,6 +71,7 @@
             this.progressBarControl.Name = "progressBarControl";
             this.progressBarControl.Size = new System.Drawing.Size(352, 12);
             this.progressBarControl.TabIndex = 5;
+            this.progressBarControl.UseWaitCursor = true;
             // 
             // fRestore
             // 
@@ -81,6 +84,7 @@
             this.Name = "fRestore";
             this.Padding = new System.Windows.Forms.Padding(1);
             this.Text = "fRestore";
+            this.UseWaitCursor = true;
             ((System.ComponentModel.ISupportInitialize)(this.peImage.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.progressBarControl.Properties)).EndInit();
             this.ResumeLayout(false);

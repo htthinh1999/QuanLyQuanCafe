@@ -21,6 +21,7 @@ namespace QuanLyQuanCafe
         {
             LoadData();
             LoadCategoryList();
+            LoadStateList();
             DataBinding();
         }
 
@@ -36,12 +37,19 @@ namespace QuanLyQuanCafe
             cbxCategoryName.DisplayMember = "Name";
         }
 
+        void LoadStateList()
+        {
+            cbxState.DataSource = DAL_State.Instance.LoadStateList();
+            cbxState.DisplayMember = "Name";
+        }
+
         void DataBinding()
         {
             txtID.DataBindings.Add(new Binding("Text", bindingSource, "ID", true, DataSourceUpdateMode.Never));
             txtFoodName.DataBindings.Add(new Binding("Text", bindingSource, "Tên món", true, DataSourceUpdateMode.Never));
             cbxCategoryName.DataBindings.Add(new Binding("Text", bindingSource, "Danh mục", true, DataSourceUpdateMode.Never));
             nrPrice.DataBindings.Add(new Binding("Value", bindingSource, "Giá tiền", true, DataSourceUpdateMode.Never));
+            cbxState.DataBindings.Add(new Binding("Text", bindingSource, "Trạng thái", true, DataSourceUpdateMode.Never));
         }
 
         bool DataAvailable(bool mustExistFood)
@@ -93,7 +101,7 @@ namespace QuanLyQuanCafe
         {
             if (DataAvailable(true) && XtraMessageBox.Show("Bạn có muốn sửa thông tin món " + txtFoodName.Text + "?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                DAL_Food.Instance.UpdateFood(int.Parse(txtID.Text), txtFoodName.Text, (cbxCategoryName.SelectedValue as FoodCategory).ID, (float)nrPrice.Value);
+                DAL_Food.Instance.UpdateFood(int.Parse(txtID.Text), txtFoodName.Text, (cbxCategoryName.SelectedValue as FoodCategory).ID, (float)nrPrice.Value, (cbxState.SelectedValue as State).ID);
                 LoadData();
                 XtraMessageBox.Show("Cập nhật thông tin món thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -101,11 +109,21 @@ namespace QuanLyQuanCafe
 
         private void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (DataAvailable(true) && XtraMessageBox.Show("Bạn có muốn xóa món " + txtFoodName.Text + " khỏi danh sách món?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (DataAvailable(true))
             {
-                DAL_Food.Instance.DeleteFood(int.Parse(txtID.Text));
-                LoadData();
-                XtraMessageBox.Show("Xóa món thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (!DAL_Food.Instance.FoodWasUsing(int.Parse(txtID.Text)))
+                {
+                    if (XtraMessageBox.Show("Bạn có muốn xóa món " + txtFoodName.Text + " khỏi danh sách món?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        DAL_Food.Instance.DeleteFood(int.Parse(txtID.Text));
+                        LoadData();
+                        XtraMessageBox.Show("Xóa món thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                else
+                {
+                    XtraMessageBox.Show("Món này đã được sử dụng! Bạn chỉ có thể ngưng sử dụng món này!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 

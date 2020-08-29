@@ -33,10 +33,19 @@ CREATE TABLE Account
 	username VARCHAR(100) PRIMARY KEY,
 	password VARCHAR(1000) NOT NULL DEFAULT 'c4ca4238a0b923820dcc509a6f75849b', -- default password = '1'
 	displayName NVARCHAR(100) NOT NULL,
-	typeID INT REFERENCES dbo.AccountType(id) NOT NULL DEFAULT 2, -- 1: Quản trị viên, 2: Nhân viên
+	typeID INT NOT NULL DEFAULT 2, -- 1: Quản trị viên, 2: Nhân viên
 	sex NVARCHAR(5) NOT NULL DEFAULT N'Nam', -- Nam / Nữ
 	birthday DATE NOT NULL,
-	address NVARCHAR(100) NOT NULL
+	address NVARCHAR(100) NOT NULL,
+
+	FOREIGN KEY(typeID) REFERENCES dbo.AccountType(id)
+)
+GO
+
+CREATE TABLE State
+(
+	id INT IDENTITY PRIMARY KEY, -- 1: Sử dụng, 2: Ngưng sử dụng
+	name NVARCHAR(50) NOT NULL
 )
 GO
 
@@ -53,8 +62,10 @@ CREATE TABLE Food
 	name NVARCHAR(100) NOT NULL,
 	idCategory INT NOT NULL,
 	price FLOAT NOT NULL DEFAULT 0,
+	stateID INT NOT NULL DEFAULT 1,
 	
-	FOREIGN KEY (idCategory) REFERENCES dbo.FoodCategory(id)
+	FOREIGN KEY (idCategory) REFERENCES dbo.FoodCategory(id),
+	FOREIGN KEY (stateID) REFERENCES dbo.State(id)
 )
 GO
 
@@ -178,21 +189,11 @@ BEGIN
 END
 GO
 
-INSERT INTO dbo.FoodCategory
-(
-    name
-)
-VALUES
-(N'Thức ăn' -- name - nvarchar(100)
-    )
+INSERT INTO dbo.State(name) VALUES(N'Sử dụng')
+INSERT INTO dbo.State(name) VALUES(N'Ngưng sử dụng')
 
-INSERT INTO dbo.FoodCategory
-(
-    name
-)
-VALUES
-(N'Thức uống' -- name - nvarchar(100)
-    )
+INSERT INTO dbo.FoodCategory(name) VALUES(N'Thức ăn')
+INSERT INTO dbo.FoodCategory(name) VALUES(N'Thức uống')
 
 INSERT INTO dbo.Food
 (
@@ -377,6 +378,15 @@ GO
 
 --**************************************** CREATE PROCEDURES ****************************************--
 
+------------------------------ PROCEDURES OF dbo.State ------------------------------
+
+CREATE PROC USP_LoadStateList
+AS
+	SELECT * FROM State
+GO
+
+------------------------------ END PROCEDURES OF dbo.State ------------------------------
+
 ------------------------------ PROCEDURES OF dbo.FoodCategory ------------------------------
 
 CREATE PROC USP_LoadFoodCategoryList
@@ -419,8 +429,9 @@ GO
 
 CREATE PROC USP_LoadFoodList
 AS
-	SELECT f.id [ID], f.name [Tên món], fc.name [Danh mục], price [Giá tiền]
+	SELECT f.id [ID], f.name [Tên món], fc.name [Danh mục], price [Giá tiền], s.name [Trạng thái]
     FROM dbo.Food f INNER JOIN dbo.FoodCategory fc ON fc.id = f.idCategory
+				INNER JOIN dbo.State s ON f.stateID = s.id
 GO
 
 CREATE PROC USP_LoadFoodListByCategoryID
@@ -428,7 +439,7 @@ CREATE PROC USP_LoadFoodListByCategoryID
 AS
 	SELECT *
 	FROM dbo.Food
-	WHERE idCategory = @idCategory
+	WHERE idCategory = @idCategory AND stateID = 1
 GO
 
 CREATE PROC USP_ExistFood
@@ -530,17 +541,18 @@ CREATE PROC USP_AddFood
 @idCategory INT,
 @price FLOAT
 AS
-	INSERT INTO dbo.Food VALUES(@foodName, @idCategory, @price)
+	INSERT INTO dbo.Food(name, idCategory, price) VALUES(@foodName, @idCategory, @price)
 GO
 
 CREATE PROC USP_UpdateFood
 @idFood INT,
 @foodName NVARCHAR(100),
 @idCategory INT,
-@price FLOAT
+@price FLOAT,
+@stateID INT
 AS
 	UPDATE dbo.Food
-	SET name = @foodName, idCategory = @idCategory, price = @price
+	SET name = @foodName, idCategory = @idCategory, price = @price, stateID = @stateID
 	WHERE id = @idFood
 GO
 
@@ -548,6 +560,12 @@ CREATE PROC USP_DeleteFood
 @idFood INT
 AS
 	DELETE dbo.Food WHERE id = @idFood
+GO
+
+CREATE PROC USP_FoodWasUsing
+@idFood INT
+AS
+	SELECT id FROM dbo.BillInfo WHERE idFood = @idFood
 GO
 
 ------------------------------ END PROCEDURES OF dbo.Food ------------------------------
@@ -815,22 +833,6 @@ AS
 	WHERE id = @id
 GO
 ------------------------------ END PROCEDURES OF dbo.TableFood ------------------------------
-
------------------------------- PROCEDURES OF DATA ------------------------------
-
-CREATE PROC USP_BackupData
-@path NVARCHAR(500)
-AS
-	BACKUP DATABASE QuanLyQuanCafe TO DISK = @path
-GO
-
-CREATE PROC USP_RestoreData
-@path NVARCHAR(500)
-AS
-	RESTORE DATABASE QuanLyQuanCafe FROM DISK = @path
-GO
-
------------------------------- END PROCEDURES OF DATA ------------------------------
 
 --**************************************** END CREATE PROCEDURES ****************************************--
 

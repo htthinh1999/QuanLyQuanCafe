@@ -230,6 +230,7 @@
     <Compile Include="DAL\DAL_BillTableInfo.cs" />
     <Compile Include="DAL\DAL_Food.cs" />
     <Compile Include="DAL\DAL_FoodCategory.cs" />
+    <Compile Include="DAL\DAL_State.cs" />
     <Compile Include="DAL\DAL_TableFood.cs" />
     <Compile Include="DAL\DataProvider.cs" />
     <Compile Include="DTO\Account.cs" />
@@ -239,6 +240,7 @@
     <Compile Include="DTO\BillTableInfo.cs" />
     <Compile Include="DTO\Food.cs" />
     <Compile Include="DTO\FoodCategory.cs" />
+    <Compile Include="DTO\State.cs" />
     <Compile Include="DTO\TableFood.cs" />
     <Compile Include="fAccount.cs">
       <SubType>Form</SubType>
@@ -294,6 +296,12 @@
     <Compile Include="fRevenue.Designer.cs">
       <DependentUpon>fRevenue.cs</DependentUpon>
     </Compile>
+    <Compile Include="fSoftwareInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fSoftwareInfo.Designer.cs">
+      <DependentUpon>fSoftwareInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="fTableFood.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -305,6 +313,12 @@
     </Compile>
     <Compile Include="fTableManager.Designer.cs">
       <DependentUpon>fTableManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fTutorial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fTutorial.Designer.cs">
+      <DependentUpon>fTutorial.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -347,11 +361,17 @@
     <EmbeddedResource Include="fRevenue.resx">
       <DependentUpon>fRevenue.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="fSoftwareInfo.resx">
+      <DependentUpon>fSoftwareInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="fTableFood.resx">
       <DependentUpon>fTableFood.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="fTableManager.resx">
       <DependentUpon>fTableManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fTutorial.resx">
+      <DependentUpon>fTutorial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">

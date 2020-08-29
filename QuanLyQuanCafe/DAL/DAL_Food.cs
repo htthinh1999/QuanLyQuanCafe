@@ -1,4 +1,5 @@
 ﻿using QuanLyQuanCafe.DTO;
+using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -68,16 +69,22 @@ namespace QuanLyQuanCafe.DAL
             DataProvider.ExecuteQuery(query, new object[] { foodName, idCategory, price });
         }
 
-        public void UpdateFood(int foodID, string foodName, int categoryID, float price)
+        public void UpdateFood(int foodID, string foodName, int categoryID, float price, int stateID)
         {
             string query = "USP_UpdateFood";
-            DataProvider.ExecuteQuery(query, new object[] { foodID, foodName, categoryID, price });
+            DataProvider.ExecuteQuery(query, new object[] { foodID, foodName, categoryID, price, stateID });
         }
 
         public void DeleteFood(int foodID)
         {
             string query = "USP_DeleteFood";
             DataProvider.ExecuteQuery(query, new object[] { foodID });
+        }
+
+        public bool FoodWasUsing(int foodID)
+        {
+            string query = "USP_FoodWasUsing";
+            return DataProvider.ExecuteQuery(query, new object[] { foodID }).Rows.Count > 0;
         }
     }
 }

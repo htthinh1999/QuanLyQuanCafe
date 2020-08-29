@@ -1,5 +1,5 @@
-﻿﻿using QuanLyQuanCafe.DTO;
-﻿using System;
+﻿using QuanLyQuanCafe.DTO;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -8,30 +8,30 @@ using System.Threading.Tasks;
 
 namespace QuanLyQuanCafe.DAL
 {
-    class DAL_AccountType
+    class DAL_State
     {
-        static DAL_AccountType instance;
-        public static DAL_AccountType Instance
+        static DAL_State instance;
+        public static DAL_State Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new DAL_AccountType();
+                    instance = new DAL_State();
                 }
                 return instance;
             }
             private set { instance = value; }
         }
 
-        public List<AccountType> LoadAccountTypeList()
+        public List<State> LoadStateList()
         {
-            List<AccountType> accountTypeList = new List<AccountType>();
-            string query = "USP_LoadAccountTypeList";
+            List<State> accountTypeList = new List<State>();
+            string query = "USP_LoadStateList";
             DataTable dataTable = DataProvider.ExecuteQuery(query);
             foreach (DataRow row in dataTable.Rows)
             {
-                accountTypeList.Add(new AccountType(row));
+                accountTypeList.Add(new State(row));
             }
             return accountTypeList;
         }

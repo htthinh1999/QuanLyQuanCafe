@@ -47,7 +47,6 @@
             this.btnFood = new DevExpress.XtraBars.BarButtonItem();
             this.btnTableManager = new DevExpress.XtraBars.BarButtonItem();
             this.btnTutorial = new DevExpress.XtraBars.BarButtonItem();
-            this.btnContact = new DevExpress.XtraBars.BarButtonItem();
             this.btnSoftwareInfo = new DevExpress.XtraBars.BarButtonItem();
             this.rbpSys = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.rbpSystem = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -56,13 +55,17 @@
             this.rbpManagement = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.rbpgStaff = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.rbpgAdmin = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.rbpHelp = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.rbpgHelp = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.rbpgInfomation = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.repositoryItemColorEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemColorEdit();
+            this.repositoryItemImageEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemImageEdit();
+            this.repositoryItemColorEdit2 = new DevExpress.XtraEditors.Repository.RepositoryItemColorEdit();
             this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.tabMDI = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageCL)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemColorEdit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemImageEdit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemColorEdit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabMDI)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,15 +93,17 @@
             this.btnFood,
             this.btnTableManager,
             this.btnTutorial,
-            this.btnContact,
             this.btnSoftwareInfo});
             this.ribbon.Location = new System.Drawing.Point(0, 0);
-            this.ribbon.MaxItemId = 245;
+            this.ribbon.MaxItemId = 255;
             this.ribbon.Name = "ribbon";
             this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.rbpSys,
-            this.rbpManagement,
-            this.rbpHelp});
+            this.rbpManagement});
+            this.ribbon.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemColorEdit1,
+            this.repositoryItemImageEdit1,
+            this.repositoryItemColorEdit2});
             this.ribbon.ShowItemCaptionsInPageHeader = true;
             this.ribbon.Size = new System.Drawing.Size(1094, 158);
             this.ribbon.StatusBar = this.ribbonStatusBar;
@@ -296,16 +301,7 @@
             this.btnTutorial.Name = "btnTutorial";
             this.btnTutorial.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
             | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
-            // 
-            // btnContact
-            // 
-            this.btnContact.Caption = "Liên hệ";
-            this.btnContact.Id = 19;
-            this.btnContact.ImageOptions.ImageIndex = 25;
-            this.btnContact.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F2);
-            this.btnContact.Name = "btnContact";
-            this.btnContact.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
-            | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
+            this.btnTutorial.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnTutorial_ItemClick);
             // 
             // btnSoftwareInfo
             // 
@@ -316,13 +312,15 @@
             this.btnSoftwareInfo.Name = "btnSoftwareInfo";
             this.btnSoftwareInfo.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)(((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText) 
             | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
+            this.btnSoftwareInfo.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSoftwareInfo_ItemClick);
             // 
             // rbpSys
             // 
             this.rbpSys.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.rbpSystem,
             this.rbpData,
-            this.rbpTheme});
+            this.rbpTheme,
+            this.rbpgHelp});
             this.rbpSys.Name = "rbpSys";
             this.rbpSys.Text = "Hệ thống";
             // 
@@ -372,26 +370,33 @@
             this.rbpgAdmin.Name = "rbpgAdmin";
             this.rbpgAdmin.Text = "Quản trị viên";
             // 
-            // rbpHelp
-            // 
-            this.rbpHelp.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.rbpgHelp,
-            this.rbpgInfomation});
-            this.rbpHelp.Name = "rbpHelp";
-            this.rbpHelp.Text = "Trợ giúp";
-            // 
             // rbpgHelp
             // 
             this.rbpgHelp.ItemLinks.Add(this.btnTutorial);
-            this.rbpgHelp.ItemLinks.Add(this.btnContact);
+            this.rbpgHelp.ItemLinks.Add(this.btnSoftwareInfo);
             this.rbpgHelp.Name = "rbpgHelp";
             this.rbpgHelp.Text = "Trợ giúp";
             // 
-            // rbpgInfomation
+            // repositoryItemColorEdit1
             // 
-            this.rbpgInfomation.ItemLinks.Add(this.btnSoftwareInfo);
-            this.rbpgInfomation.Name = "rbpgInfomation";
-            this.rbpgInfomation.Text = "Thông tin";
+            this.repositoryItemColorEdit1.AutoHeight = false;
+            this.repositoryItemColorEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemColorEdit1.Name = "repositoryItemColorEdit1";
+            // 
+            // repositoryItemImageEdit1
+            // 
+            this.repositoryItemImageEdit1.AutoHeight = false;
+            this.repositoryItemImageEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemImageEdit1.Name = "repositoryItemImageEdit1";
+            // 
+            // repositoryItemColorEdit2
+            // 
+            this.repositoryItemColorEdit2.AutoHeight = false;
+            this.repositoryItemColorEdit2.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemColorEdit2.Name = "repositoryItemColorEdit2";
             // 
             // ribbonStatusBar
             // 
@@ -417,8 +422,12 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.StatusBar = this.ribbonStatusBar;
             this.Text = "PHẦN MỀM QUẢN LÝ QUÁN CAFE";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.fMain_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageCL)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemColorEdit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemImageEdit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemColorEdit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabMDI)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -441,7 +450,6 @@
         private DevExpress.XtraBars.SkinRibbonGalleryBarItem skinRibbonGalleryBarItem1;
         private DevExpress.XtraBars.Ribbon.RibbonPage rbpManagement;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbpgAdmin;
-        private DevExpress.XtraBars.Ribbon.RibbonPage rbpHelp;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbpgHelp;
         private DevExpress.Utils.ImageCollection imageCL;
         private DevExpress.XtraBars.BarButtonItem btnAccountInformation;
@@ -455,8 +463,9 @@
         private DevExpress.XtraBars.BarButtonItem btnTableManager;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbpgStaff;
         private DevExpress.XtraBars.BarButtonItem btnTutorial;
-        private DevExpress.XtraBars.BarButtonItem btnContact;
         private DevExpress.XtraBars.BarButtonItem btnSoftwareInfo;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbpgInfomation;
+        private DevExpress.XtraEditors.Repository.RepositoryItemColorEdit repositoryItemColorEdit2;
+        private DevExpress.XtraEditors.Repository.RepositoryItemColorEdit repositoryItemColorEdit1;
+        private DevExpress.XtraEditors.Repository.RepositoryItemImageEdit repositoryItemImageEdit1;
     }
 }
